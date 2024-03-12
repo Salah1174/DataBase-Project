@@ -1,2 +1,2 @@
 
-![Alt text](relative%20path/to/CrossFit Schema.png?raw=true "Title")
+![Alt text](relative%20path/to/CrossFitSchema.png?raw=true "Title")
