@@ -18,7 +18,7 @@ from PySide6.QtWidgets import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 550)
+        MainWindow.resize(1000, 700)
         MainWindow.setMinimumSize(QSize(800, 550))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setStyleSheet("background:rgb(91,90,90);")
@@ -322,43 +322,17 @@ class Ui_MainWindow(object):
         self.frame_cloud.setFrameShape(QFrame.NoFrame)
         self.frame_cloud.setFrameShadow(QFrame.Plain)
         self.frame_cloud.setObjectName("frame_cloud")
-        self.horizontalLayout_17 = QHBoxLayout(self.frame_cloud)
-        self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_17.setSpacing(0)
-        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.bn_cloud = QPushButton(self.frame_cloud)
-        self.bn_cloud.setMinimumSize(QSize(80, 55))
-        self.bn_cloud.setMaximumSize(QSize(160, 55))
-        self.bn_cloud.setStyleSheet("QPushButton {\n"
-                                    "    border: none;\n"
-                                    "    background-color: rgba(0,0,0,0);\n"
-                                    "}\n"
-                                    "QPushButton:hover {\n"
-                                    "    background-color: rgb(91,90,90);\n"
-                                    "}\n"
-                                    "QPushButton:pressed {    \n"
-                                    "    background-color: rgba(0,0,0,0);\n"
-                                    "}")
-        self.bn_cloud.setText("")
-        icon6 = QIcon()
-        icon6.addPixmap(QPixmap("static/cloudAsset 48.png"),
-                        QIcon.Normal,  QIcon.Off)
-        self.bn_cloud.setIcon(icon6)
-        self.bn_cloud.setIconSize(QSize(22, 12))
-        self.bn_cloud.setFlat(True)
-        self.bn_cloud.setObjectName("bn_cloud")
-        self.horizontalLayout_17.addWidget(self.bn_cloud)
-        self.verticalLayout_3.addWidget(self.frame_cloud)
+
         self.frame_android = QFrame(self.frame_bottom_west)
         self.frame_android.setMinimumSize(QSize(80, 55))
         self.frame_android.setMaximumSize(QSize(160, 55))
         self.frame_android.setFrameShape(QFrame.NoFrame)
         self.frame_android.setFrameShadow(QFrame.Plain)
         self.frame_android.setObjectName("frame_android")
-        self.horizontalLayout_18 = QHBoxLayout(self.frame_android)
-        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_18.setSpacing(0)
-        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.horizontalLayout_17 = QHBoxLayout(self.frame_android)
+        self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_17.setSpacing(0)
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
         self.bn_android = QPushButton(self.frame_android)
         self.bn_android.setMinimumSize(QSize(80, 55))
         self.bn_android.setMaximumSize(QSize(160, 55))
@@ -374,14 +348,42 @@ class Ui_MainWindow(object):
                                       "}")
         self.bn_android.setText("")
         icon7 = QIcon()
-        icon7.addPixmap(QPixmap("static/androidAsset 49.png"),
+        icon7.addPixmap(QPixmap("static/cloudAsset 48.png"),
                         QIcon.Normal,  QIcon.Off)
         self.bn_android.setIcon(icon7)
         self.bn_android.setIconSize(QSize(20, 22))
         self.bn_android.setFlat(True)
         self.bn_android.setObjectName("bn_android")
-        self.horizontalLayout_18.addWidget(self.bn_android)
+        self.horizontalLayout_17.addWidget(self.bn_android)
+        self.verticalLayout_3.addWidget(self.frame_cloud)
+        self.horizontalLayout_18 = QHBoxLayout(self.frame_cloud)
+        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_18.setSpacing(0)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.bn_cloud = QPushButton(self.frame_cloud)
+        self.bn_cloud.setMinimumSize(QSize(80, 55))
+        self.bn_cloud.setMaximumSize(QSize(160, 55))
+        self.bn_cloud.setStyleSheet("QPushButton {\n"
+                                    "    border: none;\n"
+                                    "    background-color: rgba(0,0,0,0);\n"
+                                    "}\n"
+                                    "QPushButton:hover {\n"
+                                    "    background-color: rgb(91,90,90);\n"
+                                    "}\n"
+                                    "QPushButton:pressed {    \n"
+                                    "    background-color: rgba(0,0,0,0);\n"
+                                    "}")
+        self.bn_cloud.setText("")
+        icon6 = QIcon()
+        icon6.addPixmap(QPixmap("static/androidAsset 49.png"),
+                        QIcon.Normal,  QIcon.Off)
+        self.bn_cloud.setIcon(icon6)
+        self.bn_cloud.setIconSize(QSize(40, 24))
+        self.bn_cloud.setFlat(True)
+        self.bn_cloud.setObjectName("bn_cloud")
         self.verticalLayout_3.addWidget(self.frame_android)
+        self.horizontalLayout_18.addWidget(self.bn_cloud)
+
         self.frame_8 = QFrame(self.frame_bottom_west)
         self.frame_8.setFrameShape(QFrame.NoFrame)
         self.frame_8.setFrameShadow(QFrame.Plain)
@@ -575,42 +577,7 @@ class Ui_MainWindow(object):
         spacerItem3 = QSpacerItem(
             40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.verticalLayout_12.addItem(spacerItem3)
-        self.ID_field = QLineEdit(self.widget)
-        palette = QPalette()
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Button, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Base, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Window, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.Base, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.Window, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Disabled, QPalette.Base, brush)
-        brush = QBrush(QColor(255, 255, 255, 128))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Disabled, QPalette.Window, brush)
-        self.ID_field.setPalette(palette)
-        font = QFont()
-        font.setPointSize(13)
-        self.ID_field.setFont(font)
-        self.ID_field.setText("")
-        self.ID_field.setObjectName("ID_field")
-        self.verticalLayout_12.addWidget(self.ID_field)
+
         self.Full_name_field = QLineEdit(self.widget)
         self.Full_name_field.setObjectName("Full_name_field")
         self.verticalLayout_12.addWidget(self.Full_name_field)
@@ -1640,7 +1607,7 @@ class Ui_MainWindow(object):
         self.bn_about_contact.setText("")
         icon8 = QIcon()
         icon8.addPixmap(QPixmap(
-            "../../Desktop/DataBase/Project/db-Team5/Team-5/static/bookAsset 57.png"),  QIcon.Normal,  QIcon.Off)
+            "static/bookAsset 57.png"),  QIcon.Normal,  QIcon.Off)
         self.bn_about_contact.setIcon(icon8)
         self.bn_about_contact.setIconSize(QSize(13, 16))
         self.bn_about_contact.setFlat(True)
@@ -1673,7 +1640,7 @@ class Ui_MainWindow(object):
         self.bn_about_game.setText("")
         icon9 = QIcon()
         icon9.addPixmap(QPixmap(
-            "../../Desktop/DataBase/Project/db-Team5/Team-5/static/gameAsset 61.png"),  QIcon.Normal,  QIcon.Off)
+            "static/gameAsset 61.png"),  QIcon.Normal,  QIcon.Off)
         self.bn_about_game.setIcon(icon9)
         self.bn_about_game.setIconSize(QSize(20, 13))
         self.bn_about_game.setFlat(True)
@@ -1706,7 +1673,7 @@ class Ui_MainWindow(object):
         self.bn_about_clean.setText("")
         icon10 = QIcon()
         icon10.addPixmap(QPixmap(
-            "../../Desktop/DataBase/Project/db-Team5/Team-5/static/cleanAsset 59.png"),  QIcon.Normal,  QIcon.Off)
+            "static/cleanAsset 59.png"),  QIcon.Normal,  QIcon.Off)
         self.bn_about_clean.setIcon(icon10)
         self.bn_about_clean.setFlat(True)
         self.bn_about_clean.setObjectName("bn_about_clean")
@@ -1801,7 +1768,7 @@ class Ui_MainWindow(object):
         self.lab_person_icon_2.setMaximumSize(QSize(200, 160))
         self.lab_person_icon_2.setText("")
         self.lab_person_icon_2.setPixmap(QPixmap(
-            "../../Desktop/DataBase/Project/db-Team5/Team-5/static/peopleAsset 62.png"))
+            "static/peopleAsset 62.png"))
         self.lab_person_icon_2.setObjectName("lab_person_icon_2")
         self.gridLayout_11.addWidget(self.lab_person_icon_2, 0, 0, 1, 1)
         spacerItem14 = QSpacerItem(
@@ -2445,6 +2412,7 @@ class Ui_MainWindow(object):
         self.frame_about_home.setFrameShape(QFrame.StyledPanel)
         self.frame_about_home.setFrameShadow(QFrame.Raised)
         self.frame_about_home.setObjectName("frame_about_home")
+        # self.frame_about_home.
         self.horizontalLayout_28 = QHBoxLayout(self.frame_about_home)
         self.horizontalLayout_28.setContentsMargins(5, 5, 0, 5)
         self.horizontalLayout_28.setSpacing(0)
@@ -2533,13 +2501,13 @@ class Ui_MainWindow(object):
         spacerItem21 = QSpacerItem(
             421, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem21, 5, 7, 1, 1)
-        self.lab_bullet = QLabel(self.frame_bug_main)
-        self.lab_bullet.setMaximumSize(QSize(5, 16777215))
-        self.lab_bullet.setText("")
-        self.lab_bullet.setPixmap(QPixmap("static/bulletAsset 54.png"))
-        self.lab_bullet.setAlignment(Qt.AlignCenter)
-        self.lab_bullet.setObjectName("lab_bullet")
-        self.gridLayout.addWidget(self.lab_bullet, 0, 0, 1, 1)
+        # self.lab_bullet = QLabel(self.frame_bug_main)
+        # self.lab_bullet.setMaximumSize(QSize(5, 16777215))
+        # self.lab_bullet.setText("")
+        # self.lab_bullet.setPixmap(QPixmap("static/bulletAsset 54.png"))
+        # self.lab_bullet.setAlignment(Qt.AlignCenter)
+        # self.lab_bullet.setObjectName("lab_bullet")
+        # self.gridLayout.addWidget(self.lab_bullet, 0, 0, 1, 1)
         self.lab_bullet3 = QLabel(self.frame_bug_main)
         self.lab_bullet3.setMaximumSize(QSize(5, 16777215))
         self.lab_bullet3.setText("")
@@ -2627,14 +2595,14 @@ class Ui_MainWindow(object):
         self.comboBox_bug.addItem("")
         self.comboBox_bug.addItem("")
         self.comboBox_bug.addItem("")
-        self.comboBox_bug.addItem("")
+        # self.comboBox_bug.addItem("")
         self.gridLayout.addWidget(self.comboBox_bug, 3, 8, 1, 1)
         self.lab_bug1 = QLabel(self.frame_bug_main)
         self.lab_bug1.setMinimumSize(QSize(0, 0))
         self.lab_bug1.setMaximumSize(QSize(16777215, 16777215))
         font = QFont()
         font.setFamily("Segoe UI")
-        font.setPointSize(14)
+        font.setPointSize(17)
         self.lab_bug1.setFont(font)
         self.lab_bug1.setStyleSheet("color:rgb(255,255,255);")
         self.lab_bug1.setAlignment(
@@ -2678,27 +2646,34 @@ class Ui_MainWindow(object):
         self.bn_bug_start.setFlat(True)
         self.bn_bug_start.setObjectName("bn_bug_start")
         self.gridLayout.addWidget(self.bn_bug_start, 3, 9, 1, 1)
-        self.progressBar_bug = QProgressBar(self.frame_bug_main)
+
+        ###############################################
+
+        ###############################################
+
+        self.progressBar_bug = QLineEdit(self.frame_bug_main)
+        self.progressBar_bug.setMinimumSize(QSize(400, 25))
+        self.progressBar_bug.setMaximumSize(QSize(500, 25))
         self.progressBar_bug.setEnabled(True)
-        self.progressBar_bug.setStyleSheet("QProgressBar\n"
-                                           "{\n"
+        self.progressBar_bug.setStyleSheet("QLineEdit {\n"
                                            "    color:rgb(255,255,255);\n"
-                                           "    background-color :rgb(51,51,51);\n"
-                                           "    border : 2px;\n"
+                                           "    border:2px solid rgb(51,51,51);\n"
                                            "    border-radius:4px;\n"
+                                           "    background:rgb(51,51,51);\n"
                                            "}\n"
                                            "\n"
-                                           "QProgressBar::chunk{\n"
-                                           "    border : 2px;\n"
+                                           "QLineEdit:disabled {\n"
+                                           "    color:rgb(255,255,255);\n"
+                                           "    border:2px solid rgb(112,112,112);\n"
                                            "    border-radius:4px;\n"
-                                           "    background-color:rgb(0,143,170);\n"
+                                           "    background:rgb(112,112,112);\n"
                                            "}")
-        self.progressBar_bug.setProperty("value", 0)
+        # self.progressBar_bug.setProperty("value", 0)
         self.progressBar_bug.setAlignment(Qt.AlignCenter)
-        self.progressBar_bug.setTextVisible(True)
-        self.progressBar_bug.setOrientation(Qt.Horizontal)
-        self.progressBar_bug.setInvertedAppearance(False)
-        self.progressBar_bug.setTextDirection(QProgressBar.TopToBottom)
+        self.progressBar_bug.setVisible(True)
+        # self.progressBar_bug.setOrientation(Qt.Horizontal)
+        # self.progressBar_bug.setInvertedAppearance(False)
+        # self.progressBar_bug.setTextDirection(QProgressBar.TopToBottom)
         self.progressBar_bug.setObjectName("progressBar_bug")
         self.gridLayout.addWidget(self.progressBar_bug, 4, 7, 1, 3)
         self.lab_bug_action = QLabel(self.frame_bug_main)
@@ -3919,11 +3894,11 @@ class Ui_MainWindow(object):
         self.bn_max.setToolTip(_translate("MainWindow", "Maximize"))
         self.bn_close.setToolTip(_translate("MainWindow", "Close"))
         self.bn_home.setToolTip(_translate("MainWindow", "Home"))
-        self.bn_bug.setToolTip(_translate("MainWindow", "Bug"))
-        self.bn_cloud.setToolTip(_translate("MainWindow", "Cloud"))
-        self.bn_android.setToolTip(_translate("MainWindow", "Android"))
+        self.bn_bug.setToolTip(_translate("MainWindow", "Cafeteria"))
+        self.bn_cloud.setToolTip(_translate("MainWindow", "About Us"))
+        self.bn_android.setToolTip(_translate("MainWindow", "Exercises"))
         self.sign_up_title.setText(_translate("MainWindow", "Add New User"))
-        self.ID_field.setPlaceholderText(_translate("MainWindow", "ID"))
+        # self.ID_field.setPlaceholderText(_translate("MainWindow", "ID"))
         self.Full_name_field.setText(_translate("MainWindow", "Name"))
         self.Full_name_field.setPlaceholderText(
             _translate("MainWindow", "Name"))
@@ -4038,20 +4013,23 @@ class Ui_MainWindow(object):
         self.lab_about_home.setText(_translate("MainWindow", "About: Home"))
         self.label_10.setText(_translate("MainWindow", "Empty"))
         self.lab_Bug.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Bugs Found</span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Cafeteria</span></p></body></html>"))
         self.lab_bug2.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Simple TO</span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Supplements/Protien Bars</span></p></body></html>"))
         self.lab_bug3.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Sertilage</span></p></body></html>"))
-        self.comboBox_bug.setItemText(0, _translate("MainWindow", "100000"))
-        self.comboBox_bug.setItemText(1, _translate("MainWindow", "1000000"))
-        self.comboBox_bug.setItemText(2, _translate("MainWindow", "10000000"))
-        self.comboBox_bug.setItemText(3, _translate("MainWindow", "100000000"))
+            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">SportsWear</span></p></body></html>"))
+        self.comboBox_bug.setItemText(
+            0, _translate("MainWindow", "Supplements"))
+        self.comboBox_bug.setItemText(
+            1, _translate("MainWindow", "Protien bars"))
+        self.comboBox_bug.setItemText(
+            2, _translate("MainWindow", "Sports Wear"))
+        # self.comboBox_bug.setItemText(3, _translate("MainWindow", "100000000"))
         self.lab_bug1.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Vore/Lore</span></p></body></html>"))
-        self.bn_bug_start.setText(_translate("MainWindow", "Start"))
+            "MainWindow", "<html><head/><body><p><span style=\" color:#008F96;\">We Have</span></p></body></html>"))
+        self.bn_bug_start.setText(_translate("MainWindow", "Search"))
         self.lab_bug_action.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Action: </span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Filters: </span></p></body></html>"))
         self.lab_cloud_main.setText(_translate("MainWindow", "Cloud Connect"))
         self.label_2.setText(_translate("MainWindow", "Client ID :"))
         self.label_3.setText(_translate("MainWindow", "Server Adress :"))

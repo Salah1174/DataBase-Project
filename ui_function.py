@@ -43,15 +43,15 @@ class UIFunction(MainWindow):
             GLOBAL_STATE = 1
             self.ui.bn_max.setToolTip("Restore")
             # CHANGE THE MAXIMISE ICON TO RESTOR ICON
-            self.ui.bn_max.setIcon(QtGui.QIcon("icons/1x/restore.png"))
-            self.ui.frame_drag.hide()  # HIDE DRAG AS NOT NECESSERY
+            self.ui.bn_max.setIcon(QtGui.QIcon("static/restore.png"))
+            # self.ui.frame_drag.hide()  # HIDE DRAG AS NOT NECESSERY
         else:
             GLOBAL_STATE = 0
             self.showNormal()
             self.resize(self.width()+1, self.height()+1)
             self.ui.bn_max.setToolTip("Maximize")
             # CHANGE BACK TO MAXIMISE ICON
-            self.ui.bn_max.setIcon(QtGui.QIcon("icons/1x/max.png"))
+            self.ui.bn_max.setIcon(QtGui.QIcon("static/max.png"))
             self.ui.frame_drag.show()
     ################################################################################################
 
@@ -174,7 +174,20 @@ class UIFunction(MainWindow):
 
         elif buttonName == 'Add_new_user':
             print(index)
+            # Query
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_login)
+
+        elif buttonName == 'bn_android_contact_save':
+            inp = self.ui.line_android_name.text()
+            print(inp)
+
+        elif buttonName == 'bn_android_contact_edit':
+            inp = self.ui.line_android_name.text()
+            print(inp)
+
+        elif buttonName == 'bn_bug_start':
+            inp = self.ui.progressBar_bug.text()
+            print(inp)
 
         elif buttonName == 'bn_bug':
             if self.ui.frame_bottom_west.width() == 80:
@@ -229,11 +242,7 @@ class UIFunction(MainWindow):
 
         # PAGE_HOME ############# BELOW DISPLAYS THE FUNCTION OF WIDGET, LABEL, PROGRESS BAR, E.T.C IN STACKEDWIDGET page_HOME
         self.ui.lab_home_main_hed.setText("Profile")
-        self.ui.lab_home_stat_hed.setText("Stat")
-
-        # PAGE_BUG ############## BELOW DISPLAYS THE FUNCTION OF WIDGET, LABEL, PROGRESS BAR, E.T.C IN STACKEDWIDGET page_bug
-        self.ui.bn_bug_start.clicked.connect(lambda: APFunction.addNumbers(
-            self, self.ui.comboBox_bug.currentText(), True))
+        self.ui.lab_home_stat_hed.setText("Report")
 
         # THIS CALLS A SIMPLE FUNCTION LOOPS THROW THE NUMBER FORWARDED BY THE COMBOBOX 'comboBox_bug' AND DISPLAY IN PROGRESS BAR
         # ALONGWITH MOVING THE PROGRESS CHUNK FROM 0 TO 100%
@@ -241,7 +250,8 @@ class UIFunction(MainWindow):
         ######### PAGE about_us #############
         self.ui.bn_cloud_connect.clicked.connect(
             lambda: APFunction.cloudConnect(self))
-        # self.ui.bn_cloud_clear.clicked.connect(lambda: self.dialogexec("Warning", "Do you want to save the file", "icons/1x/errorAsset 55.png", "Cancel", "Save"))
+        self.ui.bn_cloud_clear.clicked.connect(lambda: self.dialogexec(
+            "Warning", "Do you want to save the file", "icons/1x/errorAsset 55.png", "Cancel", "Save"))
         self.ui.bn_cloud_clear.clicked.connect(
             lambda: APFunction.cloudClear(self))
 
@@ -333,18 +343,6 @@ class UIFunction(MainWindow):
 # REDIRECTED TO THIS AREA FOR THE PROCESSING AND THEN THE RESULT ARE EXPOTED.
 # REMEMBER THE SOFTWARE UI HAS A FUNCTION WHOSE CODE SHOULD BE HERE
 class APFunction():
-    # -----> ADDING NUMBER TO ILLUSTRATE THE CAPABILITY OF THE PROGRESS BAR WHEN THE 'START' BUTTON IS PRESSED
-    def addNumbers(self, number, enable):
-        if enable:
-            lastProgress = 0
-            for x in range(0, int(number), 1):
-                progress = int((x/int(number))*100)
-                if progress != lastProgress:
-                    self.ui.progressBar_bug.setValue(progress)
-                    lastProgress = progress
-            self.ui.progressBar_bug.setValue(100)
-    ###########################
-
     # ---> FUNCTION TO CONNECT THE about_us USING ADRESS AND RETURN A ERROR STATEMENT
     def cloudConnect(self):
         self.ui.bn_cloud_clear.setEnabled(False)
@@ -356,7 +354,7 @@ class APFunction():
             self.ui.line_cloud_proxy.setText("Connection established")
         else:
             self.errorexec("Incorrect Credentials",
-                           "icons/1x/errorAsset 55.png", "Retry")
+                           "static/errorAsset 55.png", "Retry")
 
     def cloudClear(self):
         self.ui.line_cloud_proxy.setText("")
