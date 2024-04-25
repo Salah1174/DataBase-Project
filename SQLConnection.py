@@ -1,6 +1,7 @@
 ############################################################
 # Will be movved to ui_function.py
 ############################################################
+import datetime
 import pyodbc
 
 try:
@@ -28,3 +29,11 @@ WHERE NOT EXISTS (
 
 except pyodbc.Error as e:
     print("Connection Failed:", e)
+
+import datetime
+print(datetime.datetime.now())
+print(type(datetime.datetime.now()))
+
+str = '2021-05-25 00:00:00'
+print(str)
+print(type(str))

@@ -6,7 +6,7 @@ from PySide6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
                            QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide6.QtWidgets import *
-
+import pyodbc
 # from ui_function import UIFunction
 from ui_main1 import Ui_MainWindow
 
@@ -169,8 +169,9 @@ class MainWindow(QMainWindow):
         # FILE, WHICH EXPANDS THE MENU BAR TO DOUBLE ITS WIDTH MAKING ROOM FOR THE ABOUT PAGES.
         # THIS EFFECT CALLED AS TOODLE, CAN BE MADE USE IN MANY WAYS. CHECK THE FUNCTION: toodleMenu: IN THE ui_function.py
         # FILE FOR THE CLEAR WORKING
-        self.ui.toodle.clicked.connect(
-            lambda: UIFunction.toodleMenu(self, 160, True))
+        # if self.ui.widget != self.ui.page_login and self.ui.widget != self.ui.sign_up:
+        #     self.ui.toodle.clicked.connect(
+        #         lambda: UIFunction.toodleMenu(self, 160, True))
         #############################################################
 
         # ----> MENU BUTTON PRESSED EVENTS
@@ -179,19 +180,19 @@ class MainWindow(QMainWindow):
         # IT TAKES SELF AND THE BUTTON NAME AS THE RGUMENT, THIS IS ONLY TO RECOGNISE WHICH BUTTON IS PRESSED BY THE buttonPressed() FUNCTION.
 
         self.ui.bn_home.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_home'))
+            lambda: UIFunction.buttonPressed(self, 'bn_home', connection, cursor))
         self.ui.submit.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'submit'))
+            lambda: UIFunction.buttonPressed(self, 'submit', connection, cursor))
         self.ui.bn_bug.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_bug'))
+            lambda: UIFunction.buttonPressed(self, 'bn_bug', connection, cursor))
         self.ui.bn_cloud.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_cloud'))
+            lambda: UIFunction.buttonPressed(self, 'bn_cloud', connection, cursor))
         self.ui.bn_android.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_android'))
+            lambda: UIFunction.buttonPressed(self, 'bn_android', connection, cursor))
         self.ui.Add_new_user.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'Add_new_user'))
+            lambda: UIFunction.buttonPressed(self, 'Add_new_user', connection, cursor))
         self.ui.notLogged.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'notLogged'))
+            lambda: UIFunction.buttonPressed(self, 'notLogged', connection, cursor))
         #############################################################
         # -----> STACK PAGE FUNCTION
         # OUR APPLICATION CHANGES THE PAGES BY USING THE STACKED WIDGET, THIS CODE POINTS TO A FUNCTION IN ui_function.py FILE             ---------(C9)
@@ -352,6 +353,16 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
+    try:
+        connection = pyodbc.connect('DRIVER={SQL Server};' +
+                                    'Server=LAPTOP-019RIHG4;' +
+                                    'Database=Team-5;' +
+                                    'Trusted_Connection=True;')
+        print("Connection Established")
+        connection.autocommit = True
+        cursor = connection.cursor()
+    except pyodbc.Error as e:
+        print("Connection Failed", e)
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

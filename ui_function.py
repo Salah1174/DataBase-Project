@@ -1,5 +1,6 @@
 
 from main import *  # IMPORTING THE MAIN.PY FILE
+import pyodbc
 
 GLOBAL_STATE = 0  # NECESSERY FOR CHECKING WEATHER THE WINDWO IS FULL SCREEN OR NOT
 # NECESSERY FOR CHECKING WEATHER THE WINDWO IS FULL SCREEN OR NOT
@@ -12,6 +13,86 @@ init = False  # NECRESSERY FOR INITITTION OF THE WINDOW.
 # THIS CLASS HOUSES ALL FUNCTION NECESSERY FOR OUR PROGRAMME TO RUN.
 
 
+def createUser(cursor, Fullname, startDate, endDate, type, Bdate, password, email, address=None, phone=None):
+    print(Fullname, startDate, endDate, type,
+          Bdate, password, email, address, phone, sep='\n')
+    sql_stmt = "INSERT INTO USERS (Username, PasswordHash, Email, U_Address, BirthDate) VALUES (?, ?, ?, ?, ?)"
+    cursor.execute(sql_stmt, (Fullname, password, email, address, Bdate))
+    cursor.execute("SELECT @@IDENTITY")
+    UserID = cursor.fetchone()[0]
+    print(UserID)
+
+    if type == "Trainee":
+
+        sql_stmt = '''INSERT INTO Trainee (StartMembership, EndMembership, UserID)
+SELECT ?, ?, ?
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Trainer
+    WHERE Trainer.UserID = ?
+)AND NOT EXISTS (
+    SELECT 1
+    FROM Employee
+    WHERE Employee.UserID = ?
+)
+AND NOT EXISTS (
+    SELECT 1
+    FROM Trainee
+    WHERE Trainee.UserID = ?
+);'''
+
+        cursor.execute(sql_stmt, (startDate, endDate,
+                       UserID, UserID, UserID, UserID))
+    elif type == "Trainer":
+        sql_stmt = '''INSERT INTO [Team-5].[dbo].[Trainer] (TrainerRole, UserID)
+        SELECT 'Coach', ?
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM [Team-5].[dbo].[Trainee]
+            WHERE [Team-5].[dbo].[Trainee].UserID = ?
+        )
+        AND NOT EXISTS(
+            SELECT 1
+            FROM [Team-5].[dbo].[Trainer]
+            WHERE [Team-5].[dbo].Trainer.UserID = ?
+        )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM [Team-5].[dbo].[Employee]
+            WHERE [Team-5].[dbo].[Employee].UserID = ?
+        );'''
+        cursor.execute(sql_stmt, (UserID, UserID, UserID, UserID))
+    elif type == "Employee":
+        sql_stmt = '''INSERT INTO Employee (UserID)
+        SELECT ?
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM Trainee
+            WHERE Trainee.UserID = ?
+        )AND NOT EXISTS(
+        SELECT 1 
+        FROM Employee
+        WHERE Employee.UserID = ?
+        )AND NOT EXISTS (
+            SELECT 1
+            FROM Trainer
+            WHERE Trainer.UserID = ?
+        );'''
+        cursor.execute(sql_stmt, (UserID, UserID, UserID, UserID))
+
+
+def loginUser(username, password, cursor):
+    sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ?"
+    cursor.execute(sql_stmt, (username, password))
+    # print(cursor.fetchall())
+    # # print(cursor.fetchall()[0])
+    # # print(cursor.fetchall()[1])
+    # for data in cursor:
+    #     print(data[0][0])
+
+    return cursor.fetchall()
+
+
 class UIFunction(MainWindow):
 
     # ----> INITIAL FUNCTION TO LOAD THE FRONT STACK WIDGET AND TAB BUTTON I.E. HOME PAGE
@@ -19,7 +100,7 @@ class UIFunction(MainWindow):
     def initStackTab(self):
         global init
         if init == False:
-            self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up)
+            self.ui.stackedWidget.setCurrentWidget(self.ui.page_login)
             self.ui.lab_tab.setText("Home")
             self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
             init = True
@@ -142,7 +223,7 @@ class UIFunction(MainWindow):
 
     # ----> BUTTON IN TAB PRESSED EXECUTES THE CORRESPONDING PAGE IN STACKEDWIDGET PAGES
 
-    def buttonPressed(self, buttonName):
+    def buttonPressed(self, buttonName, connection, cursor):
 
         index = self.ui.stackedWidget.currentIndex()
 
@@ -150,7 +231,7 @@ class UIFunction(MainWindow):
         for each in self.ui.frame_bottom_west.findChildren(QFrame):
             each.setStyleSheet("background:rgb(51,51,51)")
 
-        if buttonName == 'bn_home':
+        if buttonName == 'bn_home' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             print(index)
             if self.ui.frame_bottom_west.width() == 80 and index != 1:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
@@ -165,31 +246,70 @@ class UIFunction(MainWindow):
                 self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
 
         elif buttonName == "submit":
+            print(self.ui.stackedWidget.currentWidget())
+            print(self.ui.page_login)
+            # print(self.ui.stackedWidget.currentWidget())
+            fetch = loginUser(self.ui.lineEdit.text(),
+                              self.ui.lineEdit_2.text(), cursor)
+            # UserID = fetch[0][0]
+
+            if len(fetch) != 0 and self.ui.lineEdit.text() != "" and self.ui.lineEdit_2.text() != "":
+                self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+                self.ui.lab_user.setText(self.ui.lineEdit.text().split()[0])
+            else:
+                self.errorexec("Incorrect Name or Password",
+                               "static/errorAsset 55.png", "Try again")
+
             # print(index)
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
 
         elif buttonName == 'notLogged':
             # print(index)
             self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up)
+# def createUser(cursor,Fullname, startDate, endDate, type, Bdate, password, email=None, address=None, phone=None):
 
         elif buttonName == 'Add_new_user':
-            print(index)
-            # Query
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_login)
+            if self.ui.bn_trainee_radio.toggled:
+                print("Trainee")
+                type = "Trainee"
+            elif self.ui.bn_trainer_radio.toggled:
+                print("Trainer")
+                type = "Trainer"
+            elif self.ui.bn_employee_radio.toggled:
+                print("Employee")
+                type = "Employee"
+            name = self.ui.Full_name_field.text()
+            start = self.ui.Start_date_field.date().toPython()
+            start = start.strftime('%Y-%m-%d')
+            end = self.ui.End_date_field.date().toPython()
+            end = end.strftime('%Y-%m-%d')
+            birth = self.ui.Birth_date_field.date().toPython()
+            birth = birth.strftime('%Y-%m-%d')
+            password = self.ui.pass_field.text()
+            email = self.ui.Email_field.text()
+            try:
+                if name != "" and password != "" and email != "":
+                    createUser(cursor, name, start, end,
+                               type, birth, password, email)
+                    self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+                else:
+                    raise Exception
+            except:
+                self.errorexec("Invalid Input",
+                               "static/errorAsset 55.png", "Try again")
 
-        elif buttonName == 'bn_android_contact_save':
+        elif buttonName == 'bn_android_contact_save' and self.ui.widget != self.ui.page_login and self.ui.widget != self.ui.sign_up:
             inp = self.ui.line_android_name.text()
             print(inp)
 
-        elif buttonName == 'bn_android_contact_edit':
+        elif buttonName == 'bn_android_contact_edit' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.line_android_name.text()
             print(inp)
 
-        elif buttonName == 'bn_bug_start':
+        elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
             print(inp)
 
-        elif buttonName == 'bn_bug':
+        elif buttonName == 'bn_bug' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_bug)
                 self.ui.lab_tab.setText("cafeteria")
@@ -202,7 +322,7 @@ class UIFunction(MainWindow):
                 # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
                 self.ui.frame_bug.setStyleSheet("background:rgb(91,90,90)")
 
-        elif buttonName == 'bn_cloud':
+        elif buttonName == 'bn_cloud' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_android)
                 self.ui.lab_tab.setText("exercises")
@@ -217,7 +337,7 @@ class UIFunction(MainWindow):
                 # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
                 self.ui.frame_cloud.setStyleSheet("background:rgb(91,90,90)")
 
-        elif buttonName == 'bn_android':
+        elif buttonName == 'bn_android' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_cloud)
                 self.ui.lab_tab.setText("about_us")
@@ -251,7 +371,7 @@ class UIFunction(MainWindow):
         self.ui.bn_cloud_connect.clicked.connect(
             lambda: APFunction.cloudConnect(self))
         self.ui.bn_cloud_clear.clicked.connect(lambda: self.dialogexec(
-            "Warning", "Do you want to save the file", "icons/1x/errorAsset 55.png", "Cancel", "Save"))
+            "Warning", "Do you want to save the file", "static/errorAsset 55.png", "Cancel", "Save"))
         self.ui.bn_cloud_clear.clicked.connect(
             lambda: APFunction.cloudClear(self))
 
@@ -288,9 +408,9 @@ class UIFunction(MainWindow):
             "Slider: Horizondal: ", self.ui.horizontalSlider_2.value()))
         # WHEN THE CHECK BOX IS CHECKED IT ECECUTES THE ERROR BOX WITH MESSAGE.
         self.ui.checkBox.stateChanged.connect(lambda: self.errorexec(
-            "Happy to Know you liked the UI", "icons/1x/smile2Asset 1.png", "Ok"))
+            "Happy to Know you liked the UI", "static/smile2Asset 1.png", "Ok"))
         self.ui.checkBox_2.stateChanged.connect(lambda: self.errorexec(
-            "Even More Happy to hear this", "icons/1x/smileAsset 1.png", "Ok"))
+            "Even More Happy to hear this", "static/smileAsset 1.png", "Ok"))
 
         ########## PAGE: ABOUT HOME #############
         self.ui.text_about_home.setVerticalScrollBar(self.ui.vsb_about_home)
