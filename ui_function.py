@@ -1,4 +1,5 @@
 
+import datetime
 from main import *  # IMPORTING THE MAIN.PY FILE
 import pyodbc
 
@@ -9,8 +10,6 @@ init = False  # NECRESSERY FOR INITITTION OF THE WINDOW.
 
 # tab_Buttons = ['bn_home', ' bn_bug', ' bn_cloud', ' bn_android'] #BUTTONS IN MAIN TAB
 # android_buttons = ['bn_android_contact', 'bn_android_game', 'bn_android_clean', 'bn_android_world'] #BUTTONS IN exercises STACKPAGE
-
-# THIS CLASS HOUSES ALL FUNCTION NECESSERY FOR OUR PROGRAMME TO RUN.
 
 
 def createUser(cursor, Fullname, startDate, endDate, type, Bdate, password, email, address=None, phone=None):
@@ -82,14 +81,8 @@ AND NOT EXISTS (
 
 
 def loginUser(username, password, cursor):
-    sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ?"
+    sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
     cursor.execute(sql_stmt, (username, password))
-    # print(cursor.fetchall())
-    # # print(cursor.fetchall()[0])
-    # # print(cursor.fetchall()[1])
-    # for data in cursor:
-    #     print(data[0][0])
-
     return cursor.fetchall()
 
 
@@ -110,11 +103,6 @@ class UIFunction(MainWindow):
 
     def labelTitle(self, appName):
         self.ui.lab_appname.setText(appName)
-    ################################################################################################
-
-    # ----> MAXIMISE/RESTORE FUNCTION
-    # THIS FUNCTION MAXIMISES OUR MAINWINDOW WHEN THE MAXIMISE BUTTON IS PRESSED OR IF DOUBLE MOUSE LEFT PRESS IS DOEN OVER THE TOPFRMAE.
-    # THIS MAKE THE APPLICATION TO OCCUPY THE WHOLE MONITOR.
 
     def maximize_restore(self):
         global GLOBAL_STATE
@@ -136,55 +124,12 @@ class UIFunction(MainWindow):
             self.ui.frame_drag.show()
     ################################################################################################
 
-    # ----> RETURN STATUS MAX OR RESTROE
-    # NECESSERY OFR THE MAXIMISE FUNCTION TRO WORK.
-
     def returStatus():
         return GLOBAL_STATE
 
     def setStatus(status):
         global GLOBAL_STATE
         GLOBAL_STATE = status
-
-    # ------> TOODLE MENU FUNCTION
-    # THIS FUNCTION TOODLES THE MENU BAR TO DOUBLE THE LENGTH OPENING A NEW ARE OF ABOUT TAB IN FRONT.
-    # ASLO IT SETS THE ABOUT>HOME AS THE FIRST PAGE.
-    # IF THE PAGE IS IN THE ABOUT PAGE THEN PRESSING AGAIN WILL RESULT IN UNDOING THE PROCESS AND COMMING BACK TO THE
-    # HOME PAGE.
-
-    def toodleMenu(self, maxWidth, clicked):
-
-        # ------> THIS LINE CLEARS THE BG OF PREVIOUS TABS : I.E. MAKING THEN NORMAL COLOR THAN LIGHTER COLOR.
-        for each in self.ui.frame_bottom_west.findChildren(QFrame):
-            each.setStyleSheet("background:rgb(51,51,51)")
-
-        if clicked:
-            # Reads the current width of the frame
-            currentWidth = self.ui.frame_bottom_west.width()
-            minWidth = 80  # MINIMUN WITDTH OF THE BOTTOM_WEST FRAME
-            if currentWidth == 80:
-                extend = maxWidth
-                # ----> MAKE THE STACKED WIDGET PAGE TO ABOUT HOME PAGE
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_about_home)
-                self.ui.lab_tab.setText("About > Home")
-                self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
-            else:
-                extend = minWidth
-                # -----> REVERT THE ABOUT HOME PAGE TO NORMAL HOME PAGE
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-                self.ui.lab_tab.setText("Home")
-                self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
-            # THIS ANIMATION IS RESPONSIBLE FOR THE TOODLE TO MOVE IN A SOME FIXED STATE.
-            self.animation = QPropertyAnimation(
-                self.ui.frame_bottom_west, b"minimumWidth")
-            self.animation.setDuration(300)
-            self.animation.setStartValue(minWidth)
-            self.animation.setEndValue(extend)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
-            self.animation.start()
-    ################################################################################################
-
-    # -----> DEFAULT ACTION FUNCTION
 
     def constantFunction(self):
         # -----> DOUBLE CLICK RESULT IN MAXIMISE OF WINDOW
@@ -203,14 +148,6 @@ class UIFunction(MainWindow):
             self.ui.frame_max.hide()
             self.ui.frame_min.hide()
             self.ui.frame_drag.hide()
-
-        # -----> RESIZE USING DRAG                                       THIS CODE TO DRAG AND RESIZE IS IN PROTOPYPE.
-        # self.sizegrip = QSizeGrip(self.ui.frame_drag)
-        # self.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
-
-        # SINCE THERE IS NO WINDOWS TOPBAR, THE CLOSE MIN, MAX BUTTON ARE ABSENT AND SO THERE IS A NEED FOR THE ALTERNATIVE BUTTONS IN OUR
-        # DIALOG BOX, WHICH IS CARRIED OUT BY THE BELOW CODE
-        # -----> MINIMIZE BUTTON FUNCTION
         self.ui.bn_min.clicked.connect(lambda: self.showMinimized())
 
         # -----> MAXIMIZE/RESTORE BUTTON FUNCTION
@@ -248,24 +185,35 @@ class UIFunction(MainWindow):
         elif buttonName == "submit":
             print(self.ui.stackedWidget.currentWidget())
             print(self.ui.page_login)
-            # print(self.ui.stackedWidget.currentWidget())
             fetch = loginUser(self.ui.lineEdit.text(),
                               self.ui.lineEdit_2.text(), cursor)
-            # UserID = fetch[0][0]
-
             if len(fetch) != 0 and self.ui.lineEdit.text() != "" and self.ui.lineEdit_2.text() != "":
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-                self.ui.lab_user.setText(self.ui.lineEdit.text().split()[0])
+                username = self.ui.lineEdit.text().split()[0]
+                email = fetch[0][2]
+                Bdate = fetch[0][5]
+                age = fetch[0][7]
+                id = fetch[0][0]
+                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                if len(traineeinfo) == 0:
+                    sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                if len(traineeinfo) == 0:
+                    sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                start = traineeinfo[0][1]
+                end = traineeinfo[0][2]
+                self.ui.lab_user.setText(str(id))
+                self.ui.lab_home_stat_disc.setText(
+                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Start Date: {start}<br/>End Date: {end}<br/>Birth Date: {Bdate}</span></p></body></html>")
+
             else:
                 self.errorexec("Incorrect Name or Password",
                                "static/errorAsset 55.png", "Try again")
 
-            # print(index)
-
         elif buttonName == 'notLogged':
-            # print(index)
             self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up)
-# def createUser(cursor,Fullname, startDate, endDate, type, Bdate, password, email=None, address=None, phone=None):
 
         elif buttonName == 'Add_new_user':
             if self.ui.bn_trainee_radio.toggled:
@@ -283,17 +231,27 @@ class UIFunction(MainWindow):
             end = self.ui.End_date_field.date().toPython()
             end = end.strftime('%Y-%m-%d')
             birth = self.ui.Birth_date_field.date().toPython()
+            age = datetime.datetime.now().year - birth.year
             birth = birth.strftime('%Y-%m-%d')
             password = self.ui.pass_field.text()
             email = self.ui.Email_field.text()
-            try:
-                if name != "" and password != "" and email != "":
-                    createUser(cursor, name, start, end,
-                               type, birth, password, email)
-                    self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-                else:
-                    raise Exception
-            except:
+            if name != "" and password != "" and email != "":
+                createUser(cursor, name, start, end,
+                           type, birth, password, email)
+                try:
+                    print(name.split()[0])
+                    sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
+                    id = cursor.execute(
+                        sql_stmt, (name, password)).fetchall()[0][0]
+                except:
+                    print("Error")
+                self.ui.lab_user.setText(str(id))
+                # self.ui.lab_user.setText(name.split()[0])
+                self.ui.lab_home_stat_disc.setText(
+                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {name}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {birth}<br/>Start Date: {start}<br/>End Date: {end}</span></p></body></html>")
+                self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+            else:
+                #     raise Exception
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
 
@@ -350,6 +308,36 @@ class UIFunction(MainWindow):
                 self.ui.lab_tab.setText("About > about_us")
                 # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
                 self.ui.frame_android.setStyleSheet("background:rgb(91,90,90)")
+        elif buttonName == 'bn_cloud_connect':
+            name = self.ui.line_cloud_id.text()
+            password = self.ui.line_cloud_adress.text()
+            email = self.ui.line_cloud_proxy.text()
+            birth = self.ui.Birth_date_field_2.text()
+            start = self.ui.Start_Date_field_2.text()
+            end = self.ui.End_Date_field_2.text()
+            if self.ui.bn_trainee_radio_2.toggled:
+                type = "Trainee"
+            elif self.ui.bn_trainer_radio_2.toggled:
+                type = "Trainer"
+            elif self.ui.bn_Employee_radio_2.toggled:
+                type = "Employee"
+            if name != "" and password != "" and email != "":
+                createUser(cursor, name, start, end,
+                           type, birth, password, email)
+                try:
+                    print(name.split()[0])
+                    sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
+                    id = cursor.execute(
+                        sql_stmt, (name, password)).fetchall()[0][0]
+                    self.errorexec("User Created Successfully",
+                                   "static/smile2Asset 1.png", "OK")
+                    APFunction.cloudClear(self)
+                except:
+                    print("Error")
+            else:
+                # raise Exception
+                self.errorexec("Invalid Input",
+                               "static/errorAsset 55.png", "Try again")
 
         # ADD ANOTHER ELIF STATEMENT HERE FOR EXECTUITING A NEW MENU BUTTON STACK PAGE.
     ########################################################################################################################
@@ -363,17 +351,7 @@ class UIFunction(MainWindow):
         # PAGE_HOME ############# BELOW DISPLAYS THE FUNCTION OF WIDGET, LABEL, PROGRESS BAR, E.T.C IN STACKEDWIDGET page_HOME
         self.ui.lab_home_main_hed.setText("Profile")
         self.ui.lab_home_stat_hed.setText("Report")
-
-        # THIS CALLS A SIMPLE FUNCTION LOOPS THROW THE NUMBER FORWARDED BY THE COMBOBOX 'comboBox_bug' AND DISPLAY IN PROGRESS BAR
-        # ALONGWITH MOVING THE PROGRESS CHUNK FROM 0 TO 100%
-
         ######### PAGE about_us #############
-        self.ui.bn_cloud_connect.clicked.connect(
-            lambda: APFunction.cloudConnect(self))
-        self.ui.bn_cloud_clear.clicked.connect(lambda: self.dialogexec(
-            "Warning", "Do you want to save the file", "static/errorAsset 55.png", "Cancel", "Save"))
-        self.ui.bn_cloud_clear.clicked.connect(
-            lambda: APFunction.cloudClear(self))
 
         # PAGE exercises WIDGET AND ITS STACKANDROID WIDGET PAGES
         # self.ui.bn_android_contact.clicked.connect(
@@ -417,9 +395,6 @@ class UIFunction(MainWindow):
         self.ui.text_about_home.setText("aboutHome")
     ################################################################################################################################
 
-    # -----> FUNCTION TO SHOW CORRESPONDING STACK PAGE WHEN THE exercises BUTTONS ARE PRESSED: CONTACT, GAME, about_us, WORLD
-    # SINCE THE exercises PAGE AHS A SUB STACKED WIDGET WIT FOUR MORE BUTTONS, ALL THIS 4 PAGES CONTENT: BUTTONS, TEXT, LABEL E.T.C ARE INITIALIED OVER HERE.
-
     def androidStackPages(self, page):
         # ------> THIS LINE CLEARS THE BG COLOR OF PREVIOUS TABS
         for each in self.ui.frame_android_menu.findChildren(QFrame):
@@ -457,25 +432,7 @@ class UIFunction(MainWindow):
     ##############################################################################################################
 
 
-# ------> CLASS WHERE ALL THE ACTION OF TH SOFTWARE IS PERFORMED:
-# THIS CLASS IS WHERE THE APPLICATION OF THE UI OR THE BRAINOF THE SOFTWARE GOES
-# UNTILL NOW WE SEPCIFIED THE BUTTON CLICKS, SLIDERS, E.T.C WIDGET, WHOSE APPLICATION IS EXPLORED HERE. THOSE FUNCTION WHEN DONE IS
-# REDIRECTED TO THIS AREA FOR THE PROCESSING AND THEN THE RESULT ARE EXPOTED.
-# REMEMBER THE SOFTWARE UI HAS A FUNCTION WHOSE CODE SHOULD BE HERE
 class APFunction():
-    # ---> FUNCTION TO CONNECT THE about_us USING ADRESS AND RETURN A ERROR STATEMENT
-    def cloudConnect(self):
-        self.ui.bn_cloud_clear.setEnabled(False)
-        textID = self.ui.line_cloud_id.text()
-        textADRESS = self.ui.line_cloud_adress.text()
-        if textID == 'asd' and textADRESS == '1234':
-            self.ui.line_cloud_adress.setText("")
-            self.ui.line_cloud_id.setText("")
-            self.ui.line_cloud_proxy.setText("Connection established")
-        else:
-            self.errorexec("Incorrect Credentials",
-                           "static/errorAsset 55.png", "Retry")
-
     def cloudClear(self):
         self.ui.line_cloud_proxy.setText("")
         self.ui.line_cloud_adress.setText("")
@@ -494,7 +451,6 @@ class APFunction():
         self.ui.bn_android_contact_share.setEnabled(False)
         self.ui.bn_android_contact_delete.setEnabled(False)
 
-# -----> FUNCTION TO SAVE THE MODOFOED TEXT FIELD
     def saveContact(self):
         self.ui.line_android_name.setEnabled(False)
         self.ui.line_android_adress.setEnabled(False)

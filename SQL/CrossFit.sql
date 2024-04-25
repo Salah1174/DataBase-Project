@@ -1,22 +1,27 @@
-USE master;
+
 GO
 CREATE DATABASE CrossFit;
-
-USE CrossFit;
 
 CREATE TABLE Users
 (
     UserID INT IDENTITY(1,1),
     Username NVARCHAR(50) NOT NULL,
     PasswordHash NVARCHAR(255) NOT NULL,
+    Phone_no NVARCHAR(15),
     Email NVARCHAR(100) UNIQUE,
     U_Address NVARCHAR(255),
     BirthDate DATE NOT NULL,
+
     RegistrationDate DATETIME DEFAULT GETDATE(),
     Age AS (DATEDIFF(YEAR, Birthdate, GETDATE())),
     CONSTRAINT USER_PK PRIMARY KEY (UserID)
 );
 
+
+INSERT INTO [Team-5].[dbo].[Users]
+    (Username, PasswordHash,Email, BirthDate)
+VALUES
+    ('Seif1', 'Seif1234', 'seif@gmail.com', '2003-11-29')
 CREATE TABLE [Trainee]
 (
     [TraineeID] INT IDENTITY(1,1) ,
@@ -114,11 +119,11 @@ CREATE TABLE [Programs]
 )
 GO
 
+
 CREATE TABLE [Product]
 (
     [ProductID] INT IDENTITY(1,1),
     [ProdcutName] nvarchar(255) NOT NULL UNIQUE,
-    [ProductType] nvarchar(255) NOT NULL,
     [Price] float NOT NULL,
     [Quantity] int CHECK (Quantity >= 1) NULL,
     [ExpiryDate] DATE not null,
@@ -129,8 +134,13 @@ CREATE TABLE [Product]
 GO
 
 --ALTER TABLE [Product]
+--ADD CafeteriaID INT;
+
+
+--ALTER TABLE [Product]
 --ADD CONSTRAINT PRODUCT_CAFETERIA_FK
 --FOREIGN KEY (CafeteriaID) REFERENCES Cafeteria(CafeteriaID);
+
 
 CREATE TABLE [Cafateria]
 (
@@ -190,14 +200,25 @@ INSERT INTO Users
 VALUES
     ('john_do', 'hashed_passwor', 'john.oe@example.com', '123 Main St', '1990-01-01');
 
+Insert into [Team-5].[dbo].[Users]
+    (Username,PasswordHash, Email, U_Address, BirthDate)
+VALUES
+    ('john_do3', 'hashed_passwor3', 'john.oe@example.com3', '123 Main St3', '1990-01-03');
+
+Insert into [Team-5].[dbo].[Users]
+    (Username,PasswordHash, Email, U_Address, BirthDate)
+VALUES
+    ('john_do4', 'hashed_passwor4', 'john.oe@example.com4', '123 Main St4', '1990-01-04');
+
+
 --Insert Into Trainee
 INSERT INTO Trainee
     (StartMembership, EndMembership, UserID)
-SELECT '2024-04-23', '2025-04-23', 2
+select '2024-04-23', '2025-04-23', 3
 WHERE NOT EXISTS (
     SELECT 1
     FROM Trainer
-    WHERE Trainer.UserID = 2
+    WHERE Trainer.UserID = 3
 )AND NOT EXISTS (
     SELECT 1
     FROM Employee
@@ -207,11 +228,11 @@ WHERE NOT EXISTS (
 --Insert into Employee
 INSERT INTO Employee
     (EmployeeSalary, UserID)
-SELECT 50000.00, 3
+SELECT 50000.00, 2
 WHERE NOT EXISTS (
     SELECT 1
     FROM Trainee
-    WHERE Trainee.UserID = 3
+    WHERE Trainee.UserID = 2
 )AND NOT EXISTS (
     SELECT 1
     FROM Trainer
@@ -219,18 +240,23 @@ WHERE NOT EXISTS (
 );
 
 --Insert into Trainer
-INSERT INTO Trainer
+INSERT INTO [Team-5].[dbo].[Trainer]
     (TrainerRole, UserID)
 SELECT 'Coach', 5
 WHERE NOT EXISTS (
     SELECT 1
-    FROM Trainee
-    WHERE Trainee.UserID = 5
+    FROM [Team-5].[dbo].[Trainee]
+    WHERE [Team-5].[dbo].[Trainee].UserID = 5
+)
+    AND NOT EXISTS(
+	SELECT 1
+    FROM [Team-5].[dbo].[Trainer]
+    WHERE [Team-5].[dbo].Trainer.UserID = 5
 )
     AND NOT EXISTS (
     SELECT 1
-    FROM Employee
-    WHERE Employee.UserID = 5
+    FROM [Team-5].[dbo].[Employee]
+    WHERE [Team-5].[dbo].[Employee].UserID = 5
 );
 
 --Insert Into Equipment
@@ -265,9 +291,9 @@ VALUES
 
 --Insert into Product
 INSERT INTO Product
-    (ProdcutName, ProductType, Price, Quantity, ExpiryDate, CafeteriaID)
+    (ProductName, Price, Quantity, ExpiryDate, CafateriaID)
 VALUES
-    ('Product1', 'Type1', 10.99, 100, '2024-12-31', 1);
+    ('Apple', 1.50, 50, '2024-04-30', 1);
 
 --Insert into Cafateria
 INSERT INTO Cafeteria
@@ -293,183 +319,20 @@ INSERT INTO Equipment_Programs
 VALUES
     (1, 1);
 
-
-
-GO
---Filter Products By Type
-CREATE PROCEDURE FilterProductsByType
-    @p_ProductType NVARCHAR(255)
-AS
-BEGIN
-    SELECT *
-    FROM Product
-    WHERE ProductType = @p_ProductType;
-END;
-
-
--- Execute the stored procedure with a specific ProductType using EXECUTE
-EXECUTE FilterProductsByType @p_ProductType = 'Type1';
-
-
-GO
---Select User Name by User ID
-CREATE PROCEDURE SelectUsernameByID
-    @p_UserID INT
-AS
-BEGIN
-    DECLARE @UserType NVARCHAR(50);
-
-    -- Determine the user type based on the provided User ID
-    SELECT @UserType = 
-        CASE
-            WHEN EXISTS (SELECT 1
-        FROM Trainee
-        WHERE Trainee.UserID = @p_UserID) THEN 'Trainee'
-            WHEN EXISTS (SELECT 1
-        FROM Employee
-        WHERE Employee.UserID = @p_UserID) THEN 'Employee'
-            WHEN EXISTS (SELECT 1
-        FROM Trainer
-        WHERE Trainer.UserID = @p_UserID) THEN 'Trainer'
-            ELSE NULL
-        END;
-
-    -- Select the username based on the user type
-    IF @UserType = 'Trainee'
-    BEGIN
-        SELECT Users.Username AS TraineeName
-        FROM Users , Trainee
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainee.UserID;
-    END
-    ELSE IF @UserType = 'Employee'
-    BEGIN
-        SELECT Users.Username AS EmployeeName
-        FROM Users , Employee
-        WHERE Users.UserID = @p_UserID and Users.UserID = Employee.UserID
-    END
-    ELSE IF @UserType = 'Trainer'
-    BEGIN
-        SELECT Users.Username AS TrainerName
-        FROM Users , Trainer
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainer.UserID
-    END
-    ELSE
-    BEGIN
-        -- Handle the case where the user type is not recognized
-        PRINT 'User type not recognized.';
-    END;
-END;
-GO
-
-
---Execute of Selected User Name by UserID 
-EXECUTE SelectUsernameByID @p_UserID = 2;
-GO
-
-
---Select Age
-CREATE PROCEDURE SelectAge
-    @p_UserID INT
-AS
-BEGIN
-    DECLARE @UserType NVARCHAR(50);
-
-    -- Determine the user type based on the provided User ID
-    SELECT @UserType = 
-        CASE
-            WHEN EXISTS (SELECT 1
-        FROM Trainee
-        WHERE Trainee.UserID = @p_UserID) THEN 'Trainee'
-            WHEN EXISTS (SELECT 1
-        FROM Employee
-        WHERE Employee.UserID = @p_UserID) THEN 'Employee'
-            WHEN EXISTS (SELECT 1
-        FROM Trainer
-        WHERE Trainer.UserID = @p_UserID) THEN 'Trainer'
-            ELSE NULL
-        END;
-
-    IF @UserType = 'Trainee' 
-    BEGIN
-        SELECT Users.Age as TraineeAge
-        FROM Trainee , Users
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainee.UserID;
-    END
-    ELSE IF @UserType = 'Trainer' 
-    BEGIN
-        SELECT Users.Age as TrainerAge
-        FROM Trainer  , Users
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainer.UserID;
-    END
-	ELSE IF @UserType = 'Employee'
-    BEGIN
-        SELECT Users.Age AS EmployeeAge
-        FROM Users , Employee
-        WHERE Users.UserID = @p_UserID and Users.UserID = Employee.UserID
-    END
-	ELSE
-    BEGIN
-        -- Handle the case where the user type is not recognized
-        PRINT 'User type not recognized.';
-    END;
-END;
-GO
-
---Execute Select Age User ID
-EXECUTE SelectAge @p_UserID = 2;
-GO
-
-
-
-
---Select address of trainee/trainer
-CREATE PROCEDURE SelectAddress
-    @p_UserID INT
-AS
-BEGIN
-    DECLARE @UserType NVARCHAR(50);
-
-    -- Determine the user type based on the provided User ID
-    SELECT @UserType = 
-        CASE
-            WHEN EXISTS (SELECT 1
-        FROM Trainee
-        WHERE Trainee.UserID = @p_UserID) THEN 'Trainee'
-            WHEN EXISTS (SELECT 1
-        FROM Employee
-        WHERE Employee.UserID = @p_UserID) THEN 'Employee'
-            WHEN EXISTS (SELECT 1
-        FROM Trainer
-        WHERE Trainer.UserID = @p_UserID) THEN 'Trainer'
-            ELSE NULL
-        END;
-
-    IF @UserType = 'Trainee' 
-    BEGIN
-        SELECT Users.U_Address as TraineeAddress
-        FROM Trainee , Users
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainee.UserID;
-    END
-    ELSE IF @UserType = 'Trainer' 
-    BEGIN
-        SELECT Users.U_Address as TrainerAddress
-        FROM Trainer , Users
-        WHERE Users.UserID = @p_UserID and Users.UserID = Trainer.UserID;
-    END
-	ELSE IF @UserType = 'Employee'
-    BEGIN
-        SELECT Users.U_Address AS EmployeeAddress
-        FROM Users , Employee
-        WHERE Users.UserID = @p_UserID and Users.UserID = Employee.UserID
-    END
-	ELSE
-    BEGIN
-        -- Handle the case where the user type is not recognized
-        PRINT 'User type not recognized.';
-    END;
-END;
-
--- Execute Select Address
-EXECUTE SelectAddress @p_UserID = 2;
-
-
+INSERT INTO Trainee
+    (StartMembership, EndMembership, UserID)
+SELECT '2024-04-23', '2025-04-23', 2
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Trainer
+    WHERE Trainer.UserID = 2
+)AND NOT EXISTS (
+    SELECT 1
+    FROM Employee
+    WHERE Employee.UserID = 5
+)
+    AND NOT EXISTS (
+    SELECT 1
+    FROM Trainee
+    WHERE Trainee.UserID = 5
+);

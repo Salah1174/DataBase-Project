@@ -1825,15 +1825,15 @@ class Ui_MainWindow(object):
         self.label_16.setFont(font)
         self.label_16.setStyleSheet("color:rgb(255,255,255);")
         self.label_16.setObjectName("label_16")
-        self.gridLayout_12.addWidget(self.label_16, 7, 0, 1, 1)
-        self.label_17 = QLabel(self.frame_android_field_2)
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(14)
-        self.label_17.setFont(font)
-        self.label_17.setStyleSheet("color:rgb(255,255,255);")
-        self.label_17.setObjectName("label_17")
-        self.gridLayout_12.addWidget(self.label_17, 4, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.label_16, 5, 0, 1, 1)
+        # self.label_17 = QLabel(self.frame_android_field_2)
+        # font = QFont()
+        # font.setFamily("Segoe UI")
+        # font.setPointSize(14)
+        # self.label_17.setFont(font)
+        # self.label_17.setStyleSheet("color:rgb(255,255,255);")
+        # self.label_17.setObjectName("label_17")
+        # self.gridLayout_12.addWidget(self.label_17, 4, 0, 1, 1)
         self.label_18 = QLabel(self.frame_android_field_2)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -1841,7 +1841,7 @@ class Ui_MainWindow(object):
         self.label_18.setFont(font)
         self.label_18.setStyleSheet("color:rgb(255,255,255);")
         self.label_18.setObjectName("label_18")
-        self.gridLayout_12.addWidget(self.label_18, 5, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.label_18, 4, 0, 1, 1)
         self.label_19 = QLabel(self.frame_android_field_2)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -1881,29 +1881,29 @@ class Ui_MainWindow(object):
         self.label_20.setStyleSheet("color:rgb(255,255,255);")
         self.label_20.setObjectName("label_20")
         self.gridLayout_12.addWidget(self.label_20, 3, 0, 1, 3)
-        self.line_android_org_2 = QLineEdit(self.frame_android_field_2)
-        self.line_android_org_2.setEnabled(False)
-        self.line_android_org_2.setMinimumSize(QSize(300, 25))
-        self.line_android_org_2.setMaximumSize(QSize(400, 25))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(12)
-        self.line_android_org_2.setFont(font)
-        self.line_android_org_2.setStyleSheet("QLineEdit {\n"
-                                              "    color:rgb(255,255,255);\n"
-                                              "    border:2px solid rgb(51,51,51);\n"
-                                              "    border-radius:4px;\n"
-                                              "    background:rgb(51,51,51);\n"
-                                              "}\n"
-                                              "\n"
-                                              "QLineEdit:disabled {\n"
-                                              "    color:rgb(255,255,255);\n"
-                                              "    border:2px solid rgb(112,112,112);\n"
-                                              "    border-radius:4px;\n"
-                                              "    background:rgb(112,112,112);\n"
-                                              "}")
-        self.line_android_org_2.setObjectName("line_android_org_2")
-        self.gridLayout_12.addWidget(self.line_android_org_2, 4, 3, 1, 1)
+        # self.line_android_org_2 = QLineEdit(self.frame_android_field_2)
+        # self.line_android_org_2.setEnabled(False)
+        # self.line_android_org_2.setMinimumSize(QSize(300, 25))
+        # self.line_android_org_2.setMaximumSize(QSize(400, 25))
+        # font = QFont()
+        # font.setFamily("Segoe UI")
+        # font.setPointSize(12)
+        # self.line_android_org_2.setFont(font)
+        # self.line_android_org_2.setStyleSheet("QLineEdit {\n"
+        #                                       "    color:rgb(255,255,255);\n"
+        #                                       "    border:2px solid rgb(51,51,51);\n"
+        #                                       "    border-radius:4px;\n"
+        #                                       "    background:rgb(51,51,51);\n"
+        #                                       "}\n"
+        #                                       "\n"
+        #                                       "QLineEdit:disabled {\n"
+        #                                       "    color:rgb(255,255,255);\n"
+        #                                       "    border:2px solid rgb(112,112,112);\n"
+        #                                       "    border-radius:4px;\n"
+        #                                       "    background:rgb(112,112,112);\n"
+        #                                       "}")
+        # self.line_android_org_2.setObjectName("line_android_org_2")
+        # self.gridLayout_12.addWidget(self.line_android_org_2, 4, 3, 1, 1)
         self.line_android_adress_2 = QLineEdit(self.frame_android_field_2)
         self.line_android_adress_2.setEnabled(False)
         self.line_android_adress_2.setMinimumSize(QSize(300, 25))
@@ -1949,7 +1949,8 @@ class Ui_MainWindow(object):
                                              "    background:rgb(112,112,112);\n"
                                              "}")
         self.line_android_ph_2.setObjectName("line_android_ph_2")
-        self.gridLayout_12.addWidget(self.line_android_ph_2, 7, 3, 1, 1)
+
+        self.gridLayout_12.addWidget(self.line_android_ph_2, 5, 3, 1, 1)
         self.line_android_email_2 = QLineEdit(self.frame_android_field_2)
         self.line_android_email_2.setEnabled(False)
         self.line_android_email_2.setMinimumSize(QSize(300, 25))
@@ -1972,7 +1973,7 @@ class Ui_MainWindow(object):
                                                 "    background:rgb(112,112,112);\n"
                                                 "}")
         self.line_android_email_2.setObjectName("line_android_email_2")
-        self.gridLayout_12.addWidget(self.line_android_email_2, 5, 3, 1, 1)
+        self.gridLayout_12.addWidget(self.line_android_email_2, 4, 3, 1, 1)
         spacerItem15 = QSpacerItem(
             40, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
         self.gridLayout_12.addItem(spacerItem15, 8, 8, 1, 1)
@@ -2791,6 +2792,73 @@ class Ui_MainWindow(object):
         self.label_4.setStyleSheet("color:rgb(255,255,255);")
         self.label_4.setObjectName("label_4")
         self.gridLayout_2.addWidget(self.label_4, 2, 0, 1, 1)
+        self.label_99 = QLabel(self.frame_2)
+        self.label_99.setMinimumSize(QSize(100, 0))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_99.setFont(font)
+        self.label_99.setStyleSheet("color:rgb(255,255,255);")
+        self.label_99.setObjectName("label_99")
+        self.gridLayout_2.addWidget(self.label_99, 3, 0, 1, 1)
+        self.label_100 = QLabel(self.frame_2)
+        self.label_100.setMinimumSize(QSize(100, 0))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_100.setFont(font)
+        self.label_100.setStyleSheet("color:rgb(255,255,255);")
+        self.label_100.setObjectName("label_100")
+        self.gridLayout_2.addWidget(self.label_100, 4, 0, 1, 1)
+        self.label_101 = QLabel(self.frame_2)
+        self.label_101.setMinimumSize(QSize(100, 0))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_101.setFont(font)
+        self.label_101.setStyleSheet("color:rgb(255,255,255);")
+        self.label_101.setObjectName("label_101")
+        self.gridLayout_2.addWidget(self.label_101, 5, 0, 1, 1)
+
+        #################################################
+        self.bn_trainee_radio_2 = QRadioButton(self.widget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bn_trainee_radio_2.sizePolicy().hasHeightForWidth())
+        self.bn_trainee_radio_2.setSizePolicy(sizePolicy)
+        self.bn_trainee_radio_2.setMinimumSize(QSize(0, 20))
+        # self.bn_trainee_radio_2.setStyleSheet(
+        #     "background-color:rgb(144, 144, 144)")
+        self.bn_trainee_radio_2.setObjectName("bn_trainee_radio_2")
+        self.gridLayout_2.addWidget(self.bn_trainee_radio_2, 6, 0, 1, 1)
+        ################################################
+        self.bn_trainer_radio_2 = QRadioButton(self.widget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bn_trainer_radio_2.sizePolicy().hasHeightForWidth())
+        self.bn_trainer_radio_2.setSizePolicy(sizePolicy)
+        self.bn_trainer_radio_2.setMinimumSize(QSize(0, 20))
+        # self.bn_trainer_radio_2.setStyleSheet(
+        #     "background-color:rgb(144, 144, 144)")
+        self.bn_trainer_radio_2.setObjectName("bn_trainer_radio_2")
+        self.gridLayout_2.addWidget(self.bn_trainer_radio_2, 6, 1, 1, 1)
+        ################################################
+        self.bn_Employee_radio_2 = QRadioButton(self.widget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bn_Employee_radio_2.sizePolicy().hasHeightForWidth())
+        self.bn_Employee_radio_2.setSizePolicy(sizePolicy)
+        self.bn_Employee_radio_2.setMinimumSize(QSize(0, 20))
+        # self.bn_Employee_radio_2.setStyleSheet(
+        #     "background-color:rgb(144, 144, 144)")
+        self.bn_Employee_radio_2.setObjectName("bn_Employee_radio_2")
+        self.gridLayout_2.addWidget(self.bn_Employee_radio_2, 6, 2, 1, 1)
         self.line_cloud_proxy = QLineEdit(self.frame_2)
         self.line_cloud_proxy.setMinimumSize(QSize(400, 25))
         self.line_cloud_proxy.setMaximumSize(QSize(500, 25))
@@ -2813,6 +2881,86 @@ class Ui_MainWindow(object):
                                             "}")
         self.line_cloud_proxy.setObjectName("line_cloud_proxy")
         self.gridLayout_2.addWidget(self.line_cloud_proxy, 2, 1, 1, 3)
+
+        self.Birth_date_field_2 = QDateEdit(self.widget)
+        self.Birth_date_field_2.setDateTime(
+            QDateTime(QDate(2024, 1, 1), QTime(0, 0, 0)))
+        self.Birth_date_field_2.setMaximumDateTime(
+            QDateTime(QDate(2100, 12, 31), QTime(23, 59, 59)))
+        self.Birth_date_field_2.setMinimumDateTime(
+            QDateTime(QDate(1900, 9, 14), QTime(0, 0, 0)))
+        self.Birth_date_field_2.setMinimumSize(QSize(400, 25))
+        self.Birth_date_field_2.setMaximumSize(QSize(500, 25))
+        self.Birth_date_field_2.setCalendarPopup(True)
+        self.Birth_date_field_2.setObjectName("Birth_date_field_2")
+        self.Birth_date_field_2.setStyleSheet("QLineEdit {\n"
+                                              "    color:rgb(255,255,255);\n"
+                                              "    border:2px solid rgb(51,51,51);\n"
+                                              "    border-radius:4px;\n"
+                                              "    background:rgb(51,51,51);\n"
+                                              "}\n"
+                                              "\n"
+                                              "QLineEdit:disabled {\n"
+                                              "    color:rgb(255,255,255);\n"
+                                              "    border:2px solid rgb(112,112,112);\n"
+                                              "    border-radius:4px;\n"
+                                              "    background:rgb(112,112,112);\n"
+                                              "}")
+        self.verticalLayout_12.addWidget(self.Birth_date_field_2)
+        self.gridLayout_2.addWidget(self.Birth_date_field_2, 3, 1, 1, 3)
+
+        self.Start_Date_field_2 = QDateEdit(self.widget)
+        self.Start_Date_field_2.setDateTime(
+            QDateTime(QDate(2024, 1, 1), QTime(0, 0, 0)))
+        self.Start_Date_field_2.setMaximumDateTime(
+            QDateTime(QDate(2100, 12, 31), QTime(23, 59, 59)))
+        self.Start_Date_field_2.setMinimumDateTime(
+            QDateTime(QDate(1900, 9, 14), QTime(0, 0, 0)))
+        self.Start_Date_field_2.setMinimumSize(QSize(400, 25))
+        self.Start_Date_field_2.setMaximumSize(QSize(500, 25))
+        self.Start_Date_field_2.setCalendarPopup(True)
+        self.Start_Date_field_2.setObjectName("Start_Date_field_2")
+        self.Start_Date_field_2.setStyleSheet("QLineEdit {\n"
+                                              "    color:rgb(255,255,255);\n"
+                                              "    border:2px solid rgb(51,51,51);\n"
+                                              "    border-radius:4px;\n"
+                                              "    background:rgb(51,51,51);\n"
+                                              "}\n"
+                                              "\n"
+                                              "QLineEdit:disabled {\n"
+                                              "    color:rgb(255,255,255);\n"
+                                              "    border:2px solid rgb(112,112,112);\n"
+                                              "    border-radius:4px;\n"
+                                              "    background:rgb(112,112,112);\n"
+                                              "}")
+        self.verticalLayout_12.addWidget(self.Start_Date_field_2)
+        self.gridLayout_2.addWidget(self.Start_Date_field_2, 4, 1, 1, 3)
+        self.End_Date_field_2 = QDateEdit(self.widget)
+        self.End_Date_field_2.setDateTime(
+            QDateTime(QDate(2024, 1, 1), QTime(0, 0, 0)))
+        self.End_Date_field_2.setMaximumDateTime(
+            QDateTime(QDate(2100, 12, 31), QTime(23, 59, 59)))
+        self.End_Date_field_2.setMinimumDateTime(
+            QDateTime(QDate(1900, 9, 14), QTime(0, 0, 0)))
+        self.End_Date_field_2.setMinimumSize(QSize(400, 25))
+        self.End_Date_field_2.setMaximumSize(QSize(500, 25))
+        self.End_Date_field_2.setCalendarPopup(True)
+        self.End_Date_field_2.setObjectName("End_Date_field_2")
+        self.End_Date_field_2.setStyleSheet("QLineEdit {\n"
+                                            "    color:rgb(255,255,255);\n"
+                                            "    border:2px solid rgb(51,51,51);\n"
+                                            "    border-radius:4px;\n"
+                                            "    background:rgb(51,51,51);\n"
+                                            "}\n"
+                                            "\n"
+                                            "QLineEdit:disabled {\n"
+                                            "    color:rgb(255,255,255);\n"
+                                            "    border:2px solid rgb(112,112,112);\n"
+                                            "    border-radius:4px;\n"
+                                            "    background:rgb(112,112,112);\n"
+                                            "}")
+        self.verticalLayout_12.addWidget(self.End_Date_field_2)
+        self.gridLayout_2.addWidget(self.End_Date_field_2, 5, 1, 1, 3)
         self.line_cloud_id = QLineEdit(self.frame_2)
         self.line_cloud_id.setEnabled(True)
         self.line_cloud_id.setMinimumSize(QSize(400, 25))
@@ -2893,7 +3041,7 @@ class Ui_MainWindow(object):
                                           "    background-color: rgb(112,112,112);\n"
                                           "}")
         self.bn_cloud_clear.setObjectName("bn_cloud_clear")
-        self.gridLayout_2.addWidget(self.bn_cloud_clear, 3, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.bn_cloud_clear, 7, 2, 1, 1)
         self.bn_cloud_connect = QPushButton(self.frame_2)
         self.bn_cloud_connect.setMinimumSize(QSize(69, 25))
         self.bn_cloud_connect.setMaximumSize(QSize(69, 25))
@@ -2922,7 +3070,7 @@ class Ui_MainWindow(object):
                                             "    background-color: rgb(112,112,112);\n"
                                             "}")
         self.bn_cloud_connect.setObjectName("bn_cloud_connect")
-        self.gridLayout_2.addWidget(self.bn_cloud_connect, 3, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.bn_cloud_connect, 7, 3, 1, 1)
         self.verticalLayout_8.addWidget(self.frame_2)
         spacerItem25 = QSpacerItem(
             20, 162,  QSizePolicy.Minimum,  QSizePolicy.Expanding)
@@ -3133,15 +3281,15 @@ class Ui_MainWindow(object):
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("color:rgb(255,255,255);")
         self.label_8.setObjectName("label_8")
-        self.gridLayout_4.addWidget(self.label_8, 7, 0, 1, 1)
-        self.label_6 = QLabel(self.frame_android_field)
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(14)
-        self.label_6.setFont(font)
-        self.label_6.setStyleSheet("color:rgb(255,255,255);")
-        self.label_6.setObjectName("label_6")
-        self.gridLayout_4.addWidget(self.label_6, 4, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.label_8, 5, 0, 1, 1)
+        # self.label_6 = QLabel(self.frame_android_field)
+        # font = QFont()
+        # font.setFamily("Segoe UI")
+        # font.setPointSize(14)
+        # self.label_6.setFont(font)
+        # self.label_6.setStyleSheet("color:rgb(255,255,255);")
+        # self.label_6.setObjectName("label_6")
+        # self.gridLayout_4.addWidget(self.label_6, 4, 0, 1, 1)
         self.label_7 = QLabel(self.frame_android_field)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -3149,7 +3297,7 @@ class Ui_MainWindow(object):
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("color:rgb(255,255,255);")
         self.label_7.setObjectName("label_7")
-        self.gridLayout_4.addWidget(self.label_7, 5, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.label_7, 4, 0, 1, 1)
         self.label = QLabel(self.frame_android_field)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -3189,29 +3337,29 @@ class Ui_MainWindow(object):
         self.label_5.setStyleSheet("color:rgb(255,255,255);")
         self.label_5.setObjectName("label_5")
         self.gridLayout_4.addWidget(self.label_5, 3, 0, 1, 3)
-        self.line_android_org = QLineEdit(self.frame_android_field)
-        self.line_android_org.setEnabled(False)
-        self.line_android_org.setMinimumSize(QSize(300, 25))
-        self.line_android_org.setMaximumSize(QSize(400, 25))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(12)
-        self.line_android_org.setFont(font)
-        self.line_android_org.setStyleSheet("QLineEdit {\n"
-                                            "    color:rgb(255,255,255);\n"
-                                            "    border:2px solid rgb(51,51,51);\n"
-                                            "    border-radius:4px;\n"
-                                            "    background:rgb(51,51,51);\n"
-                                            "}\n"
-                                            "\n"
-                                            "QLineEdit:disabled {\n"
-                                            "    color:rgb(255,255,255);\n"
-                                            "    border:2px solid rgb(112,112,112);\n"
-                                            "    border-radius:4px;\n"
-                                            "    background:rgb(112,112,112);\n"
-                                            "}")
-        self.line_android_org.setObjectName("line_android_org")
-        self.gridLayout_4.addWidget(self.line_android_org, 4, 3, 1, 1)
+        # self.line_android_org = QLineEdit(self.frame_android_field)
+        # self.line_android_org.setEnabled(False)
+        # self.line_android_org.setMinimumSize(QSize(300, 25))
+        # self.line_android_org.setMaximumSize(QSize(400, 25))
+        # font = QFont()
+        # font.setFamily("Segoe UI")
+        # font.setPointSize(12)
+        # self.line_android_org.setFont(font)
+        # self.line_android_org.setStyleSheet("QLineEdit {\n"
+        #                                     "    color:rgb(255,255,255);\n"
+        #                                     "    border:2px solid rgb(51,51,51);\n"
+        #                                     "    border-radius:4px;\n"
+        #                                     "    background:rgb(51,51,51);\n"
+        #                                     "}\n"
+        #                                     "\n"
+        #                                     "QLineEdit:disabled {\n"
+        #                                     "    color:rgb(255,255,255);\n"
+        #                                     "    border:2px solid rgb(112,112,112);\n"
+        #                                     "    border-radius:4px;\n"
+        #                                     "    background:rgb(112,112,112);\n"
+        #                                     "}")
+        # self.line_android_org.setObjectName("line_android_org")
+        # self.gridLayout_4.addWidget(self.line_android_org, 4, 3, 1, 1)
         self.line_android_adress = QLineEdit(self.frame_android_field)
         self.line_android_adress.setEnabled(False)
         self.line_android_adress.setMinimumSize(QSize(300, 25))
@@ -3257,7 +3405,8 @@ class Ui_MainWindow(object):
                                            "    background:rgb(112,112,112);\n"
                                            "}")
         self.line_android_ph.setObjectName("line_android_ph")
-        self.gridLayout_4.addWidget(self.line_android_ph, 7, 3, 1, 1)
+
+        self.gridLayout_4.addWidget(self.line_android_ph, 5, 3, 1, 1)
         self.line_android_email = QLineEdit(self.frame_android_field)
         self.line_android_email.setEnabled(False)
         self.line_android_email.setMinimumSize(QSize(300, 25))
@@ -3280,7 +3429,7 @@ class Ui_MainWindow(object):
                                               "    background:rgb(112,112,112);\n"
                                               "}")
         self.line_android_email.setObjectName("line_android_email")
-        self.gridLayout_4.addWidget(self.line_android_email, 5, 3, 1, 1)
+        self.gridLayout_4.addWidget(self.line_android_email, 4, 3, 1, 1)
         spacerItem28 = QSpacerItem(
             40, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
         self.gridLayout_4.addItem(spacerItem28, 8, 8, 1, 1)
@@ -3327,35 +3476,7 @@ class Ui_MainWindow(object):
                                                    "}")
         self.bn_android_contact_edit.setObjectName("bn_android_contact_edit")
         self.horizontalLayout_25.addWidget(self.bn_android_contact_edit)
-        self.bn_android_contact_share = QPushButton(self.frame_3)
-        self.bn_android_contact_share.setMinimumSize(QSize(69, 25))
-        self.bn_android_contact_share.setMaximumSize(QSize(69, 25))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(12)
-        self.bn_android_contact_share.setFont(font)
-        self.bn_android_contact_share.setStyleSheet("QPushButton {\n"
-                                                    "    border: 2px solid rgb(51,51,51);\n"
-                                                    "    border-radius: 5px;    \n"
-                                                    "    color:rgb(255,255,255);\n"
-                                                    "    background-color: rgb(51,51,51);\n"
-                                                    "}\n"
-                                                    "QPushButton:hover {\n"
-                                                    "    border: 2px solid rgb(0,143,150);\n"
-                                                    "    background-color: rgb(0,143,150);\n"
-                                                    "}\n"
-                                                    "QPushButton:pressed {    \n"
-                                                    "    border: 2px solid rgb(0,143,150);\n"
-                                                    "    background-color: rgb(51,51,51);\n"
-                                                    "}\n"
-                                                    "\n"
-                                                    "QPushButton:disabled {    \n"
-                                                    "    border-radius: 5px;    \n"
-                                                    "    border: 2px solid rgb(112,112,112);\n"
-                                                    "    background-color: rgb(112,112,112);\n"
-                                                    "}")
-        self.bn_android_contact_share.setObjectName("bn_android_contact_share")
-        self.horizontalLayout_25.addWidget(self.bn_android_contact_share)
+
         self.bn_android_contact_delete = QPushButton(self.frame_3)
         self.bn_android_contact_delete.setMinimumSize(QSize(69, 25))
         self.bn_android_contact_delete.setMaximumSize(QSize(69, 25))
@@ -3933,7 +4054,7 @@ class Ui_MainWindow(object):
         self.bn_bug.setToolTip(_translate("MainWindow", "Cafeteria"))
         self.bn_cloud.setToolTip(_translate("MainWindow", "About Us"))
         self.bn_android.setToolTip(_translate("MainWindow", "Exercises"))
-        self.sign_up_title.setText(_translate("MainWindow", "Add New User"))
+        self.sign_up_title.setText(_translate("MainWindow", "Sign Up"))
         self.Email_field.setPlaceholderText(_translate("MainWindow", "Email"))
         # self.Full_name_field.setText(_translate("MainWindow", "Name"))
         self.Full_name_field.setPlaceholderText(
@@ -3952,6 +4073,9 @@ class Ui_MainWindow(object):
         self.bn_trainee_radio.setText(_translate("MainWindow", "Trainee"))
         self.bn_trainer_radio.setText(_translate("MainWindow", "Trainer"))
         self.bn_employee_radio.setText(_translate("MainWindow", "Employee"))
+        self.bn_trainee_radio_2.setText(_translate("MainWindow", "Trainee"))
+        self.bn_trainer_radio_2.setText(_translate("MainWindow", "Trainer"))
+        self.bn_Employee_radio_2.setText(_translate("MainWindow", "Employee"))
         self.Add_new_user.setText(_translate("MainWindow", "Submit"))
 
         self.label_11.setText(_translate(
@@ -3998,13 +4122,13 @@ class Ui_MainWindow(object):
         self.bn_about_clean.setToolTip(_translate("MainWindow", "Clean"))
         self.lab_android_contact_2.setText(_translate("MainWindow", "Contact"))
         self.label_16.setText(_translate("MainWindow", "Ph:"))
-        self.label_17.setText(_translate("MainWindow", "Organisation:"))
+        # self.label_17.setText(_translate("MainWindow", "Organisation:"))
         self.label_18.setText(_translate("MainWindow", "Email:"))
         self.label_19.setText(_translate("MainWindow", "Name: "))
         self.line_android_name_2.setText(
             _translate("MainWindow", "ALBERT EINSTEIN"))
         self.label_20.setText(_translate("MainWindow", "Adress: "))
-        self.line_android_org_2.setText(_translate("MainWindow", "Physist"))
+        # self.line_android_org_2.setText(_translate("MainWindow", "Physist"))
         self.line_android_adress_2.setText(
             _translate("MainWindow", "112 Mercer Street"))
         self.line_android_email_2.setText(
@@ -4029,23 +4153,22 @@ class Ui_MainWindow(object):
                                                    "Zeynat Haytham             210"))
         self.lab_home_main_hed.setText(_translate(
             "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Profile</span></p></body></html>"))
-        self.lab_home_main_disc.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                                   "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                                   "p, li { white-space: pre-wrap; }\n"
-                                                   "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-                                                   "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Name:</span></p>\n"
-                                                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
-                                                   "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Age:</span></p>\n"
-                                                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
-                                                   "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Adress:</span></p>\n"
-                                                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
-                                                   "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span></p>\n"
-                                                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
-                                                   "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Managememt :Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</span></p></body></html>"))
+
+        # self.lab_home_main_disc.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        #                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+        #                                            "p, li { white-space: pre-wrap; }\n"
+        #                                            "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+        #                                            "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Name:</span></p>\n"
+        #                                            "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
+        #                                            "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Age:</span></p>\n"
+        #                                            "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
+        #                                            "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Adress:</span></p>\n"
+        #                                            "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
+        #                                            "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span></p>\n"
+        #                                            "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#ffffff;\"><br /></p>\n"
+        #                                            "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Managememt :Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</span></p></body></html>"))
         self.lab_home_stat_hed.setText(_translate(
             "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Stat </span></p></body></html>"))
-        self.lab_home_stat_disc.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Weather: Rainy<br/>Skys: Cloudy<br/>Wind: blowing Fast<br/>Temperature: 32 Degree Celcious</span></p></body></html>"))
         self.lab_about_home.setText(_translate("MainWindow", "About: Home"))
         self.label_10.setText(_translate("MainWindow", "Empty"))
         self.lab_Bug.setText(_translate(
@@ -4066,32 +4189,35 @@ class Ui_MainWindow(object):
         self.bn_bug_start.setText(_translate("MainWindow", "Search"))
         self.lab_bug_action.setText(_translate(
             "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Filters: </span></p></body></html>"))
-        self.lab_cloud_main.setText(_translate("MainWindow", "Cloud Connect"))
-        self.label_2.setText(_translate("MainWindow", "Client ID :"))
-        self.label_3.setText(_translate("MainWindow", "Server Adress :"))
-        self.label_4.setText(_translate("MainWindow", "Proxy :"))
+        self.lab_cloud_main.setText(_translate("MainWindow", "Add user"))
+        self.label_2.setText(_translate("MainWindow", "Name :"))
+        self.label_3.setText(_translate("MainWindow", "Password :"))
+        self.label_4.setText(_translate("MainWindow", "Email :"))
+        self.label_99.setText(_translate("MainWindow", "BirthDate :"))
+        self.label_100.setText(_translate("MainWindow", "Start Date :"))
+        self.label_101.setText(_translate("MainWindow", "End Date :"))
         self.bn_cloud_clear.setText(_translate("MainWindow", "Clear"))
-        self.bn_cloud_connect.setText(_translate("MainWindow", "Connect"))
+        self.bn_cloud_connect.setText(_translate("MainWindow", "Create"))
         self.bn_android_contact.setToolTip(_translate("MainWindow", "Contact"))
         # self.bn_android_game.setToolTip(_translate("MainWindow", "GamePad"))
         # self.bn_android_clean.setToolTip(_translate("MainWindow", "Clean"))
         # self.bn_android_world.setToolTip(_translate("MainWindow", "World"))
         self.lab_android_contact.setText(_translate("MainWindow", "Contact"))
         self.label_8.setText(_translate("MainWindow", "Ph:"))
-        self.label_6.setText(_translate("MainWindow", "Organisation:"))
+        # self.label_6.setText(_translate("MainWindow", "Organisation:"))
         self.label_7.setText(_translate("MainWindow", "Email:"))
         self.label.setText(_translate("MainWindow", "Name: "))
         self.line_android_name.setText(
             _translate("MainWindow", "ALBERT EINSTEIN"))
-        self.label_5.setText(_translate("MainWindow", "Adress: "))
-        self.line_android_org.setText(_translate("MainWindow", "Physist"))
+        self.label_5.setText(_translate("MainWindow", "Address: "))
+        # self.line_android_org.setText(_translate("MainWindow", "Physist"))
         self.line_android_adress.setText(
             _translate("MainWindow", "112 Mercer Street"))
         self.line_android_email.setText(
             _translate("MainWindow", "einstein@gmail.com"))
         self.bn_android_contact_edit.setText(_translate("MainWindow", "Edit"))
-        self.bn_android_contact_share.setText(
-            _translate("MainWindow", "Share"))
+        # self.bn_android_contact_share.setText(
+        #     _translate("MainWindow", "Share"))
         self.bn_android_contact_delete.setText(
             _translate("MainWindow", "Delete"))
         self.bn_android_contact_save.setText(_translate("MainWindow", "Save"))
