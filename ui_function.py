@@ -100,7 +100,7 @@ class UIFunction(MainWindow):
     def initStackTab(self):
         global init
         if init == False:
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_login)
+            self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
             self.ui.lab_tab.setText("Home")
             self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
             init = True
@@ -376,18 +376,18 @@ class UIFunction(MainWindow):
             lambda: APFunction.cloudClear(self))
 
         # PAGE exercises WIDGET AND ITS STACKANDROID WIDGET PAGES
-        self.ui.bn_android_contact.clicked.connect(
-            lambda: UIFunction.androidStackPages(self, "page_contact"))
-        self.ui.bn_android_game.clicked.connect(
-            lambda: UIFunction.androidStackPages(self, "page_game"))
-        self.ui.bn_android_clean.clicked.connect(
-            lambda: UIFunction.androidStackPages(self, "page_clean"))
-        self.ui.bn_android_world.clicked.connect(
-            lambda: UIFunction.androidStackPages(self, "page_world"))
+        # self.ui.bn_android_contact.clicked.connect(
+        #     lambda: UIFunction.androidStackPages(self, "page_contact"))
+        # self.ui.bn_android_game.clicked.connect(
+        #     lambda: UIFunction.androidStackPages(self, "page_game"))
+        # self.ui.bn_android_clean.clicked.connect(
+        #     lambda: UIFunction.androidStackPages(self, "page_clean"))
+        # self.ui.bn_android_world.clicked.connect(
+        #     lambda: UIFunction.androidStackPages(self, "page_world"))
 
         # exercises > PAGE CONTACT >>>>>>>>>>>>>>>>>>>>
         self.ui.bn_android_contact_delete.clicked.connect(lambda: self.dialogexec(
-            "Warning", "The Contact Infromtion will be Deleted, Do you want to continue.", "icons/1x/errorAsset 55.png", "Cancel", "Yes"))
+            "Warning", "The Contact Infromtion will be Deleted, Do you want to continue.", "static/errorAsset 55.png", "Cancel", "Yes"))
 
         self.ui.bn_android_contact_edit.clicked.connect(
             lambda: APFunction.editable(self))

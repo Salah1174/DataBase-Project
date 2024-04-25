@@ -2989,28 +2989,28 @@ class Ui_MainWindow(object):
         self.horizontalLayout_22.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_22.setSpacing(0)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
-        self.bn_android_game = QPushButton(self.frame_android_game)
-        self.bn_android_game.setMinimumSize(QSize(80, 30))
-        self.bn_android_game.setMaximumSize(QSize(80, 30))
-        self.bn_android_game.setStyleSheet("QPushButton {\n"
-                                           "    border: none;\n"
-                                           "    background-color: rgba(0,0,0,0);\n"
-                                           "}\n"
-                                           "QPushButton:hover {\n"
-                                           "    background-color: rgb(91,90,90);\n"
-                                           "}\n"
-                                           "QPushButton:pressed {    \n"
-                                           "    background-color: rgba(0,0,0,0);\n"
-                                           "}")
-        self.bn_android_game.setText("")
-        icon12 = QIcon()
-        icon12.addPixmap(QPixmap("static/gameAsset 61.png"),
-                         QIcon.Normal,  QIcon.Off)
-        self.bn_android_game.setIcon(icon12)
-        self.bn_android_game.setIconSize(QSize(20, 13))
-        self.bn_android_game.setFlat(True)
-        self.bn_android_game.setObjectName("bn_android_game")
-        self.horizontalLayout_22.addWidget(self.bn_android_game)
+        # self.bn_android_game = QPushButton(self.frame_android_game)
+        # self.bn_android_game.setMinimumSize(QSize(80, 30))
+        # self.bn_android_game.setMaximumSize(QSize(80, 30))
+        # self.bn_android_game.setStyleSheet("QPushButton {\n"
+        #                                    "    border: none;\n"
+        #                                    "    background-color: rgba(0,0,0,0);\n"
+        #                                    "}\n"
+        #                                    "QPushButton:hover {\n"
+        #                                    "    background-color: rgb(91,90,90);\n"
+        #                                    "}\n"
+        #                                    "QPushButton:pressed {    \n"
+        #                                    "    background-color: rgba(0,0,0,0);\n"
+        #                                    "}")
+        # self.bn_android_game.setText("")
+        # icon12 = QIcon()
+        # icon12.addPixmap(QPixmap("static/gameAsset 61.png"),
+        #                  QIcon.Normal,  QIcon.Off)
+        # self.bn_android_game.setIcon(icon12)
+        # self.bn_android_game.setIconSize(QSize(20, 13))
+        # self.bn_android_game.setFlat(True)
+        # self.bn_android_game.setObjectName("bn_android_game")
+        # self.horizontalLayout_22.addWidget(self.bn_android_game)
         self.horizontalLayout_20.addWidget(self.frame_android_game)
         self.frame_android_clean = QFrame(self.frame_android_menu)
         self.frame_android_clean.setMinimumSize(QSize(80, 30))
@@ -3022,27 +3022,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_23.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_23.setSpacing(0)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
-        self.bn_android_clean = QPushButton(self.frame_android_clean)
-        self.bn_android_clean.setMinimumSize(QSize(80, 30))
-        self.bn_android_clean.setMaximumSize(QSize(80, 30))
-        self.bn_android_clean.setStyleSheet("QPushButton {\n"
-                                            "    border: none;\n"
-                                            "    background-color: rgba(0,0,0,0);\n"
-                                            "}\n"
-                                            "QPushButton:hover {\n"
-                                            "    background-color: rgb(91,90,90);\n"
-                                            "}\n"
-                                            "QPushButton:pressed {    \n"
-                                            "    background-color: rgba(0,0,0,0);\n"
-                                            "}")
-        self.bn_android_clean.setText("")
-        icon13 = QIcon()
-        icon13.addPixmap(QPixmap("static/cleanAsset 59.png"),
-                         QIcon.Normal,  QIcon.Off)
-        self.bn_android_clean.setIcon(icon13)
-        self.bn_android_clean.setFlat(True)
-        self.bn_android_clean.setObjectName("bn_android_clean")
-        self.horizontalLayout_23.addWidget(self.bn_android_clean)
+        # self.bn_android_clean = QPushButton(self.frame_android_clean)
+        # self.bn_android_clean.setMinimumSize(QSize(80, 30))
+        # self.bn_android_clean.setMaximumSize(QSize(80, 30))
+        # self.bn_android_clean.setStyleSheet("QPushButton {\n"
+        #                                     "    border: none;\n"
+        #                                     "    background-color: rgba(0,0,0,0);\n"
+        #                                     "}\n"
+        #                                     "QPushButton:hover {\n"
+        #                                     "    background-color: rgb(91,90,90);\n"
+        #                                     "}\n"
+        #                                     "QPushButton:pressed {    \n"
+        #                                     "    background-color: rgba(0,0,0,0);\n"
+        #                                     "}")
+        # self.bn_android_clean.setText("")
+        # icon13 = QIcon()
+        # icon13.addPixmap(QPixmap("static/cleanAsset 59.png"),
+        #                  QIcon.Normal,  QIcon.Off)
+        # self.bn_android_clean.setIcon(icon13)
+        # self.bn_android_clean.setFlat(True)
+        # self.bn_android_clean.setObjectName("bn_android_clean")
+        # self.horizontalLayout_23.addWidget(self.bn_android_clean)
         self.horizontalLayout_20.addWidget(self.frame_android_clean)
         self.frame_android_world = QFrame(self.frame_android_menu)
         self.frame_android_world.setMinimumSize(QSize(80, 30))
@@ -3054,27 +3054,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_24.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_24.setSpacing(0)
         self.horizontalLayout_24.setObjectName("horizontalLayout_24")
-        self.bn_android_world = QPushButton(self.frame_android_world)
-        self.bn_android_world.setMinimumSize(QSize(80, 30))
-        self.bn_android_world.setMaximumSize(QSize(80, 30))
-        self.bn_android_world.setStyleSheet("QPushButton {\n"
-                                            "    border: none;\n"
-                                            "    background-color: rgba(0,0,0,0);\n"
-                                            "}\n"
-                                            "QPushButton:hover {\n"
-                                            "    background-color: rgb(91,90,90);\n"
-                                            "}\n"
-                                            "QPushButton:pressed {    \n"
-                                            "    background-color: rgba(0,0,0,0);\n"
-                                            "}")
-        self.bn_android_world.setText("")
-        icon14 = QIcon()
-        icon14.addPixmap(QPixmap("static/worldAsset 60.png"),
-                         QIcon.Normal,  QIcon.Off)
-        self.bn_android_world.setIcon(icon14)
-        self.bn_android_world.setFlat(True)
-        self.bn_android_world.setObjectName("bn_android_world")
-        self.horizontalLayout_24.addWidget(self.bn_android_world)
+        # self.bn_android_world = QPushButton(self.frame_android_world)
+        # self.bn_android_world.setMinimumSize(QSize(80, 30))
+        # self.bn_android_world.setMaximumSize(QSize(80, 30))
+        # self.bn_android_world.setStyleSheet("QPushButton {\n"
+        #                                     "    border: none;\n"
+        #                                     "    background-color: rgba(0,0,0,0);\n"
+        #                                     "}\n"
+        #                                     "QPushButton:hover {\n"
+        #                                     "    background-color: rgb(91,90,90);\n"
+        #                                     "}\n"
+        #                                     "QPushButton:pressed {    \n"
+        #                                     "    background-color: rgba(0,0,0,0);\n"
+        #                                     "}")
+        # self.bn_android_world.setText("")
+        # icon14 = QIcon()
+        # icon14.addPixmap(QPixmap("static/worldAsset 60.png"),
+        #                  QIcon.Normal,  QIcon.Off)
+        # self.bn_android_world.setIcon(icon14)
+        # self.bn_android_world.setFlat(True)
+        # self.bn_android_world.setObjectName("bn_android_world")
+        # self.horizontalLayout_24.addWidget(self.bn_android_world)
         self.horizontalLayout_20.addWidget(self.frame_android_world)
         spacerItem26 = QSpacerItem(
             397, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
@@ -4073,9 +4073,9 @@ class Ui_MainWindow(object):
         self.bn_cloud_clear.setText(_translate("MainWindow", "Clear"))
         self.bn_cloud_connect.setText(_translate("MainWindow", "Connect"))
         self.bn_android_contact.setToolTip(_translate("MainWindow", "Contact"))
-        self.bn_android_game.setToolTip(_translate("MainWindow", "GamePad"))
-        self.bn_android_clean.setToolTip(_translate("MainWindow", "Clean"))
-        self.bn_android_world.setToolTip(_translate("MainWindow", "World"))
+        # self.bn_android_game.setToolTip(_translate("MainWindow", "GamePad"))
+        # self.bn_android_clean.setToolTip(_translate("MainWindow", "Clean"))
+        # self.bn_android_world.setToolTip(_translate("MainWindow", "World"))
         self.lab_android_contact.setText(_translate("MainWindow", "Contact"))
         self.label_8.setText(_translate("MainWindow", "Ph:"))
         self.label_6.setText(_translate("MainWindow", "Organisation:"))
