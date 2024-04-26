@@ -250,8 +250,10 @@ class UIFunction(MainWindow):
                     print("Error", e)
                 self.ui.lab_user.setText(str(id))
                 # self.ui.lab_user.setText(name.split()[0])
+                # member = cursor.execute(
+                #     "Select type from Membership where TraineeID = ?", (id)).fetchall()[0][4]
                 self.ui.lab_home_stat_disc.setText(
-                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}</span></p></body></html>")
+                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}<br/>MemberShip Type: N/A </span></p></body></html>")
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
 
             else:
@@ -259,20 +261,61 @@ class UIFunction(MainWindow):
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
         elif buttonName == 'bn_android_contact_edit':
+            sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+            if self.ui.Full_name_field.text() == "":
+                id = loginUser(self.ui.lineEdit.text(),
+                               self.ui.lineEdit_2.text(), cursor)[0][0]
+            else:
+                id = loginUser(self.ui.Full_name_field.text(),
+                               self.ui.pass_field.text(), cursor)[0][0]
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+            type = "Trainee"
+            if len(traineeinfo) == 0:
+                sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                type = "Trainer"
+            if len(traineeinfo) == 0:
+                sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                type = "Employee"
             self.ui.bn_android_contact_save.setEnabled(True)
             self.ui.bn_android_contact_edit.setEnabled(False)
             self.ui.line_android_name.setEnabled(True)
             self.ui.line_android_ph.setEnabled(True)
             self.ui.line_android_email.setEnabled(True)
             self.ui.line_android_adress.setEnabled(True)
+            if type == "Employee":
+                x = True
+                y = True
+            elif type == "Trainer":
+                x = False
+                y = False
+            elif type == "Trainee":
+                x = False
+                y = True
+            self.ui.line_android_role.setEnabled(x)
+            self.ui.line_android_membership.setEnabled(y)
 
         elif buttonName == 'bn_android_contact_save':
+            sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+            type = "Trainee"
+            if len(traineeinfo) == 0:
+                sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                type = "Trainer"
+            if len(traineeinfo) == 0:
+                sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                type = "Employee"
             self.ui.bn_android_contact_save.setEnabled(False)
             self.ui.bn_android_contact_edit.setEnabled(True)
             self.ui.line_android_name.setEnabled(False)
             self.ui.line_android_ph.setEnabled(False)
             self.ui.line_android_email.setEnabled(False)
             self.ui.line_android_adress.setEnabled(False)
+            self.ui.line_android_role.setEnabled(Y1)
+            self.ui.line_android_membership.setEnabled(Y2)
 
             if self.ui.Full_name_field.text() == "":
                 username = self.ui.lineEdit.text()
@@ -294,6 +337,11 @@ class UIFunction(MainWindow):
                 sql_stmt, (id, password, username, phone, email, address))
         elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
+            sql_stmt = "exec SearchByID ?"
+            fetch = cursor.execute(sql_stmt, (inp))
+            if len(fetch.fetchall()) != 0:
+                self.ui.searchresults.setText("Found")
+                self.ui.searchresults.setText(str(fetch.fetchall()[0]))
             print(inp)
 
         elif buttonName == 'bn_bug' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
@@ -307,16 +355,21 @@ class UIFunction(MainWindow):
                 fetch = loginUser(self.ui.lineEdit.text(),
                                   self.ui.lineEdit_2.text(), cursor)
                 if (self.ui.lineEdit.text() == ""):
-                    username = self.ui.Full_name_field.text()
-                username = username[0]
-                email = fetch[0][2]
+                    username = self.ui.Full_name_field.text().split()[0]
+                    password = self.ui.pass_field.text()
+                else:
+                    username = self.ui.lineEdit.text().split()[0]
+                    password = self.ui.lineEdit_2.text()
+
+                email = cursor.execute("select email from Users where Username=? and PasswordHash=?", (
+                    username, password)).fetchall()[0][0]
                 self.ui.line_android_name.setText(username)
                 self.ui.line_android_adress.setText("")
                 self.ui.line_android_ph.setText("")
                 self.ui.line_android_email.setText(email)
                 self.ui.stackedWidget.setCurrentWidget(
                     self.ui.page_android)
-                self.ui.lab_tab.setText("exercises")
+                self.ui.lab_tab.setText("Users")
                 self.ui.frame_cloud.setStyleSheet(
                     "background:rgb(91,90,90)")
                 UIFunction.androidStackPages(self, "page_contact")
@@ -336,9 +389,15 @@ class UIFunction(MainWindow):
                     type = "Employee"
                 if type == "Employee":
                     self.ui.stackedWidget.setCurrentWidget(self.ui.page_cloud)
-                    self.ui.lab_tab.setText("about_us")
+                    self.ui.lab_tab.setText("about you")
                     self.ui.frame_android.setStyleSheet(
                         "background:rgb(91,90,90)")
+                elif type == "Trainer":
+                    self.ui.line_android_role.setModelColumn(0)
+                    self.ui.line_android_membership.setModelColumn(4)
+                elif type == "Trainee":
+                    self.ui.line_android_role.setModelColumn(5)
+                    self.ui.line_android_membership.setModelColumn(4)
 
         elif buttonName == 'bn_cloud_connect':
             name = self.ui.line_cloud_id.text()
@@ -378,7 +437,23 @@ class UIFunction(MainWindow):
 
         # PAGE_HOME ############# BELOW DISPLAYS THE FUNCTION OF WIDGET, LABEL, PROGRESS BAR, E.T.C IN STACKEDWIDGET page_HOME
         self.ui.lab_home_main_hed.setText("Profile")
+        self.ui.lab_home_main_hed.setStyleSheet("color: rgb(255, 255, 255);")
         self.ui.lab_home_stat_hed.setText("Report")
+        self.ui.lab_home_main_disc.setText("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                           "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Welcome to our CrossFit community!<br /> Here's some personalized advice to help you maximize your workouts and maintain optimal health:</p>\n"
+                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Variety is Key:<br /> Mix up your workouts regularly to challenge different muscle groups and prevent plateaus.<br /> Incorporate a combination of strength training, HIIT, cardio, and mobility work for a well-rounded fitness regimen.</p>\n"
+                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"- Functional Movements:<br /> Focus on exercises that mimic everyday movements to improve your overall strength and agility.<br /> Squats, deadlifts, push-ups, and pull-ups are great examples of functional exercises that translate into real-life activities.</p>\n"
+                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Proper Form is Crucial:<br /> Prioritize technique over intensity to avoid injuries.<br /> Start with lighter weights and gradually increase as you master the movements.<br /> Don't hesitate to ask a coach for guidance or feedback on your form.:</p>\n"
+                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Listen to Your Body: Pay attention to any signs of fatigue or discomfort during workouts. Rest when needed and prioritize recovery to prevent overtraining and burnout. Adequate sleep, hydration, and nutrition are essential for supporting your fitness goals.</p>\n"
+                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                           "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Nutrition Matters: Fuel your body with whole, nutrient-dense foods to support your training and recovery. Aim for a balanced diet rich in lean protein, complex carbohydrates, healthy fats, and plenty of fruits and vegetables. Consider consulting with a nutritionist for personalized dietary guidance.</p></body></html>")
+
         ######### PAGE about_us #############
 
         # PAGE exercises WIDGET AND ITS STACKANDROID WIDGET PAGES

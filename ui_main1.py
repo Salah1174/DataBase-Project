@@ -2371,7 +2371,7 @@ class Ui_MainWindow(object):
         font.setPointSize(24)
         self.lab_home_main_hed.setFont(font)
         self.lab_home_main_hed.setStyleSheet("QLabel {\n"
-                                             "    color:rgb(255,255,255);\n"
+                                             "    color:rgb(0,0,0);\n"
                                              "}")
         self.lab_home_main_hed.setTextFormat(Qt.RichText)
         self.lab_home_main_hed.setObjectName("lab_home_main_hed")
@@ -2547,6 +2547,33 @@ class Ui_MainWindow(object):
         # self.gridLayout.addWidget(self.lab_bullet, 0, 0, 1, 1)
         # self.photos = QPixmap("static/tshirt.png")
         # self.gridLayout.addWidget(self.photos, 5, 3, 1, 1)
+
+        # self.searchresults=Q
+        self.searchresults = QLabel(self.page_exercises)
+        self.searchresults.setMinimumSize(QSize(0, 55))
+        self.searchresults.setMaximumSize(QSize(16777215, 55))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(24)
+        self.searchresults.setFont(font)
+        self.searchresults.setStyleSheet("QLabel {\n"
+                                         "    color:rgb(255,255,255);\n"
+                                         "}")
+        self.searchresults.setObjectName("searchresults")
+        self.gridLayout.addWidget(self.searchresults, 6, 2, 2, 2)
+
+        self.searchresults_2 = QLabel(self.page_exercises)
+        self.searchresults_2.setMinimumSize(QSize(0, 55))
+        self.searchresults_2.setMaximumSize(QSize(16777215, 55))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(24)
+        self.searchresults_2.setFont(font)
+        self.searchresults_2.setStyleSheet("QLabel {\n"
+                                           "    color:rgb(255,255,255);\n"
+                                           "}")
+        self.searchresults_2.setObjectName("searchresults_2")
+        self.gridLayout.addWidget(self.searchresults_2, 7, 2, 2, 2)
 
         self.lab_bullet3 = QLabel(self.frame_bug_main)
         self.lab_bullet3.setMaximumSize(QSize(5, 16777215))
@@ -3285,14 +3312,86 @@ class Ui_MainWindow(object):
         self.label_8.setStyleSheet("color:rgb(255,255,255);")
         self.label_8.setObjectName("label_8")
         self.gridLayout_4.addWidget(self.label_8, 5, 0, 1, 1)
-        # self.label_6 = QLabel(self.frame_android_field)
-        # font = QFont()
-        # font.setFamily("Segoe UI")
-        # font.setPointSize(14)
-        # self.label_6.setFont(font)
-        # self.label_6.setStyleSheet("color:rgb(255,255,255);")
-        # self.label_6.setObjectName("label_6")
-        # self.gridLayout_4.addWidget(self.label_6, 4, 0, 1, 1)
+        self.label_6 = QLabel(self.frame_android_field)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_6.setFont(font)
+        self.label_6.setStyleSheet("color:rgb(255,255,255);")
+        self.label_6.setObjectName("label_6")
+        self.gridLayout_4.addWidget(self.label_6, 6, 0, 1, 1)
+
+        self.line_android_role = QComboBox(self.frame_android_field)
+        self.line_android_role.setEnabled(False)
+        self.line_android_role.setMinimumSize(QSize(300, 25))
+        self.line_android_role.setMaximumSize(QSize(400, 25))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        self.line_android_role.setFont(font)
+        self.line_android_role.setStyleSheet("QLineEdit {\n"
+                                             "    color:rgb(255,255,255);\n"
+                                             "    border:2px solid rgb(51,51,51);\n"
+                                             "    border-radius:4px;\n"
+                                             "    background:rgb(51,51,51);\n"
+                                             "}\n"
+                                             "\n"
+                                             "QLineEdit:disabled {\n"
+                                             "    color:rgb(255,255,255);\n"
+                                             "    border:2px solid rgb(112,112,112);\n"
+                                             "    border-radius:4px;\n"
+                                             "    background:rgb(112,112,112);\n"
+                                             "}")
+        self.line_android_role.setObjectName("line_android_role")
+        self.line_android_role.setFrame(False)
+        self.line_android_role.addItem("")
+        self.line_android_role.addItem("")
+        self.line_android_role.addItem("")
+        self.line_android_role.addItem("")
+        self.line_android_role.addItem("")
+        self.line_android_role.addItem("")
+        self.line_android_role.setModelColumn(0)
+        self.gridLayout_4.addWidget(self.line_android_role, 6, 3, 1, 1)
+
+        self.line_android_membership = QComboBox(self.frame_android_field)
+        self.line_android_membership.setEnabled(False)
+        self.line_android_membership.setMinimumSize(QSize(300, 25))
+        self.line_android_membership.setMaximumSize(QSize(400, 25))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        self.line_android_membership.setFont(font)
+        self.line_android_membership.setStyleSheet("QLineEdit {\n"
+                                                   "    color:rgb(255,255,255);\n"
+                                                   "    border:2px solid rgb(51,51,51);\n"
+                                                   "    border-radius:4px;\n"
+                                                   "    background:rgb(51,51,51);\n"
+                                                   "}\n"
+                                                   "\n"
+                                                   "QLineEdit:disabled {\n"
+                                                   "    color:rgb(255,255,255);\n"
+                                                   "    border:2px solid rgb(112,112,112);\n"
+                                                   "    border-radius:4px;\n"
+                                                   "    background:rgb(112,112,112);\n"
+                                                   "}")
+        self.line_android_membership.setObjectName("line_android_membership")
+        self.line_android_membership.setFrame(False)
+        self.line_android_membership.addItem("")
+        self.line_android_membership.addItem("")
+        self.line_android_membership.addItem("")
+        self.line_android_membership.addItem("")
+        self.line_android_membership.addItem("")
+        self.line_android_membership.setModelColumn(0)
+        self.gridLayout_4.addWidget(self.line_android_membership, 7, 3, 1, 1)
+
+        self.label_199 = QLabel(self.frame_android_field)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_199.setFont(font)
+        self.label_199.setStyleSheet("color:rgb(255,255,255);")
+        self.label_199.setObjectName("label_199")
+        self.gridLayout_4.addWidget(self.label_199, 7, 0, 1, 1)
         self.label_7 = QLabel(self.frame_android_field)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -4095,17 +4194,17 @@ class Ui_MainWindow(object):
                                                      "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                      "p, li { white-space: pre-wrap; }\n"
                                                      "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Name:</p>\n"
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Welcome to our CrossFit community! Here's some personalized advice to help you maximize your workouts and maintain optimal health:</p>\n"
                                                      "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Age:</p>\n"
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Variety is Key: Mix up your workouts regularly to challenge different muscle groups and prevent plateaus. Incorporate a combination of strength training, HIIT, cardio, and mobility work for a well-rounded fitness regimen.</p>\n"
                                                      "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Adress:</p>\n"
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"Functional Movements: Focus on exercises that mimic everyday movements to improve your overall strength and agility. Squats, deadlifts, push-ups, and pull-ups are great examples of functional exercises that translate into real-life activities.</p>\n"
                                                      "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Coach:</p>\n"
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Proper Form is Crucial: Prioritize technique over intensity to avoid injuries. Start with lighter weights and gradually increase as you master the movements. Don't hesitate to ask a coach for guidance or feedback on your form.:</p>\n"
                                                      "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Membership Type:</p>\n"
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Listen to Your Body: Pay attention to any signs of fatigue or discomfort during workouts. Rest when needed and prioritize recovery to prevent overtraining and burnout. Adequate sleep, hydration, and nutrition are essential for supporting your fitness goals.</p>\n"
                                                      "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Membership end Date:</p></body></html>"))
+                                                     "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nutrition Matters: Fuel your body with whole, nutrient-dense foods to support your training and recovery. Aim for a balanced diet rich in lean protein, complex carbohydrates, healthy fats, and plenty of fruits and vegetables. Consider consulting with a nutritionist for personalized dietary guidance.</p></body></html>"))
         self.lab_home_stat_hed_2.setText(_translate(
             "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Weekly Plan</span></p></body></html>"))
         self.lab_home_stat_disc_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Saturday:</span></p><p><span style=\" color:#ffffff;\">Sunday:</span></p><p><span style=\" color:#ffffff;\">Monday:</span></p><p><span style=\" color:#ffffff;\">Tuesday:</span></p><p><span style=\" color:#ffffff;\">Wednesday:</span></p><p><span style=\" color:#ffffff;\">Thursday:</span></p><p><span style=\" color:#ffffff;\">Friday:</span></p><p><br/></p></body></html>"))
@@ -4154,8 +4253,21 @@ class Ui_MainWindow(object):
                                                    "Salma Mohamed            21P\n"
                                                    "\n"
                                                    "Zeynat Haytham             210"))
-        self.lab_home_main_hed.setText(_translate(
-            "MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Profile</span></p></body></html>"))
+        self.lab_home_main_hed.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                  "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                  "p, li { white-space: pre-wrap; }\n"
+                                                  "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Welcome to our CrossFit community! Here's some personalized advice to help you maximize your workouts and maintain optimal health:</p>\n"
+                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Variety is Key: Mix up your workouts regularly to challenge different muscle groups and prevent plateaus. Incorporate a combination of strength training, HIIT, cardio, and mobility work for a well-rounded fitness regimen.</p>\n"
+                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"Functional Movements: Focus on exercises that mimic everyday movements to improve your overall strength and agility. Squats, deadlifts, push-ups, and pull-ups are great examples of functional exercises that translate into real-life activities.</p>\n"
+                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Proper Form is Crucial: Prioritize technique over intensity to avoid injuries. Start with lighter weights and gradually increase as you master the movements. Don't hesitate to ask a coach for guidance or feedback on your form.:</p>\n"
+                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Listen to Your Body: Pay attention to any signs of fatigue or discomfort during workouts. Rest when needed and prioritize recovery to prevent overtraining and burnout. Adequate sleep, hydration, and nutrition are essential for supporting your fitness goals.</p>\n"
+                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                  "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nutrition Matters: Fuel your body with whole, nutrient-dense foods to support your training and recovery. Aim for a balanced diet rich in lean protein, complex carbohydrates, healthy fats, and plenty of fruits and vegetables. Consider consulting with a nutritionist for personalized dietary guidance.</p></body></html>"))
 
         # self.lab_home_main_disc.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
         #                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4186,6 +4298,28 @@ class Ui_MainWindow(object):
             1, _translate("MainWindow", "Protien bars"))
         self.comboBox_bug.setItemText(
             2, _translate("MainWindow", "Sports Wear"))
+        self.line_android_role.setItemText(
+            0, _translate("MainWindow", "Coach"))
+        self.line_android_role.setItemText(
+            1, _translate("MainWindow", "Sales"))
+        self.line_android_role.setItemText(
+            2, _translate("MainWindow", "Marketing"))
+        self.line_android_role.setItemText(
+            3, _translate("MainWindow", "Manager"))
+        self.line_android_role.setItemText(
+            4, _translate("MainWindow", "Trainer"))
+        self.line_android_role.setItemText(
+            5, _translate("MainWindow", "Not Determined"))
+        self.line_android_membership.setItemText(
+            0, _translate("MainWindow", "Premium"))
+        self.line_android_membership.setItemText(
+            1, _translate("MainWindow", "Gold"))
+        self.line_android_membership.setItemText(
+            2, _translate("MainWindow", "Silver"))
+        self.line_android_membership.setItemText(
+            3, _translate("MainWindow", "Bronze"))
+        self.line_android_membership.setItemText(
+            4, _translate("MainWindow", "Not Determined"))
         # self.comboBox_bug.setItemText(3, _translate("MainWindow", "100000000"))
         self.lab_bug1.setText(_translate(
             "MainWindow", "<html><head/><body><p><span style=\" color:#008F96;\">We Have</span></p></body></html>"))
@@ -4207,7 +4341,8 @@ class Ui_MainWindow(object):
         # self.bn_android_world.setToolTip(_translate("MainWindow", "World"))
         self.lab_android_contact.setText(_translate("MainWindow", "Contact"))
         self.label_8.setText(_translate("MainWindow", "Address:"))
-        # self.label_6.setText(_translate("MainWindow", "Organisation:"))
+        self.label_6.setText(_translate("MainWindow", "Role:"))
+        self.label_199.setText(_translate("MainWindow", "MemberShip Type:"))
         self.label_7.setText(_translate("MainWindow", "Email:"))
         self.label.setText(_translate("MainWindow", "Name: "))
         # self.line_android_name.setText(

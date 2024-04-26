@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
         # self.ui.bn_android_contact_edit.clicked.connect(
         #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit'))
         self.ui.bn_bug_start.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_bug_start'))
+            lambda: UIFunction.buttonPressed(self, 'bn_bug_start', connection, cursor))
         self.ui.bn_cloud_connect.clicked.connect(
             lambda: UIFunction.buttonPressed(self, "bn_cloud_connect", connection, cursor))
         self.ui.bn_cloud_clear.clicked.connect(
