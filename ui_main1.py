@@ -2545,6 +2545,9 @@ class Ui_MainWindow(object):
         # self.lab_bullet.setAlignment(Qt.AlignCenter)
         # self.lab_bullet.setObjectName("lab_bullet")
         # self.gridLayout.addWidget(self.lab_bullet, 0, 0, 1, 1)
+        # self.photos = QPixmap("static/tshirt.png")
+        # self.gridLayout.addWidget(self.photos, 5, 3, 1, 1)
+
         self.lab_bullet3 = QLabel(self.frame_bug_main)
         self.lab_bullet3.setMaximumSize(QSize(5, 16777215))
         self.lab_bullet3.setText("")
@@ -3477,36 +3480,36 @@ class Ui_MainWindow(object):
         self.bn_android_contact_edit.setObjectName("bn_android_contact_edit")
         self.horizontalLayout_25.addWidget(self.bn_android_contact_edit)
 
-        self.bn_android_contact_delete = QPushButton(self.frame_3)
-        self.bn_android_contact_delete.setMinimumSize(QSize(69, 25))
-        self.bn_android_contact_delete.setMaximumSize(QSize(69, 25))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(12)
-        self.bn_android_contact_delete.setFont(font)
-        self.bn_android_contact_delete.setStyleSheet("QPushButton {\n"
-                                                     "    border: 2px solid rgb(51,51,51);\n"
-                                                     "    border-radius: 5px;    \n"
-                                                     "    color:rgb(255,255,255);\n"
-                                                     "    background-color: rgb(51,51,51);\n"
-                                                     "}\n"
-                                                     "QPushButton:hover {\n"
-                                                     "    border: 2px solid rgb(112,0,0);\n"
-                                                     "    background-color: rgb(112,0,0);\n"
-                                                     "}\n"
-                                                     "QPushButton:pressed {    \n"
-                                                     "    border: 2px solid rgb(112,0,0);\n"
-                                                     "    background-color: rgb(51,51,51);\n"
-                                                     "}\n"
-                                                     "\n"
-                                                     "QPushButton:disabled {    \n"
-                                                     "    border-radius: 5px;    \n"
-                                                     "    border: 2px solid rgb(112,112,112);\n"
-                                                     "    background-color: rgb(112,112,112);\n"
-                                                     "}")
-        self.bn_android_contact_delete.setObjectName(
-            "bn_android_contact_delete")
-        self.horizontalLayout_25.addWidget(self.bn_android_contact_delete)
+        # self.bn_android_contact_delete = QPushButton(self.frame_3)
+        # self.bn_android_contact_delete.setMinimumSize(QSize(69, 25))
+        # self.bn_android_contact_delete.setMaximumSize(QSize(69, 25))
+        # font = QFont()
+        # font.setFamily("Segoe UI")
+        # font.setPointSize(12)
+        # self.bn_android_contact_delete.setFont(font)
+        # self.bn_android_contact_delete.setStyleSheet("QPushButton {\n"
+        #                                              "    border: 2px solid rgb(51,51,51);\n"
+        #                                              "    border-radius: 5px;    \n"
+        #                                              "    color:rgb(255,255,255);\n"
+        #                                              "    background-color: rgb(51,51,51);\n"
+        #                                              "}\n"
+        #                                              "QPushButton:hover {\n"
+        #                                              "    border: 2px solid rgb(112,0,0);\n"
+        #                                              "    background-color: rgb(112,0,0);\n"
+        #                                              "}\n"
+        #                                              "QPushButton:pressed {    \n"
+        #                                              "    border: 2px solid rgb(112,0,0);\n"
+        #                                              "    background-color: rgb(51,51,51);\n"
+        #                                              "}\n"
+        #                                              "\n"
+        #                                              "QPushButton:disabled {    \n"
+        #                                              "    border-radius: 5px;    \n"
+        #                                              "    border: 2px solid rgb(112,112,112);\n"
+        #                                              "    background-color: rgb(112,112,112);\n"
+        #                                              "}")
+        # self.bn_android_contact_delete.setObjectName(
+        #     "bn_android_contact_delete")
+        # self.horizontalLayout_25.addWidget(self.bn_android_contact_delete)
         self.bn_android_contact_save = QPushButton(self.frame_3)
         self.bn_android_contact_save.setEnabled(False)
         self.bn_android_contact_save.setMinimumSize(QSize(69, 25))
@@ -4203,23 +4206,20 @@ class Ui_MainWindow(object):
         # self.bn_android_clean.setToolTip(_translate("MainWindow", "Clean"))
         # self.bn_android_world.setToolTip(_translate("MainWindow", "World"))
         self.lab_android_contact.setText(_translate("MainWindow", "Contact"))
-        self.label_8.setText(_translate("MainWindow", "Ph:"))
+        self.label_8.setText(_translate("MainWindow", "Address:"))
         # self.label_6.setText(_translate("MainWindow", "Organisation:"))
         self.label_7.setText(_translate("MainWindow", "Email:"))
         self.label.setText(_translate("MainWindow", "Name: "))
-        self.line_android_name.setText(
-            _translate("MainWindow", "ALBERT EINSTEIN"))
-        self.label_5.setText(_translate("MainWindow", "Address: "))
+        # self.line_android_name.setText(
+        #     _translate("MainWindow", "ALBERT EINSTEIN"))
+        self.label_5.setText(_translate("MainWindow", "Phone Number: "))
         # self.line_android_org.setText(_translate("MainWindow", "Physist"))
-        self.line_android_adress.setText(
-            _translate("MainWindow", "112 Mercer Street"))
-        self.line_android_email.setText(
-            _translate("MainWindow", "einstein@gmail.com"))
+
         self.bn_android_contact_edit.setText(_translate("MainWindow", "Edit"))
         # self.bn_android_contact_share.setText(
         #     _translate("MainWindow", "Share"))
-        self.bn_android_contact_delete.setText(
-            _translate("MainWindow", "Delete"))
+        # self.bn_android_contact_delete.setText(
+        #     _translate("MainWindow", "Delete"))
         self.bn_android_contact_save.setText(_translate("MainWindow", "Save"))
         self.lab_gamepad.setText(_translate("MainWindow", "GamePad"))
         self.groupBox_clean.setTitle(_translate("MainWindow", "Review"))

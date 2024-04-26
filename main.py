@@ -126,6 +126,10 @@ class MainWindow(QMainWindow):
             lambda: UIFunction.buttonPressed(self, 'Add_new_user', connection, cursor))
         self.ui.notLogged.clicked.connect(
             lambda: UIFunction.buttonPressed(self, 'notLogged', connection, cursor))
+        self.ui.bn_android_contact_edit.clicked.connect(
+            lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit', connection, cursor))
+        self.ui.bn_android_contact_save.clicked.connect(
+            lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save', connection, cursor))
         #############################################################
         UIFunction.stackPage(self)
         #############################################################
@@ -136,10 +140,10 @@ class MainWindow(QMainWindow):
 
         inp = self.ui.line_android_name.text()
         print(inp)
-        self.ui.bn_android_contact_save.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save'))
-        self.ui.bn_android_contact_edit.clicked.connect(
-            lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit'))
+        # self.ui.bn_android_contact_save.clicked.connect(
+        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save'))
+        # self.ui.bn_android_contact_edit.clicked.connect(
+        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit'))
         self.ui.bn_bug_start.clicked.connect(
             lambda: UIFunction.buttonPressed(self, 'bn_bug_start'))
         self.ui.bn_cloud_connect.clicked.connect(
@@ -186,7 +190,7 @@ if __name__ == "__main__":
     try:
         connection = pyodbc.connect('DRIVER={SQL Server};' +
                                     'Server=LAPTOP-019RIHG4;' +
-                                    'Database=Team-5;' +
+                                    'Database=CrossFit;' +
                                     'Trusted_Connection=True;')
         print("Connection Established")
         connection.autocommit = True

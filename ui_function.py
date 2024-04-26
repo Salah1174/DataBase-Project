@@ -11,6 +11,10 @@ init = False  # NECRESSERY FOR INITITTION OF THE WINDOW.
 # tab_Buttons = ['bn_home', ' bn_bug', ' bn_cloud', ' bn_android'] #BUTTONS IN MAIN TAB
 # android_buttons = ['bn_android_contact', 'bn_android_game', 'bn_android_clean', 'bn_android_world'] #BUTTONS IN exercises STACKPAGE
 
+USERNAME = ""
+PASSWORD = ""
+ID = -1
+
 
 def createUser(cursor, Fullname, startDate, endDate, type, Bdate, password, email, address=None, phone=None):
     print(Fullname, startDate, endDate, type,
@@ -93,7 +97,7 @@ class UIFunction(MainWindow):
     def initStackTab(self):
         global init
         if init == False:
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+            self.ui.stackedWidget.setCurrentWidget(self.ui.page_login)
             self.ui.lab_tab.setText("Home")
             self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
             init = True
@@ -207,7 +211,6 @@ class UIFunction(MainWindow):
                 self.ui.lab_user.setText(str(id))
                 self.ui.lab_home_stat_disc.setText(
                     f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Start Date: {start}<br/>End Date: {end}<br/>Birth Date: {Bdate}</span></p></body></html>")
-
             else:
                 self.errorexec("Incorrect Name or Password",
                                "static/errorAsset 55.png", "Try again")
@@ -225,44 +228,70 @@ class UIFunction(MainWindow):
             elif self.ui.bn_employee_radio.toggled:
                 print("Employee")
                 type = "Employee"
-            name = self.ui.Full_name_field.text()
+            username = self.ui.Full_name_field.text()
             start = self.ui.Start_date_field.date().toPython()
             start = start.strftime('%Y-%m-%d')
             end = self.ui.End_date_field.date().toPython()
             end = end.strftime('%Y-%m-%d')
-            birth = self.ui.Birth_date_field.date().toPython()
-            age = datetime.datetime.now().year - birth.year
-            birth = birth.strftime('%Y-%m-%d')
+            Bdate = self.ui.Birth_date_field.date().toPython()
+            age = datetime.datetime.now().year - Bdate.year
+            Bdate = Bdate.strftime('%Y-%m-%d')
             password = self.ui.pass_field.text()
             email = self.ui.Email_field.text()
-            if name != "" and password != "" and email != "":
-                createUser(cursor, name, start, end,
-                           type, birth, password, email)
+            if username != "" and password != "" and email != "":
+                createUser(cursor, username, start, end,
+                           type, Bdate, password, email)
                 try:
-                    print(name.split()[0])
+                    print(username.split()[0])
                     sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
                     id = cursor.execute(
-                        sql_stmt, (name, password)).fetchall()[0][0]
-                except:
-                    print("Error")
+                        sql_stmt, (username, password)).fetchall()[0][0]
+                except pyodbc.Error as e:
+                    print("Error", e)
                 self.ui.lab_user.setText(str(id))
                 # self.ui.lab_user.setText(name.split()[0])
                 self.ui.lab_home_stat_disc.setText(
-                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {name}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {birth}<br/>Start Date: {start}<br/>End Date: {end}</span></p></body></html>")
+                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}</span></p></body></html>")
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
+
             else:
                 #     raise Exception
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
+        elif buttonName == 'bn_android_contact_edit':
+            self.ui.bn_android_contact_save.setEnabled(True)
+            self.ui.bn_android_contact_edit.setEnabled(False)
+            self.ui.line_android_name.setEnabled(True)
+            self.ui.line_android_ph.setEnabled(True)
+            self.ui.line_android_email.setEnabled(True)
+            self.ui.line_android_adress.setEnabled(True)
 
-        elif buttonName == 'bn_android_contact_save' and self.ui.widget != self.ui.page_login and self.ui.widget != self.ui.sign_up:
-            inp = self.ui.line_android_name.text()
-            print(inp)
+        elif buttonName == 'bn_android_contact_save':
+            self.ui.bn_android_contact_save.setEnabled(False)
+            self.ui.bn_android_contact_edit.setEnabled(True)
+            self.ui.line_android_name.setEnabled(False)
+            self.ui.line_android_ph.setEnabled(False)
+            self.ui.line_android_email.setEnabled(False)
+            self.ui.line_android_adress.setEnabled(False)
 
-        elif buttonName == 'bn_android_contact_edit' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
-            inp = self.ui.line_android_name.text()
-            print(inp)
-
+            if self.ui.Full_name_field.text() == "":
+                username = self.ui.lineEdit.text()
+                password = self.ui.lineEdit_2.text()
+                id = loginUser(self.ui.lineEdit.text(),
+                               self.ui.lineEdit_2.text(), cursor)[0][0]
+            else:
+                username = self.ui.Full_name_field.text()
+                password = self.ui.pass_field.text()
+                sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
+                id = cursor.execute(
+                    sql_stmt, (username, password)).fetchall()[0][0]
+            username = self.ui.line_android_name.text()
+            phone = self.ui.line_android_adress.text()
+            address = self.ui.line_android_ph.text()
+            email = self.ui.line_android_email.text()
+            sql_stmt = "exec edituserinfo ?,?,?,?,?,?"
+            cursor.execute(
+                sql_stmt, (id, password, username, phone, email, address))
         elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
             print(inp)
@@ -271,43 +300,46 @@ class UIFunction(MainWindow):
             if self.ui.frame_bottom_west.width() == 80:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_bug)
                 self.ui.lab_tab.setText("cafeteria")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
-                self.ui.frame_bug.setStyleSheet("background:rgb(91,90,90)")
-
-            elif self.ui.frame_bottom_west.width() == 160:   # ABOUT PAGE STACKED WIDGET
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_about_bug)
-                self.ui.lab_tab.setText("About > cafeteria")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
                 self.ui.frame_bug.setStyleSheet("background:rgb(91,90,90)")
 
         elif buttonName == 'bn_cloud' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_android)
-                self.ui.lab_tab.setText("exercises")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
-                self.ui.frame_cloud.setStyleSheet("background:rgb(91,90,90)")
-                UIFunction.androidStackPages(self, "page_contact")
-
-            elif self.ui.frame_bottom_west.width() == 160:   # ABOUT PAGE STACKED WIDGET
+                fetch = loginUser(self.ui.lineEdit.text(),
+                                  self.ui.lineEdit_2.text(), cursor)
+                if (self.ui.lineEdit.text() == ""):
+                    username = self.ui.Full_name_field.text()
+                username = username[0]
+                email = fetch[0][2]
+                self.ui.line_android_name.setText(username)
+                self.ui.line_android_adress.setText("")
+                self.ui.line_android_ph.setText("")
+                self.ui.line_android_email.setText(email)
                 self.ui.stackedWidget.setCurrentWidget(
-                    self.ui.page_about_android)
-                self.ui.lab_tab.setText("About > exercises")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
-                self.ui.frame_cloud.setStyleSheet("background:rgb(91,90,90)")
+                    self.ui.page_android)
+                self.ui.lab_tab.setText("exercises")
+                self.ui.frame_cloud.setStyleSheet(
+                    "background:rgb(91,90,90)")
+                UIFunction.androidStackPages(self, "page_contact")
 
         elif buttonName == 'bn_android' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
-                self.ui.stackedWidget.setCurrentWidget(self.ui.page_cloud)
-                self.ui.lab_tab.setText("about_us")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
-                self.ui.frame_android.setStyleSheet("background:rgb(91,90,90)")
+                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                type = "Trainee"
+                if len(traineeinfo) == 0:
+                    sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    type = "Trainer"
+                if len(traineeinfo) == 0:
+                    sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    type = "Employee"
+                if type == "Employee":
+                    self.ui.stackedWidget.setCurrentWidget(self.ui.page_cloud)
+                    self.ui.lab_tab.setText("about_us")
+                    self.ui.frame_android.setStyleSheet(
+                        "background:rgb(91,90,90)")
 
-            elif self.ui.frame_bottom_west.width() == 160:   # ABOUT PAGE STACKED WIDGET
-                self.ui.stackedWidget.setCurrentWidget(
-                    self.ui.page_about_cloud)
-                self.ui.lab_tab.setText("About > about_us")
-                # SETS THE BACKGROUND OF THE CLICKED BUTTON TO LITER COLOR THAN THE REST
-                self.ui.frame_android.setStyleSheet("background:rgb(91,90,90)")
         elif buttonName == 'bn_cloud_connect':
             name = self.ui.line_cloud_id.text()
             password = self.ui.line_cloud_adress.text()
@@ -342,10 +374,6 @@ class UIFunction(MainWindow):
         # ADD ANOTHER ELIF STATEMENT HERE FOR EXECTUITING A NEW MENU BUTTON STACK PAGE.
     ########################################################################################################################
 
-    # ----> STACKWIDGET EACH PAGE FUNCTION PAGE FUNCTIONS
-    # CODE TO PERFOMR THE TASK IN THE STACKED WIDGET PAGE
-    # WHAT EVER WIDGET IS IN THE STACKED PAGES ITS ACTION IS EVALUATED HERE AND THEN THE REST FUNCTION IS PASSED.
-
     def stackPage(self):
 
         # PAGE_HOME ############# BELOW DISPLAYS THE FUNCTION OF WIDGET, LABEL, PROGRESS BAR, E.T.C IN STACKEDWIDGET page_HOME
@@ -363,15 +391,15 @@ class UIFunction(MainWindow):
         # self.ui.bn_android_world.clicked.connect(
         #     lambda: UIFunction.androidStackPages(self, "page_world"))
 
-        # exercises > PAGE CONTACT >>>>>>>>>>>>>>>>>>>>
-        self.ui.bn_android_contact_delete.clicked.connect(lambda: self.dialogexec(
-            "Warning", "The Contact Infromtion will be Deleted, Do you want to continue.", "static/errorAsset 55.png", "Cancel", "Yes"))
+        # # exercises > PAGE CONTACT >>>>>>>>>>>>>>>>>>>>
+        # self.ui.bn_android_contact_delete.clicked.connect(lambda: self.dialogexec(
+        #     "Warning", "The Contact Infromtion will be Deleted, Do you want to continue.", "static/errorAsset 55.png", "Cancel", "Yes"))
 
-        self.ui.bn_android_contact_edit.clicked.connect(
-            lambda: APFunction.editable(self))
+        # self.ui.bn_android_contact_edit.clicked.connect(
+        #     lambda: APFunction.editable(self))
 
-        self.ui.bn_android_contact_save.clicked.connect(
-            lambda: APFunction.saveContact(self))
+        # self.ui.bn_android_contact_save.clicked.connect(
+        #     lambda: APFunction.saveContact(self))
 
         # exercises > PAGE GAMEPAD >>>>>>>>>>>>>>>>>>>
         self.ui.textEdit_gamepad.setVerticalScrollBar(

@@ -1,1 +1,1 @@
-APFunction.cloudClear(self)
+bn_android_contact_edit
