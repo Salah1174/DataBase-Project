@@ -192,6 +192,7 @@ if __name__ == "__main__":
                                     'Server=LAPTOP-019RIHG4;' +
                                     'Database=CrossFit;' +
                                     'Trusted_Connection=True;')
+
         print("Connection Established")
         connection.autocommit = True
         cursor = connection.cursor()

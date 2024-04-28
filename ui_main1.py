@@ -2508,8 +2508,63 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_about_android)
         self.page_about_bug = QWidget()
         self.page_about_bug.setStyleSheet("background:rgb(91,90,90);")
+
         self.page_about_bug.setObjectName("page_about_bug")
         self.stackedWidget.addWidget(self.page_about_bug)
+        ##############################################################################
+        self.horizontalLayout_99 = QHBoxLayout(self.page_about_bug)
+        self.horizontalLayout_99.setContentsMargins(0, 5, 0, 5)
+        self.horizontalLayout_99.setSpacing(0)
+        self.horizontalLayout_99.setObjectName("horizontalLayout_99")
+        self.frame_bug_main = QFrame(self.page_about_bug)
+        self.frame_bug_main.setFrameShape(QFrame.NoFrame)
+        self.frame_bug_main.setFrameShadow(QFrame.Plain)
+        self.frame_bug_main.setObjectName("frame_bug_main")
+        self.verticalLayout_99 = QVBoxLayout(self.frame_bug_main)
+        self.verticalLayout_99.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_99.setSpacing(5)
+        self.verticalLayout_99.setObjectName("verticalLayout_99")
+        self.lab_bug_main_hed = QLabel(self.frame_bug_main)
+        self.lab_bug_main_hed.setMinimumSize(QSize(0, 55))
+        self.lab_bug_main_hed.setMaximumSize(QSize(16777215, 55))
+        font = QFont()
+        font.setFamily("Segoe UI Semilight")
+        font.setPointSize(24)
+        self.lab_bug_main_hed.setFont(font)
+        self.lab_bug_main_hed.setText(
+            ".......................... Not Found")
+        self.lab_bug_main_hed.setStyleSheet("QLabel {\n"
+                                            "    color:rgb(0,0,0);\n"
+                                            "}")
+        self.lab_bug_main_hed.setTextFormat(Qt.RichText)
+        self.lab_bug_main_hed.setObjectName("lab_bug_main_hed")
+        self.verticalLayout_99.addWidget(self.lab_bug_main_hed)
+        self.lab_bug_main_disc = QLabel(self.frame_bug_main)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        self.lab_bug_main_disc.setFont(font)
+        self.lab_bug_main_disc.setText("Seif Yasser")
+        self.lab_bug_main_disc.setStyleSheet("color:rgb(255,255,255);")
+        self.lab_bug_main_disc.setAlignment(
+            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.lab_bug_main_disc.setWordWrap(True)
+        self.lab_bug_main_disc.setObjectName("lab_bug_main_disc")
+        self.verticalLayout_99.addWidget(self.lab_bug_main_disc)
+        self.horizontalLayout_99.addWidget(self.frame_bug_main)
+        ##############################################################################
+        self.searchresults = QLabel(self.page_about_bug)
+        self.searchresults.setMinimumSize(QSize(0, 55))
+        self.searchresults.setMaximumSize(QSize(16777215, 55))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(24)
+        self.searchresults.setFont(font)
+        self.searchresults.setStyleSheet("QLabel {\n"
+                                         "    color:rgb(255,255,255);\n"
+                                         "}")
+        self.searchresults.setObjectName("searchresults")
+        # self.gridLayout.addWidget(self.searchresults, 6, 2, 2, 2)
         self.page_bug = QWidget()
         self.page_bug.setStyleSheet("background:rgb(91,90,90);")
         self.page_bug.setObjectName("page_bug")
@@ -2535,9 +2590,9 @@ class Ui_MainWindow(object):
         self.frame_bug_main.setObjectName("frame_bug_main")
         self.gridLayout = QGridLayout(self.frame_bug_main)
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem21 = QSpacerItem(
-            421, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem21, 5, 7, 1, 1)
+        # spacerItem21 = QSpacerItem(
+        #     421, 20,  QSizePolicy.Expanding,  QSizePolicy.Minimum)
+        # self.gridLayout.addItem(spacerItem21, 5, 7, 1, 1)
         # self.lab_bullet = QLabel(self.frame_bug_main)
         # self.lab_bullet.setMaximumSize(QSize(5, 16777215))
         # self.lab_bullet.setText("")
@@ -2760,6 +2815,7 @@ class Ui_MainWindow(object):
             20, 197,  QSizePolicy.Minimum,  QSizePolicy.Expanding)
         self.verticalLayout_7.addItem(spacerItem22)
         self.stackedWidget.addWidget(self.page_bug)
+
         self.page_cloud = QWidget()
         self.page_cloud.setStyleSheet("background:rgb(91,90,90);")
         self.page_cloud.setObjectName("page_cloud")
@@ -3312,6 +3368,22 @@ class Ui_MainWindow(object):
         self.label_8.setStyleSheet("color:rgb(255,255,255);")
         self.label_8.setObjectName("label_8")
         self.gridLayout_4.addWidget(self.label_8, 5, 0, 1, 1)
+        self.label_1001 = QLabel(self.frame_android_field)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_1001.setFont(font)
+        self.label_1001.setStyleSheet("color:rgb(255,255,255);")
+        self.label_1001.setObjectName("label_1001")
+        self.gridLayout_4.addWidget(self.label_1001, 10, 0, 1, 1)
+        self.label_1000 = QLabel(self.frame_android_field)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label_1000.setFont(font)
+        self.label_1000.setStyleSheet("color:rgb(255,255,255);")
+        self.label_1000.setObjectName("label_1000")
+        self.gridLayout_4.addWidget(self.label_1000, 8, 0, 1, 1)
         self.label_6 = QLabel(self.frame_android_field)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -3408,6 +3480,7 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet("color:rgb(255,255,255);")
         self.label.setObjectName("label")
         self.gridLayout_4.addWidget(self.label, 1, 0, 1, 3)
+
         self.line_android_name = QLineEdit(self.frame_android_field)
         self.line_android_name.setEnabled(False)
         self.line_android_name.setMinimumSize(QSize(300, 25))
@@ -3431,6 +3504,57 @@ class Ui_MainWindow(object):
                                              "}")
         self.line_android_name.setObjectName("line_android_name")
         self.gridLayout_4.addWidget(self.line_android_name, 1, 3, 1, 1)
+
+        # self.line_android_height = QLineEdit(self.frame_android_field)
+        self.line_android_height = QSpinBox(self.frame_android_field)
+        self.line_android_height.setEnabled(False)
+        self.line_android_height.setMinimumSize(QSize(300, 25))
+        self.line_android_height.setMaximumSize(QSize(400, 25))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        self.line_android_height.setFont(font)
+        self.line_android_height.setStyleSheet("QLineEdit {\n"
+                                               "    color:rgb(255,255,255);\n"
+                                               "    border:2px solid rgb(51,51,51);\n"
+                                               "    border-radius:4px;\n"
+                                               "    background:rgb(51,51,51);\n"
+                                               "}\n"
+                                               "\n"
+                                               "QLineEdit:disabled {\n"
+                                               "    color:rgb(255,255,255);\n"
+                                               "    border:2px solid rgb(112,112,112);\n"
+                                               "    border-radius:4px;\n"
+                                               "    background:rgb(112,112,112);\n"
+                                               "}")
+        self.line_android_height.setObjectName("line_android_height")
+
+        self.gridLayout_4.addWidget(self.line_android_height, 8, 3, 1, 1)
+
+        self.line_android_weight = QSpinBox(self.frame_android_field)
+        self.line_android_weight.setEnabled(False)
+        self.line_android_weight.setMinimumSize(QSize(300, 25))
+        self.line_android_weight.setMaximumSize(QSize(400, 25))
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        self.line_android_weight.setFont(font)
+        self.line_android_weight.setStyleSheet("QLineEdit {\n"
+                                               "    color:rgb(255,255,255);\n"
+                                               "    border:2px solid rgb(51,51,51);\n"
+                                               "    border-radius:4px;\n"
+                                               "    background:rgb(51,51,51);\n"
+                                               "}\n"
+                                               "\n"
+                                               "QLineEdit:disabled {\n"
+                                               "    color:rgb(255,255,255);\n"
+                                               "    border:2px solid rgb(112,112,112);\n"
+                                               "    border-radius:4px;\n"
+                                               "    background:rgb(112,112,112);\n"
+                                               "}")
+        self.line_android_weight.setObjectName("line_android_weight")
+        # self.line_android_weight.setText("weight")
+        self.gridLayout_4.addWidget(self.line_android_weight, 9, 3, 0, 0)
         self.label_5 = QLabel(self.frame_android_field)
         font = QFont()
         font.setFamily("Segoe UI")
@@ -3639,7 +3763,7 @@ class Ui_MainWindow(object):
                                                    "}")
         self.bn_android_contact_save.setObjectName("bn_android_contact_save")
         self.horizontalLayout_25.addWidget(self.bn_android_contact_save)
-        self.gridLayout_4.addWidget(self.frame_3, 8, 0, 1, 7)
+        self.gridLayout_4.addWidget(self.frame_3, 10, 0, 1, 7)
         self.gridLayout_3.addWidget(self.frame_android_field, 0, 1, 2, 1)
         self.verticalLayout_10.addWidget(self.frame_android_bottom)
         self.stackedWidget_android.addWidget(self.page_android_contact)
@@ -4343,8 +4467,15 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Address:"))
         self.label_6.setText(_translate("MainWindow", "Role:"))
         self.label_199.setText(_translate("MainWindow", "MemberShip Type:"))
+        self.label_1000.setText(_translate("MainWindow", "Height:\nWeight:"))
+        # self.label_1000.setPlaceholderText(_translate("MainWindow", "Height"))
+        self.label_1001.setText(_translate("MainWindow", "Weight:"))
         self.label_7.setText(_translate("MainWindow", "Email:"))
         self.label.setText(_translate("MainWindow", "Name: "))
+        # self.line_android_height.setPlaceholderText(
+        #     _translate("MainWindow", "Height"))
+        # self.line_android_weight.setPlaceholderText(
+        #     _translate("MainWindow", "Weight"))
         # self.line_android_name.setText(
         #     _translate("MainWindow", "ALBERT EINSTEIN"))
         self.label_5.setText(_translate("MainWindow", "Phone Number: "))

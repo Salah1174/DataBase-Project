@@ -473,4 +473,14 @@ END;
 -- Execute Select Address
 EXECUTE SelectAddress @p_UserID = 2;
 
+GO
+create procedure getUserInfo
+    @ID int
+as
+begin
+    select *
+    from Users
+    where UserID=@ID
+end;
 
+exec getUserInfo 16;
