@@ -247,6 +247,11 @@ class UIFunction(MainWindow):
                     self.ui.line_android_weight.setVisible(False)
                     self.ui.label_1000.setVisible(False)
                     self.ui.label_1001.setVisible(False)
+                    sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    start = traineeinfo[0][1]
+                    end = traineeinfo[0][2]
+                    typid = traineeinfo[0][0]
                 else:
                     type1 = "Trainer"
                     self.ui.Add_new_Report.setVisible(False)
@@ -254,13 +259,19 @@ class UIFunction(MainWindow):
                     self.ui.line_android_weight.setVisible(False)
                     self.ui.label_1000.setVisible(False)
                     self.ui.label_1001.setVisible(False)
+                    sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    start = traineeinfo[0][1]
+                    end = traineeinfo[0][2]
+                    typid = traineeinfo[0][0]
                 if type1 != "Employee":
                     self.ui.bn_android.setVisible(False)
-                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
-                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
-                typid = traineeinfo[0][0]
-                start = traineeinfo[0][1]
-                end = traineeinfo[0][2]
+                if type1 == "Trainee":
+                    sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    start = traineeinfo[0][1]
+                    end = traineeinfo[0][2]
+                    typid = traineeinfo[0][0]
                 self.ui.lab_user.setText(str(id))
                 height = "N/A"
                 weight = "N/A"
