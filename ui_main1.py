@@ -2922,18 +2922,18 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.label_101, 5, 0, 1, 1)
 
         #################################################
-        # self.bn_trainee_radio_2 = QRadioButton(self.widget)
-        # sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(
-        #     self.bn_trainee_radio_2.sizePolicy().hasHeightForWidth())
-        # self.bn_trainee_radio_2.setSizePolicy(sizePolicy)
-        # self.bn_trainee_radio_2.setMinimumSize(QSize(0, 20))
-        # # self.bn_trainee_radio_2.setStyleSheet(
-        # #     "background-color:rgb(144, 144, 144)")
-        # self.bn_trainee_radio_2.setObjectName("bn_trainee_radio_2")
-        # self.gridLayout_2.addWidget(self.bn_trainee_radio_2, 6, 0, 1, 1)
+        self.bn_trainee_radio_2 = QRadioButton(self.widget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bn_trainee_radio_2.sizePolicy().hasHeightForWidth())
+        self.bn_trainee_radio_2.setSizePolicy(sizePolicy)
+        self.bn_trainee_radio_2.setMinimumSize(QSize(0, 20))
+        # self.bn_trainee_radio_2.setStyleSheet(
+        #     "background-color:rgb(144, 144, 144)")
+        self.bn_trainee_radio_2.setObjectName("bn_trainee_radio_2")
+        self.gridLayout_2.addWidget(self.bn_trainee_radio_2, 6, 0, 1, 1)
         ################################################
         self.bn_trainer_radio_2 = QRadioButton(self.widget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -4318,7 +4318,7 @@ class Ui_MainWindow(object):
         self.bn_trainee_radio.setText(_translate("MainWindow", "Trainee"))
         self.bn_trainer_radio.setText(_translate("MainWindow", "Trainer"))
         self.bn_employee_radio.setText(_translate("MainWindow", "Employee"))
-        # self.bn_trainee_radio_2.setText(_translate("MainWindow", "Trainee"))
+        self.bn_trainee_radio_2.setText(_translate("MainWindow", "Trainee"))
         self.bn_trainer_radio_2.setText(_translate("MainWindow", "Trainer"))
         self.bn_Employee_radio_2.setText(_translate("MainWindow", "Employee"))
         self.Add_new_user.setText(_translate("MainWindow", "Submit"))

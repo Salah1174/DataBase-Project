@@ -455,29 +455,32 @@ class UIFunction(MainWindow):
             # print(type(inp))
             inp = int(inp)
             # print(type(inp))
-            sql_stmt = "exec getUserInfo ?"
-            cursor.execute(sql_stmt, (inp))
-            fetch1 = cursor.fetchall()
+            try:
+                sql_stmt = "exec getUserInfo ?"
+                cursor.execute(sql_stmt, (inp))
+                fetch1 = cursor.fetchall()
 
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_about_bug)
+                self.ui.stackedWidget.setCurrentWidget(self.ui.page_about_bug)
 
-            if (len(fetch1) == 0):
-                self.ui.lab_bug_main_hed.setText(
-                    ".............."+"Not Found")
-            else:
-                self.ui.lab_bug_main_hed.setText(
-                    ".............."+"Found User with ID:"+str(inp))
-                self.ui.lab_bug_main_disc.setText(f"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                                  f"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                                  f"</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-                                                  f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {
-                                                      fetch1[0][0]}<br />-Name:{fetch1[0][1]}<br />-Email:{fetch1[0][3]}<br />-Address:{fetch1[0][4]}<br />-Birth Date:{fetch1[0][5]}<br />-Phone Number:{fetch1[0][6]}<br />-Registration Date:{fetch1[0][7]}<br />-Age:{fetch1[0][8]}<br /></p>\n"
-                                                  f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p></body></html>")
-
+                if (len(fetch1) == 0):
+                    self.ui.lab_bug_main_hed.setText(
+                        ".............."+"Not Found")
+                else:
+                    self.ui.lab_bug_main_hed.setText(
+                        ".............."+"Found User with ID:"+str(inp))
+                    self.ui.lab_bug_main_disc.setText(f"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                      f"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                      f"</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                                                      f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                      f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {
+                                                          fetch1[0][0]}<br />-Name:{fetch1[0][1]}<br />-Email:{fetch1[0][3]}<br />-Address:{fetch1[0][4]}<br />-Birth Date:{fetch1[0][5]}<br />-Phone Number:{fetch1[0][6]}<br />-Registration Date:{fetch1[0][7]}<br />-Age:{fetch1[0][8]}<br /></p>\n"
+                                                      f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                      f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                      f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                      f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p></body></html>")
+            except:
+                self.errorexec("Invalid Input",
+                               "static/errorAsset 55.png", "Try again")
      ################################################################################
             # if len(fetch.fetchall()) != 0:
             #     self.ui.searchresults.setText("Found")
@@ -519,21 +522,31 @@ class UIFunction(MainWindow):
         elif buttonName == 'bn_android' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
                 id = getUserinfo(self, cursor)[0][0]
-                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
-                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
-                trid = traineeinfo[0][0]
-                type1 = "Trainee"
-                if len(traineeinfo) == 0:
+                sql_stmt = f"select dbo.UserType(?)"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0][0]
+                if traineeinfo == 1:
+                    type1 = "Trainee"
+                    sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    print(traineeinfo)
+                    trid = traineeinfo[0][0]
+                elif traineeinfo == 3:
+                    type1 = "Trainer"
+                    height = 0
+                    weight = 0
+                    data = getUserinfo(self, cursor)
                     sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
                     traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
                     sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
-                    weight = cursor.execute(
-                        sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
-                    height = cursor.execute(
-                        sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
-                    type1 = "Trainer"
-                    self.ui.line_android_height.setText(str(height))
-                    self.ui.line_android_weight.setText(str(weight))
+                    try:
+                        weight = cursor.execute(
+                            sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
+                        height = cursor.execute(
+                            sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
+                    except:
+                        pass
+                    self.ui.line_android_height.setValue(int(height))
+                    self.ui.line_android_weight.setValue(int(weight))
                     sql_stmt = f"SELECT type FROM Membership WHERE TraineeID = ?;"
                     traineeinfo = cursor.execute(sql_stmt, (trid)).fetchall()
                     if traineeinfo == "Premium":
@@ -546,7 +559,7 @@ class UIFunction(MainWindow):
                         self.ui.line_android_membership.setCurrentIndex(3)
                     else:
                         self.ui.line_android_membership.setCurrentIndex(4)
-                if len(traineeinfo) == 0:
+                elif traineeinfo == 2:
                     sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
                     traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
                     type1 = "Employee"
@@ -587,6 +600,8 @@ class UIFunction(MainWindow):
                     APFunction.cloudClear(self)
                 except:
                     print("Error")
+                    self.errorexec("Can't Create User",
+                                   "static/closeAsset 43.png", "OK")
             else:
                 # raise Exception
                 self.errorexec("Invalid Input",
