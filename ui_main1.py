@@ -675,8 +675,12 @@ class Ui_MainWindow(object):
             QDateTime(QDate(2100, 12, 31), QTime(23, 59, 59)))
         self.End_date_field.setMinimumDateTime(
             QDateTime(QDate(1900, 9, 14), QTime(0, 0, 0)))
-        self.End_date_field.setCalendarPopup(True)
-        self.End_date_field.setObjectName("End_date_field")
+        self.Start_date_field.setDateTime(
+            QDateTime(QDate(2024, 1, 1), QTime(0, 0, 0)))
+        self.Start_date_field.setMaximumDateTime(
+            QDateTime(QDate(2100, 12, 31), QTime(23, 59, 59)))
+        self.Start_date_field.setMinimumDateTime(
+            QDateTime(QDate(1900, 9, 14), QTime(0, 0, 0)))
         self.verticalLayout_12.addWidget(self.End_date_field)
         self.pass_field = QLineEdit(self.widget)
         palette = QPalette()
@@ -3520,6 +3524,8 @@ class Ui_MainWindow(object):
         self.line_android_height = QSpinBox(self.frame_android_field)
         self.line_android_height.setEnabled(False)
         self.line_android_height.setMinimumSize(QSize(300, 25))
+        self.line_android_height.setMinimum(80)
+        self.line_android_height.setMaximum(250)
         self.line_android_height.setMaximumSize(QSize(400, 25))
         font = QFont()
         font.setFamily("Segoe UI")
@@ -3546,6 +3552,8 @@ class Ui_MainWindow(object):
         self.line_android_weight.setEnabled(False)
         self.line_android_weight.setMinimumSize(QSize(300, 25))
         self.line_android_weight.setMaximumSize(QSize(400, 25))
+        self.line_android_weight.setMinimum(30)
+        self.line_android_weight.setMaximum(200)
         font = QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(12)

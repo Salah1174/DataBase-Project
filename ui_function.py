@@ -237,7 +237,7 @@ class UIFunction(MainWindow):
                 id = fetch[0][0]
                 password = self.ui.lineEdit_2.text()
                 sql_stmt = f"select dbo.UserType(?)"
-                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0][0]
                 if traineeinfo == 1:
                     type1 = "Trainee"
                 elif traineeinfo == 2:
@@ -266,10 +266,13 @@ class UIFunction(MainWindow):
                 weight = "N/A"
                 if type1 == "Trainee":
                     sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=?  COLLATE Latin1_General_CS_AS)"
-                    weight = cursor.execute(
-                        sql_stmt, (username, password)).fetchall()[0][1]
-                    height = cursor.execute(
-                        sql_stmt, (username, password)).fetchall()[0][0]
+                    try:
+                        weight = cursor.execute(
+                            sql_stmt, (username, password)).fetchall()[0][1]
+                        height = cursor.execute(
+                            sql_stmt, (username, password)).fetchall()[0][0]
+                    except:
+                        pass
                 self.ui.lab_home_stat_disc.setText(
                     f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>{type1}id: {typid}<br />Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Start Date: {start}<br/>End Date: {end}<br/>Birth Date: {Bdate}<br/>Height: {height}<br/>Weight: {weight}</span></p></body></html>")
             else:
@@ -361,16 +364,48 @@ class UIFunction(MainWindow):
             self.ui.line_android_membership.setEnabled(y)
 
         elif buttonName == 'bn_android_contact_save':
-            sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
-            id = getUserinfo(self, cursor)[0][0]
-            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
-            id = traineeinfo[0][3]
-            type1 = "Trainee"
-            if len(traineeinfo) == 0:
+            sql_stmt = f"select dbo.UserType(?)"
+            data = getUserinfo(self, cursor)
+            id = data[0][0]
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
+            traineeinfo = traineeinfo[0]
+            if traineeinfo == 1:
+                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                trid = traineeinfo[0][0]
+                print(trid)
+                print(type(trid))
+                id = traineeinfo[0][3]
+                start = traineeinfo[0][1]
+                end = traineeinfo[0][2]
+                ind = self.ui.line_android_membership.currentIndex()
+                print(ind)
+                print(type(ind))
+                if ind == 0:
+                    membership = "Premium"
+                elif ind == 1:
+                    membership = "Gold"
+                elif ind == 2:
+                    membership = "Silver"
+                elif ind == 3:
+                    membership = "Bronze"
+                else:
+                    membership = "Not Detemined"
+                sql_stmt = f"insert into Membership (TraineeID,start,[end],type) values (?,?,?,?)"
+                cursor.execute(sql_stmt, (trid, start, end, membership))
+                sql_stmt = f"select * from Report where TraineeID=?"
+                traineeinfo = cursor.execute(sql_stmt, (trid)).fetchall()
+                print(traineeinfo)
+                if len(traineeinfo) == 0:
+                    sql_stmt = f"insert into Report (TraineeID, Weight, Height) values (?,?,?)"
+                    cursor.execute(sql_stmt, (trid, int(self.ui.line_android_weight.text()), int(
+                        self.ui.line_android_height.text())))
+                type1 = "Trainee"
+            if traineeinfo == 3:
                 sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
                 traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
                 type1 = "Trainer"
-            if len(traineeinfo) == 0:
+            if traineeinfo == 2:
                 sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
                 traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
                 type1 = "Employee"
@@ -385,6 +420,7 @@ class UIFunction(MainWindow):
             self.ui.line_android_membership.setEnabled(False)
             self.ui.line_android_adress.setEnabled(False)
             self.ui.line_android_weight.setEnabled(False)
+            self.ui.line_android_height.setEnabled(False)
 
             if self.ui.Full_name_field.text() == "":
                 username = self.ui.lineEdit.text()
@@ -401,16 +437,19 @@ class UIFunction(MainWindow):
             phone = self.ui.line_android_adress.text()
             address = self.ui.line_android_ph.text()
             email = self.ui.line_android_email.text()
-            height = self.ui.line_android_height.text()
-            height = int(height)
-            weight = self.ui.line_android_weight.text()
-            weight = int(weight)
+            sql_stmt = f"select dbo.UserType(?)"
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0][0]
+            if traineeinfo == 1:
+                height = self.ui.line_android_height.text()
+                height = int(height)
+                weight = self.ui.line_android_weight.text()
+                weight = int(weight)
+                sql_stmt = "insert into Report (TraineeID, Weight, Height) values (?,?,?)"
+                cursor.execute(
+                    sql_stmt, (id, weight, height))
             sql_stmt = "exec edituserinfo ?,?,?,?,?,?"
             cursor.execute(
                 sql_stmt, (id, password, username, phone, email, address))
-            sql_stmt = "insert into Report (TraineeID, Weight, Height) values (?,?,?)"
-            cursor.execute(
-                sql_stmt, (id, weight, height))
         elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
             # print(type(inp))
@@ -452,6 +491,7 @@ class UIFunction(MainWindow):
                 self.ui.frame_bug.setStyleSheet("background:rgb(91,90,90)")
 
         elif buttonName == 'bn_cloud' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
+            data = getUserinfo(self, cursor)
             if self.ui.frame_bottom_west.width() == 80:
                 fetch = loginUser(self.ui.lineEdit.text(),
                                   self.ui.lineEdit_2.text(), cursor)
@@ -465,8 +505,9 @@ class UIFunction(MainWindow):
                     username, password)).fetchall()[0][0]
                 # print(email)
                 self.ui.line_android_name.setText(username)
-                self.ui.line_android_adress.setText("")
-                self.ui.line_android_ph.setText("")
+                print(data)
+                self.ui.line_android_adress.setText(data[0][6])
+                self.ui.line_android_ph.setText(data[0][4])
                 self.ui.line_android_email.setText(str(email))
                 self.ui.stackedWidget.setCurrentWidget(
                     self.ui.page_android)
@@ -480,11 +521,31 @@ class UIFunction(MainWindow):
                 id = getUserinfo(self, cursor)[0][0]
                 sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
                 traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                trid = traineeinfo[0][0]
                 type1 = "Trainee"
                 if len(traineeinfo) == 0:
                     sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
                     traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                    sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
+                    weight = cursor.execute(
+                        sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
+                    height = cursor.execute(
+                        sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
                     type1 = "Trainer"
+                    self.ui.line_android_height.setText(str(height))
+                    self.ui.line_android_weight.setText(str(weight))
+                    sql_stmt = f"SELECT type FROM Membership WHERE TraineeID = ?;"
+                    traineeinfo = cursor.execute(sql_stmt, (trid)).fetchall()
+                    if traineeinfo == "Premium":
+                        self.ui.line_android_membership.setCurrentIndex(0)
+                    elif traineeinfo == "Gold":
+                        self.ui.line_android_membership.setCurrentIndex(1)
+                    elif traineeinfo == "Silver":
+                        self.ui.line_android_membership.setCurrentIndex(2)
+                    elif traineeinfo == "Bronze":
+                        self.ui.line_android_membership.setCurrentIndex(3)
+                    else:
+                        self.ui.line_android_membership.setCurrentIndex(4)
                 if len(traineeinfo) == 0:
                     sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
                     traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
@@ -535,21 +596,26 @@ class UIFunction(MainWindow):
             data = getUserinfo(self, cursor)
             id = data[0][0]
             sql_stmt = f"select dbo.UserType(?)"
-            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0][0]
             sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
-            weight = cursor.execute(
-                sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
-            height = cursor.execute(
-                sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
+            try:
+                weight = cursor.execute(
+                    sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
+                height = cursor.execute(
+                    sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
+            except:
+                pass
             sql_stmt = f"select TraineeID from Trainee where UserID=?"
             TraineeID = cursor.execute(
                 sql_stmt, (data[0][0])).fetchall()[0][0]
-            # sql_stmt = f"select ReportID from Report,Users,Trainee where Users.UserID=Trainee.UserID and Report.TraineeID=?"
+            sql_stmt = f"select ReportID from Report,Users,Trainee where Users.UserID=Trainee.UserID and Report.TraineeID=?"
             ReportID = cursor.execute(
                 sql_stmt, (TraineeID)).fetchall()[0][0]
             disc = "seifooo"
             generate_data(ReportID, TraineeID, height,
                           weight, disc)
+            self.errorexec("Report Created Successfully",
+                           "static/smile2Asset 1.png", "OK")
 
         # SQL Insert Procedure
         #             CREATE PROCEDURE InsertReport

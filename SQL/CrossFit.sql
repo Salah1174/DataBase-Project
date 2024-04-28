@@ -11,7 +11,6 @@ CREATE TABLE Users
     Email NVARCHAR(100) UNIQUE,
     U_Address NVARCHAR(255),
     BirthDate DATE NOT NULL,
-
     RegistrationDate DATETIME DEFAULT GETDATE(),
     Age AS (DATEDIFF(YEAR, Birthdate, GETDATE())),
     CONSTRAINT USER_PK PRIMARY KEY (UserID)
@@ -31,11 +30,12 @@ GO
 CREATE TABLE [Employee]
 (
     [EmployeeID] INT IDENTITY(1,1),
-    [EmployeeSalary] FLOAT NOT NULL,
+    [EmployeeSalary] FLOAT NULL,
     [UserID] int not null,
     CONSTRAINT EMPLOYEE_PK PRIMARY KEY (EmployeeID),
     CONSTRAINT FK_User_Employee FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
+
 GO
 
 CREATE TABLE [Trainer]
@@ -102,6 +102,9 @@ CREATE TABLE [Report]
 
 
 
+
+
+
 select ReportID
 from Report r join Trainee t on r.TraineeID=t.TraineeID join Users u on u.UserID=t.TraineeID
 select *
@@ -114,17 +117,6 @@ where Users.UserID=Trainee.UserID and Report.TraineeID=Trainee.TraineeID
 
 
 
-select Height, Weight
-from Report r join Trainee t on t.TraineeID=r.TraineeID
-where userID in (select UserID
-from Users
-where Username='john_do')
-
-select *
-from Trainee
-
-select *
-from Users
 GO
 
 CREATE TABLE [Programs]
@@ -389,6 +381,7 @@ END;
 
 -- Execute Select Address
 EXECUTE SelectAddress @p_UserID = 2;
+
 
 GO
 create procedure getUserInfo
