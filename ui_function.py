@@ -3,6 +3,8 @@ import datetime
 from main import *  # IMPORTING THE MAIN.PY FILE
 import pyodbc
 
+from docx import Document
+
 GLOBAL_STATE = 0  # NECESSERY FOR CHECKING WEATHER THE WINDWO IS FULL SCREEN OR NOT
 # NECESSERY FOR CHECKING WEATHER THE WINDWO IS FULL SCREEN OR NOT
 GLOBAL_TITLE_BAR = True
@@ -14,6 +16,31 @@ init = False  # NECRESSERY FOR INITITTION OF THE WINDOW.
 USERNAME = ""
 PASSWORD = ""
 ID = -1
+
+def fill_information(template_path, output_path, data):
+    doc = Document(template_path)
+    for paragraph in doc.paragraphs:
+        for key, value in data.items():
+            if key in paragraph.text:
+                for run in paragraph.runs:
+                    run.text = run.text.replace(key, str(value))  
+
+    doc.save(output_path)
+
+def generate_data(TraineeID, ReportID, TrainerID, Height, Weight, Desc):
+    data = {}
+    data['[trainees]'] = TraineeID
+    data['[Report]'] = ReportID
+    data['[Trainer]'] = TrainerID
+    data['[Height]'] = Height
+    data['[Weight]'] = Weight
+    data['[Desc]'] = Desc
+
+    template_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\ReportTemplate.docx'
+    output_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\Report_{1}.docx'
+    fill_information(template_path, output_path, data)
+    print(data.items())
+
 
 
 def createUser(cursor, Fullname, startDate, endDate, type1, Bdate, password, email, address=None, phone=None):
@@ -377,11 +404,9 @@ class UIFunction(MainWindow):
                                                   f"</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">User Found!<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {
-                                                      fetch1[0][0]}<br /></p>\n"
+                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {fetch1[0][0]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"-Name:{
-                                                      fetch1[0][1]}<br /></p>\n"
+                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"-Name:{fetch1[0][1]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Proper Form is Crucial:<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
@@ -450,7 +475,6 @@ class UIFunction(MainWindow):
                 elif type1 == "Trainee":
                     self.ui.line_android_role.setModelColumn(5)
                     self.ui.line_android_membership.setModelColumn(4)
-
         elif buttonName == 'bn_cloud_connect':
             name = self.ui.line_cloud_id.text()
             password = self.ui.line_cloud_adress.text()
@@ -481,7 +505,34 @@ class UIFunction(MainWindow):
                 # raise Exception
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
+       
+       
+       
+        elif buttonName == 'Add_new_Report':
+            print("Report")
+            csv_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\Trainee ID,Report ID,Trainer ID,Hei.csv'
+            template_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\ReportTemplate.docx'
+            generate_data(template_path,csv_path)
+            
+        ##SQL Insert Procedure
+        #             CREATE PROCEDURE InsertReport
+        # (
+        #     @TraineeID INT,
+        #     @Weight FLOAT,
+        #     @Height INT,
+        #     @Description TEXT
+        # )
+        # AS
+        # BEGIN
+        #     INSERT INTO [Report] ([TraineeID], [Weight], [Height], [Description])
+        #     VALUES (@TraineeID, @Weight, @Height, @Description);
+            
+        #     SELECT SCOPE_IDENTITY() AS ReportID; -- Return the ID of the newly inserted report
+        # END;
 
+        ##Execution of Procedure 
+        # EXEC InsertReport @TraineeID = 1, @Weight = 70.5, @Height = 180, @Description = 'Progress report for April';
+        
         # ADD ANOTHER ELIF STATEMENT HERE FOR EXECTUITING A NEW MENU BUTTON STACK PAGE.
     ########################################################################################################################
 

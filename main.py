@@ -189,8 +189,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     try:
         connection = pyodbc.connect('DRIVER={SQL Server};' +
-                                    'Server=LAPTOP-019RIHG4;' +
-                                    'Database=CrossFit;' +
+                                    'Server=SALAHJR;' +
+                                    'Database=CrossFit1;' +
                                     'Trusted_Connection=True;')
 
         print("Connection Established")

@@ -84,8 +84,7 @@ class Ui_Dialog(object):
                                   "	background-color: rgb(51,51,51);\n"
                                   "}")
         icon = QIcon()
-        icon.addFile(u"static/hideAsset 53.png",
-                     QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"C:\ASU\ASU\SEM 6\Database Systems\Project\DataBase-Project\static\hideAsset 53.png",QSize(), QIcon.Normal, QIcon.Off)
         self.bn_min.setIcon(icon)
         self.bn_min.setIconSize(QSize(22, 12))
         self.bn_min.setAutoDefault(False)
