@@ -94,10 +94,37 @@ CREATE TABLE [Report]
     [TraineeID] int NOT NULL,
     [Weight] float NOT NULL,
     [Height] int NOT NULL,
-    [Description] TEXT NOT NULL,
+    [Description] TEXT ,
     CONSTRAINT REPORT_PK PRIMARY KEY (ReportID),
     CONSTRAINT REPORT_TRAINEE_FK  FOREIGN KEY (TraineeID) REFERENCES Trainee (TraineeID)
 )
+
+
+
+
+select ReportID
+from Report r join Trainee t on r.TraineeID=t.TraineeID join Users u on u.UserID=t.TraineeID
+select *
+from Users
+
+select ReportID
+from Report, Users, Trainee
+where Users.UserID=Trainee.UserID and Report.TraineeID=Trainee.TraineeID
+
+
+
+
+select Height, Weight
+from Report r join Trainee t on t.TraineeID=r.TraineeID
+where userID in (select UserID
+from Users
+where Username='john_do')
+
+select *
+from Trainee
+
+select *
+from Users
 GO
 
 CREATE TABLE [Programs]
@@ -182,116 +209,6 @@ CREATE TABLE [Equipment_Programs]
 
 );
 GO
---Insertions
-
---Insert Into Users
-INSERT INTO Users
-    (Username, PasswordHash, Email, U_Address, BirthDate)
-VALUES
-    ('john_do', 'hashed_passwor', 'john.oe@example.com', '123 Main St', '1990-01-01');
-
---Insert Into Trainee
-INSERT INTO Trainee
-    (StartMembership, EndMembership, UserID)
-SELECT '2024-04-23', '2025-04-23', 2
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Trainer
-    WHERE Trainer.UserID = 2
-)AND NOT EXISTS (
-    SELECT 1
-    FROM Employee
-    WHERE Employee.UserID = 5
-);
-
---Insert into Employee
-INSERT INTO Employee
-    (EmployeeSalary, UserID)
-SELECT 50000.00, 3
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Trainee
-    WHERE Trainee.UserID = 3
-)AND NOT EXISTS (
-    SELECT 1
-    FROM Trainer
-    WHERE Trainer.UserID = 3
-);
-
---Insert into Trainer
-INSERT INTO Trainer
-    (TrainerRole, UserID)
-SELECT 'Coach', 5
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Trainee
-    WHERE Trainee.UserID = 5
-)
-    AND NOT EXISTS (
-    SELECT 1
-    FROM Employee
-    WHERE Employee.UserID = 5
-);
-
---Insert Into Equipment
-INSERT INTO Equipment
-    (EquipmentName, [Condition])
-VALUES
-    ('Treadmill', 'Good');
-
---Insert into Transactions
-INSERT INTO Transactions
-    (TransactionName, Amount, Date, TraineeID, EmployeeID)
-VALUES
-    ('Membership Fee', 100.00, '2024-04-23', 1, 1);
-
---Insert Into Membership
-INSERT INTO Membership
-    (TraineeID, [start], [end], [type])
-VALUES
-    (1, '2024-04-23', '2025-04-23', 'Annual');
-
---Inserto into Report
-INSERT INTO Report
-    (TraineeID, Weight, Height, Description)
-VALUES
-    (1, 70.5, 175, 'Report description goes here.');
-
---Insert into Programs
-INSERT INTO Programs
-    (Name, description, Schedule, TrainerID, Capacity)
-VALUES
-    ('Weight Loss Program', 'This program focuses on weight loss through exercise and diet.', 'Monday to Friday, 6:00 PM - 7:00 PM', 1, 20);
-
---Insert into Product
-INSERT INTO Product
-    (ProdcutName, ProductType, Price, Quantity, ExpiryDate, CafeteriaID)
-VALUES
-    ('Product1', 'Type1', 10.99, 100, '2024-12-31', 1);
-
---Insert into Cafateria
-INSERT INTO Cafeteria
-    (EmployeeID, ProductID, NumofTables)
-VALUES
-    (1, 1, 10);
-
---Insert into Programs Trainer
-INSERT INTO Programs_Trainer
-    (ProgramID, TrainerID)
-VALUES
-    (1, 1);
-
---Insert into Programs Trainee
-INSERT INTO Programs_Trainee
-    (ProgramID, TraineeID)
-VALUES
-    (1, 1);
-
---Insert into Programs Equipment
-INSERT INTO Equipment_Programs
-    (EquipmentID, ProgramID)
-VALUES
-    (1, 1);
 
 
 GO
@@ -484,3 +401,157 @@ begin
 end;
 
 exec getUserInfo 16;
+
+
+GO
+CREATE FUNCTION UserType(@UserID as int)
+RETURNS INT 
+AS 
+BEGIN
+    DECLARE @UserType INT
+
+    SELECT @UserType = 
+        CASE 
+            WHEN EXISTS (SELECT 1
+        FROM Trainee
+        WHERE UserID = @UserID) THEN 1
+            WHEN EXISTS (SELECT 1
+        FROM Employee
+        WHERE UserID = @UserID) THEN 2
+            WHEN EXISTS (SELECT 1
+        FROM Trainer
+        WHERE UserID = @UserID) THEN 3
+            --ELSE 0 -- Assuming 0 for unknown user type
+        END
+
+    RETURN @UserType
+END
+
+select *
+from Users
+
+select dbo.UserType(9)
+
+
+
+--Insertions --> Done with GUI
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+-- --Insert Into Users
+-- INSERT INTO Users
+--     (Username, PasswordHash, Email, U_Address, BirthDate)
+-- VALUES
+--     ('john_do', 'hashed_passwor', 'john.oe@example.com', '123 Main St', '1990-01-01');
+
+-- --Insert Into Trainee
+-- INSERT INTO Trainee
+--     (StartMembership, EndMembership, UserID)
+-- SELECT '2024-04-23', '2025-04-23', 2
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM Trainer
+--     WHERE Trainer.UserID = 2
+-- )AND NOT EXISTS (
+--     SELECT 1
+--     FROM Employee
+--     WHERE Employee.UserID = 5
+-- );
+
+-- --Insert into Employee
+-- INSERT INTO Employee
+--     (EmployeeSalary, UserID)
+-- SELECT 50000.00, 3
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM Trainee
+--     WHERE Trainee.UserID = 3
+-- )AND NOT EXISTS (
+--     SELECT 1
+--     FROM Trainer
+--     WHERE Trainer.UserID = 3
+-- );
+
+-- --Insert into Trainer
+-- INSERT INTO Trainer
+--     (TrainerRole, UserID)
+-- SELECT 'Coach', 5
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM Trainee
+--     WHERE Trainee.UserID = 5
+-- )
+--     AND NOT EXISTS (
+--     SELECT 1
+--     FROM Employee
+--     WHERE Employee.UserID = 5
+-- );
+
+-- --Insert Into Equipment
+-- INSERT INTO Equipment
+--     (EquipmentName, [Condition])
+-- VALUES
+--     ('Treadmill', 'Good');
+
+-- --Insert into Transactions
+-- INSERT INTO Transactions
+--     (TransactionName, Amount, Date, TraineeID, EmployeeID)
+-- VALUES
+--     ('Membership Fee', 100.00, '2024-04-23', 1, 1);
+
+-- --Insert Into Membership
+-- INSERT INTO Membership
+--     (TraineeID, [start], [end], [type])
+-- VALUES
+--     (1, '2024-04-23', '2025-04-23', 'Annual');
+
+-- --Inserto into Report
+-- INSERT INTO Report
+--     (TraineeID, Weight, Height, Description)
+-- VALUES
+--     (1, 70.5, 175, 'Report description goes here.');
+
+-- --Insert into Programs
+-- INSERT INTO Programs
+--     (Name, description, Schedule, TrainerID, Capacity)
+-- VALUES
+--     ('Weight Loss Program', 'This program focuses on weight loss through exercise and diet.', 'Monday to Friday, 6:00 PM - 7:00 PM', 1, 20);
+
+-- --Insert into Product
+-- INSERT INTO Product
+--     (ProdcutName, ProductType, Price, Quantity, ExpiryDate, CafeteriaID)
+-- VALUES
+--     ('Product1', 'Type1', 10.99, 100, '2024-12-31', 1);
+
+-- --Insert into Cafateria
+-- INSERT INTO Cafeteria
+--     (EmployeeID, ProductID, NumofTables)
+-- VALUES
+--     (1, 1, 10);
+
+-- --Insert into Programs Trainer
+-- INSERT INTO Programs_Trainer
+--     (ProgramID, TrainerID)
+-- VALUES
+--     (1, 1);
+
+-- --Insert into Programs Trainee
+-- INSERT INTO Programs_Trainee
+--     (ProgramID, TraineeID)
+-- VALUES
+--     (1, 1);
+
+-- --Insert into Programs Equipment
+-- INSERT INTO Equipment_Programs
+--     (EquipmentID, ProgramID)
+-- VALUES
+--     (1, 1);
+
+-- insert into Report
+--     (TraineeID,Weight,Height)
+-- values
+--     (4, 100, 170)
+
+
+
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------

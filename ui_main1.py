@@ -2578,7 +2578,7 @@ class Ui_MainWindow(object):
         self.lab_bug_main_disc = QLabel(self.frame_bug_main)
         font = QFont()
         font.setFamily("Segoe UI")
-        font.setPointSize(10)
+        font.setPointSize(14)
         self.lab_bug_main_disc.setFont(font)
         self.lab_bug_main_disc.setText("Seif Yasser")
         self.lab_bug_main_disc.setStyleSheet("color:rgb(255,255,255);")
@@ -2594,7 +2594,7 @@ class Ui_MainWindow(object):
         self.searchresults.setMaximumSize(QSize(16777215, 55))
         font = QFont()
         font.setFamily("Segoe UI")
-        font.setPointSize(24)
+        font.setPointSize(30)
         self.searchresults.setFont(font)
         self.searchresults.setStyleSheet("QLabel {\n"
                                          "    color:rgb(255,255,255);\n"
@@ -2640,31 +2640,6 @@ class Ui_MainWindow(object):
         # self.gridLayout.addWidget(self.photos, 5, 3, 1, 1)
 
         # self.searchresults=Q
-        self.searchresults = QLabel(self.page_exercises)
-        self.searchresults.setMinimumSize(QSize(0, 55))
-        self.searchresults.setMaximumSize(QSize(16777215, 55))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(24)
-        self.searchresults.setFont(font)
-        self.searchresults.setStyleSheet("QLabel {\n"
-                                         "    color:rgb(255,255,255);\n"
-                                         "}")
-        self.searchresults.setObjectName("searchresults")
-        self.gridLayout.addWidget(self.searchresults, 6, 2, 2, 2)
-
-        self.searchresults_2 = QLabel(self.page_exercises)
-        self.searchresults_2.setMinimumSize(QSize(0, 55))
-        self.searchresults_2.setMaximumSize(QSize(16777215, 55))
-        font = QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(24)
-        self.searchresults_2.setFont(font)
-        self.searchresults_2.setStyleSheet("QLabel {\n"
-                                           "    color:rgb(255,255,255);\n"
-                                           "}")
-        self.searchresults_2.setObjectName("searchresults_2")
-        self.gridLayout.addWidget(self.searchresults_2, 7, 2, 2, 2)
 
         self.lab_bullet3 = QLabel(self.frame_bug_main)
         self.lab_bullet3.setMaximumSize(QSize(5, 16777215))
@@ -2943,18 +2918,18 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.label_101, 5, 0, 1, 1)
 
         #################################################
-        self.bn_trainee_radio_2 = QRadioButton(self.widget)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.bn_trainee_radio_2.sizePolicy().hasHeightForWidth())
-        self.bn_trainee_radio_2.setSizePolicy(sizePolicy)
-        self.bn_trainee_radio_2.setMinimumSize(QSize(0, 20))
-        # self.bn_trainee_radio_2.setStyleSheet(
-        #     "background-color:rgb(144, 144, 144)")
-        self.bn_trainee_radio_2.setObjectName("bn_trainee_radio_2")
-        self.gridLayout_2.addWidget(self.bn_trainee_radio_2, 6, 0, 1, 1)
+        # self.bn_trainee_radio_2 = QRadioButton(self.widget)
+        # sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        # sizePolicy.setHorizontalStretch(0)
+        # sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHeightForWidth(
+        #     self.bn_trainee_radio_2.sizePolicy().hasHeightForWidth())
+        # self.bn_trainee_radio_2.setSizePolicy(sizePolicy)
+        # self.bn_trainee_radio_2.setMinimumSize(QSize(0, 20))
+        # # self.bn_trainee_radio_2.setStyleSheet(
+        # #     "background-color:rgb(144, 144, 144)")
+        # self.bn_trainee_radio_2.setObjectName("bn_trainee_radio_2")
+        # self.gridLayout_2.addWidget(self.bn_trainee_radio_2, 6, 0, 1, 1)
         ################################################
         self.bn_trainer_radio_2 = QRadioButton(self.widget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -4335,7 +4310,7 @@ class Ui_MainWindow(object):
         self.bn_trainee_radio.setText(_translate("MainWindow", "Trainee"))
         self.bn_trainer_radio.setText(_translate("MainWindow", "Trainer"))
         self.bn_employee_radio.setText(_translate("MainWindow", "Employee"))
-        self.bn_trainee_radio_2.setText(_translate("MainWindow", "Trainee"))
+        # self.bn_trainee_radio_2.setText(_translate("MainWindow", "Trainee"))
         self.bn_trainer_radio_2.setText(_translate("MainWindow", "Trainer"))
         self.bn_Employee_radio_2.setText(_translate("MainWindow", "Employee"))
         self.Add_new_user.setText(_translate("MainWindow", "Submit"))

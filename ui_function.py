@@ -41,7 +41,7 @@ def generate_data(ReportID, TrainerID, Height, Weight, Desc):
     output_path = fr'C:\Users\Seif Yasser\Desktop\DataBase\Project\db-Team5\Repo\DataBase-Project\Report_{
         TrainerID}.docx'
     fill_information(template_path, output_path, data)
-    print(data.items())
+    # print(data.items())
 
 
 def createUser(cursor, Fullname, startDate, endDate, type1, Bdate, password, email, address=None, phone=None):
@@ -51,7 +51,7 @@ def createUser(cursor, Fullname, startDate, endDate, type1, Bdate, password, ema
     cursor.execute(sql_stmt, (Fullname, password, email, address, Bdate))
     cursor.execute("SELECT @@IDENTITY")
     UserID = cursor.fetchone()[0]
-    print(UserID)
+    # print(UserID)
 
     if type1 == "Trainee":
 
@@ -75,22 +75,22 @@ AND NOT EXISTS (
         cursor.execute(sql_stmt, (startDate, endDate,
                        UserID, UserID, UserID, UserID))
     elif type1 == "Trainer":
-        sql_stmt = '''INSERT INTO [Team-5].[dbo].[Trainer] (TrainerRole, UserID)
+        sql_stmt = '''INSERT INTO Trainer (TrainerRole, UserID)
         SELECT 'Coach', ?
         WHERE NOT EXISTS (
             SELECT 1
-            FROM [Team-5].[dbo].[Trainee]
-            WHERE [Team-5].[dbo].[Trainee].UserID = ?
+            FROM Trainee
+            WHERE Trainee.UserID = ?
         )
         AND NOT EXISTS(
             SELECT 1
-            FROM [Team-5].[dbo].[Trainer]
-            WHERE [Team-5].[dbo].Trainer.UserID = ?
+            FROM Trainer
+            WHERE Trainer.UserID = ?
         )
         AND NOT EXISTS (
             SELECT 1
-            FROM [Team-5].[dbo].[Employee]
-            WHERE [Team-5].[dbo].[Employee].UserID = ?
+            FROM Employee
+            WHERE Employee.UserID = ?
         );'''
         cursor.execute(sql_stmt, (UserID, UserID, UserID, UserID))
     elif type1 == "Employee":
@@ -210,7 +210,7 @@ class UIFunction(MainWindow):
             each.setStyleSheet("background:rgb(51,51,51)")
 
         if buttonName == 'bn_home' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
-            print(index)
+            # print(index)
             if self.ui.frame_bottom_west.width() == 80 and index != 1:
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
                 self.ui.lab_tab.setText("Home")
@@ -224,8 +224,8 @@ class UIFunction(MainWindow):
                 self.ui.frame_home.setStyleSheet("background:rgb(91,90,90)")
 
         elif buttonName == "submit":
-            print(self.ui.stackedWidget.currentWidget())
-            print(self.ui.page_login)
+            # print(self.ui.stackedWidget.currentWidget())
+            # print(self.ui.page_login)
             fetch = loginUser(self.ui.lineEdit.text(),
                               self.ui.lineEdit_2.text(), cursor)
             if len(fetch) != 0 and self.ui.lineEdit.text() != "" and self.ui.lineEdit_2.text() != "":
@@ -280,14 +280,11 @@ class UIFunction(MainWindow):
             self.ui.stackedWidget.setCurrentWidget(self.ui.sign_up)
 
         elif buttonName == 'Add_new_user':
-            if self.ui.bn_trainee_radio.toggled:
-                print("Trainee")
+            if bool(self.ui.bn_trainee_radio.isChecked()):
                 type1 = "Trainee"
-            elif self.ui.bn_trainer_radio.toggled:
-                print("Trainer")
+            elif bool(self.ui.bn_trainer_radio.isChecked()):
                 type1 = "Trainer"
-            elif self.ui.bn_employee_radio.toggled:
-                print("Employee")
+            elif bool(self.ui.bn_employee_radio.isChecked()):
                 type1 = "Employee"
             username = self.ui.Full_name_field.text()
             start = self.ui.Start_date_field.date().toPython()
@@ -303,7 +300,6 @@ class UIFunction(MainWindow):
                 createUser(cursor, username, start, end,
                            type1, Bdate, password, email)
                 try:
-                    print(username.split()[0])
                     sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
                     id = cursor.execute(
                         sql_stmt, (username, password)).fetchall()[0][0]
@@ -313,17 +309,22 @@ class UIFunction(MainWindow):
                 # self.ui.lab_user.setText(name.split()[0])
                 # member = cursor.execute(
                 #     "Select type1 from Membership where TraineeID = ?", (id)).fetchall()[0][4]
-                sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
-                weight = cursor.execute(
-                    sql_stmt, (username, password)).fetchall()[0][1]
-                height = cursor.execute(
-                    sql_stmt, (username, password)).fetchall()[0][0]
+                weight = "N/A"
+                height = "N/A"
+                if type1 == "Trainee":
+                    sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
+                    weight = cursor.execute(
+                        sql_stmt, (username, password)).fetchall()[0][1]
+                    height = cursor.execute(
+                        sql_stmt, (username, password)).fetchall()[0][0]
+                else:
+                    self.ui.Add_new_Report.setVisible(False)
+                    weight = "N/A"
+                    height = "N/A"
                 self.ui.lab_home_stat_disc.setText(
                     f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}<br/>Height: {height}<br/>Weight: {weight}<br/>MemberShip type: N/A </span></p></body></html>")
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-
             else:
-                #     raise Exception
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
         elif buttonName == 'bn_android_contact_edit':
@@ -412,9 +413,9 @@ class UIFunction(MainWindow):
                 sql_stmt, (id, weight, height))
         elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
-            print(type(inp))
+            # print(type(inp))
             inp = int(inp)
-            print(type(inp))
+            # print(type(inp))
             sql_stmt = "exec getUserInfo ?"
             cursor.execute(sql_stmt, (inp))
             fetch1 = cursor.fetchall()
@@ -423,24 +424,18 @@ class UIFunction(MainWindow):
 
             if (len(fetch1) == 0):
                 self.ui.lab_bug_main_hed.setText(
-                    "........................Not Found")
+                    ".............."+"Not Found")
             else:
                 self.ui.lab_bug_main_hed.setText(
-                    "........................................"+str(inp))
+                    ".............."+"Found User with ID:"+str(inp))
                 self.ui.lab_bug_main_disc.setText(f"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                   f"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                   f"</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">User Found!<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {
-                                                      fetch1[0][0]}<br /></p>\n"
+                                                      fetch1[0][0]}<br />-Name:{fetch1[0][1]}<br />-Email:{fetch1[0][3]}<br />-Address:{fetch1[0][4]}<br />-Birth Date:{fetch1[0][5]}<br />-Phone Number:{fetch1[0][6]}<br />-Registration Date:{fetch1[0][7]}<br />-Age:{fetch1[0][8]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"-Name:{
-                                                      fetch1[0][1]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Proper Form is Crucial:<br /></p>\n"
-                                                  f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p></body></html>")
 
@@ -448,7 +443,7 @@ class UIFunction(MainWindow):
             # if len(fetch.fetchall()) != 0:
             #     self.ui.searchresults.setText("Found")
             #     self.ui.searchresults.setText(str(fetch.fetchall()[0]))
-            print(inp)
+            # print(inp)
 
         elif buttonName == 'bn_bug' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             if self.ui.frame_bottom_west.width() == 80:
@@ -468,7 +463,7 @@ class UIFunction(MainWindow):
                     password = self.ui.lineEdit_2.text()
                 email = cursor.execute("select email from Users where Username=? and PasswordHash=?", (
                     username, password)).fetchall()[0][0]
-                print(email)
+                # print(email)
                 self.ui.line_android_name.setText(username)
                 self.ui.line_android_adress.setText("")
                 self.ui.line_android_ph.setText("")
@@ -522,7 +517,7 @@ class UIFunction(MainWindow):
                 createUser(cursor, name, start, end,
                            type1, birth, password, email)
                 try:
-                    print(name.split()[0])
+                    # print(name.split()[0])
                     sql_stmt = f"SELECT * FROM Users WHERE Users.Username = ? AND Users.PasswordHash = ? COLLATE Latin1_General_CS_AS;"
                     id = cursor.execute(
                         sql_stmt, (name, password)).fetchall()[0][0]
@@ -537,10 +532,11 @@ class UIFunction(MainWindow):
                                "static/errorAsset 55.png", "Try again")
 
         elif buttonName == 'Add_new_Report':
+            data = getUserinfo(self, cursor)
+            id = data[0][0]
             sql_stmt = f"select dbo.UserType(?)"
             traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
             sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
-            data = getUserinfo(self, cursor)
             weight = cursor.execute(
                 sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
             height = cursor.execute(
@@ -548,7 +544,7 @@ class UIFunction(MainWindow):
             sql_stmt = f"select TraineeID from Trainee where UserID=?"
             TraineeID = cursor.execute(
                 sql_stmt, (data[0][0])).fetchall()[0][0]
-            sql_stmt = f"select ReportID from Report,Users,Trainee where Users.UserID=Trainee.UserID and Report.TraineeID=?"
+            # sql_stmt = f"select ReportID from Report,Users,Trainee where Users.UserID=Trainee.UserID and Report.TraineeID=?"
             ReportID = cursor.execute(
                 sql_stmt, (TraineeID)).fetchall()[0][0]
             disc = "seifooo"

@@ -141,22 +141,12 @@ class MainWindow(QMainWindow):
         #############################################################
 
         inp = self.ui.line_android_name.text()
-        print(inp)
-        # self.ui.bn_android_contact_save.clicked.connect(
-        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save'))
-        # self.ui.bn_android_contact_edit.clicked.connect(
-        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit'))
         self.ui.bn_bug_start.clicked.connect(
             lambda: UIFunction.buttonPressed(self, 'bn_bug_start', connection, cursor))
         self.ui.bn_cloud_connect.clicked.connect(
             lambda: UIFunction.buttonPressed(self, "bn_cloud_connect", connection, cursor))
         self.ui.bn_cloud_clear.clicked.connect(
             lambda: APFunction.cloudClear(self))
-        # self.ui.bn_android_contact_save.clicked.connect(
-        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save'))
-        # self.ui.bn_android_contact_save.clicked.connect(
-        #     lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save'))
-        # PERFORM THE SAME CODE FOR THE: OBJECT NAME: 'line_android_adress', 'line_android_eamil', 'line_android_ph', 'line_android_org'
 
         self.dragPos = self.pos()
 
