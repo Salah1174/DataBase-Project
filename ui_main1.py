@@ -2426,6 +2426,42 @@ class Ui_MainWindow(object):
             Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.lab_home_stat_disc.setObjectName("lab_home_stat_disc")
         self.verticalLayout_6.addWidget(self.lab_home_stat_disc)
+        self.Add_new_Report = QPushButton(self.frame_home_stat)
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        self.Add_new_Report.setFont(font)
+        # self.Add_new_Report.setAlignment(
+        #     Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
+        self.Add_new_Report.setObjectName("Add_new_Report")
+
+        self.Add_new_Report.setStyleSheet("QPushButton {\n"
+                                          "    border: 2px solid rgb(51,51,51);\n"
+                                          "    border-radius: 5px;    \n"
+                                          "    color:rgb(255,255,255);\n"
+                                          "    background-color: rgb(51,51,51);\n"
+                                          "}\n"
+                                          "QPushButton:hover {\n"
+                                          "    border: 2px solid rgb(0,143,150);\n"
+                                          "    background-color: rgb(0,143,150);\n"
+                                          "}\n"
+                                          "QPushButton:pressed {    \n"
+                                          "    border: 2px solid rgb(0,143,150);\n"
+                                          "    background-color: rgb(51,51,51);\n"
+                                          "}\n"
+                                          "\n"
+                                          "QPushButton:disabled {    \n"
+                                          "    border-radius: 5px;    \n"
+                                          "    border: 2px solid rgb(112,112,112);\n"
+                                          "    background-color: rgb(112,112,112);\n"
+                                          "}")
+        self.Add_new_Report.setCheckable(False)
+        self.Add_new_Report.setFlat(True)
+        self.Add_new_Report.setObjectName("Add_new_Report")
+        self.verticalLayout_6.addWidget(self.Add_new_Report)
+
+        # self.gridLayout.addWidget(self.Add_new_Report, 3, 9, 1, 1)
+
         self.horizontalLayout_19.addWidget(self.frame_home_stat)
         self.stackedWidget.addWidget(self.page_home)
         self.page_about_home = QWidget()
@@ -4277,7 +4313,7 @@ class Ui_MainWindow(object):
         self.bn_max.setToolTip(_translate("MainWindow", "Maximize"))
         self.bn_close.setToolTip(_translate("MainWindow", "Close"))
         self.bn_home.setToolTip(_translate("MainWindow", "Home"))
-        self.bn_bug.setToolTip(_translate("MainWindow", "Cafeteria"))
+        self.bn_bug.setToolTip(_translate("MainWindow", "Search"))
         self.bn_cloud.setToolTip(_translate("MainWindow", "About Us"))
         self.bn_android.setToolTip(_translate("MainWindow", "Exercises"))
         self.sign_up_title.setText(_translate("MainWindow", "Sign Up"))
@@ -4487,6 +4523,7 @@ class Ui_MainWindow(object):
         # self.bn_android_contact_delete.setText(
         #     _translate("MainWindow", "Delete"))
         self.bn_android_contact_save.setText(_translate("MainWindow", "Save"))
+        self.Add_new_Report.setText(_translate("MainWindow", "Print Report"))
         self.lab_gamepad.setText(_translate("MainWindow", "GamePad"))
         self.groupBox_clean.setTitle(_translate("MainWindow", "Review"))
         self.radioButton.setText(_translate("MainWindow", "Clean History"))

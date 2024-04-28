@@ -130,6 +130,8 @@ class MainWindow(QMainWindow):
             lambda: UIFunction.buttonPressed(self, 'bn_android_contact_edit', connection, cursor))
         self.ui.bn_android_contact_save.clicked.connect(
             lambda: UIFunction.buttonPressed(self, 'bn_android_contact_save', connection, cursor))
+        self.ui.Add_new_Report.clicked.connect(
+            lambda: UIFunction.buttonPressed(self, 'Add_new_Report', connection, cursor))
         #############################################################
         UIFunction.stackPage(self)
         #############################################################
@@ -189,8 +191,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     try:
         connection = pyodbc.connect('DRIVER={SQL Server};' +
-                                    'Server=SALAHJR;' +
-                                    'Database=CrossFit1;' +
+                                    'Server=LAPTOP-019RIHG4;' +
+                                    'Database=CrossFit;' +
                                     'Trusted_Connection=True;')
 
         print("Connection Established")

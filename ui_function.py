@@ -17,30 +17,31 @@ USERNAME = ""
 PASSWORD = ""
 ID = -1
 
+
 def fill_information(template_path, output_path, data):
     doc = Document(template_path)
     for paragraph in doc.paragraphs:
         for key, value in data.items():
             if key in paragraph.text:
                 for run in paragraph.runs:
-                    run.text = run.text.replace(key, str(value))  
+                    run.text = run.text.replace(key, str(value))
 
     doc.save(output_path)
 
-def generate_data(TraineeID, ReportID, TrainerID, Height, Weight, Desc):
+
+def generate_data(ReportID, TrainerID, Height, Weight, Desc):
+    template_path = fr'C:\Users\Seif Yasser\Desktop\DataBase\Project\db-Team5\Repo\DataBase-Project\ReportTemplate.docx'
     data = {}
-    data['[trainees]'] = TraineeID
     data['[Report]'] = ReportID
     data['[Trainer]'] = TrainerID
     data['[Height]'] = Height
     data['[Weight]'] = Weight
     data['[Desc]'] = Desc
 
-    template_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\ReportTemplate.docx'
-    output_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\Report_{1}.docx'
+    output_path = fr'C:\Users\Seif Yasser\Desktop\DataBase\Project\db-Team5\Repo\DataBase-Project\Report_{
+        TrainerID}.docx'
     fill_information(template_path, output_path, data)
     print(data.items())
-
 
 
 def createUser(cursor, Fullname, startDate, endDate, type1, Bdate, password, email, address=None, phone=None):
@@ -234,26 +235,41 @@ class UIFunction(MainWindow):
                 Bdate = fetch[0][5]
                 age = fetch[0][8]
                 id = fetch[0][0]
-                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
-                type1 = "Trainee"
-                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
-                if len(traineeinfo) == 0:
-                    sql_stmt = f"SELECT * FROM Trainer WHERE Trainer.UserID = ?;"
-                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
-
-                    type1 = "Trainer"
-                if len(traineeinfo) == 0:
-                    sql_stmt = f"SELECT * FROM Employee WHERE Employee.UserID = ?;"
-                    traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
+                password = self.ui.lineEdit_2.text()
+                sql_stmt = f"select dbo.UserType(?)"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
+                if traineeinfo == 1:
+                    type1 = "Trainee"
+                elif traineeinfo == 2:
                     type1 = "Employee"
+                    self.ui.Add_new_Report.setVisible(False)
+                    self.ui.line_android_height.setVisible(False)
+                    self.ui.line_android_weight.setVisible(False)
+                    self.ui.label_1000.setVisible(False)
+                    self.ui.label_1001.setVisible(False)
+                else:
+                    type1 = "Trainer"
+                    self.ui.Add_new_Report.setVisible(False)
+                    self.ui.line_android_height.setVisible(False)
+                    self.ui.line_android_weight.setVisible(False)
+                    self.ui.label_1000.setVisible(False)
+                    self.ui.label_1001.setVisible(False)
                 if type1 != "Employee":
                     self.ui.bn_android.setVisible(False)
+                sql_stmt = f"SELECT * FROM Trainee WHERE Trainee.UserID = ?;"
+                traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()
                 typid = traineeinfo[0][0]
                 start = traineeinfo[0][1]
                 end = traineeinfo[0][2]
                 self.ui.lab_user.setText(str(id))
                 height = "N/A"
                 weight = "N/A"
+                if type1 == "Trainee":
+                    sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=?  COLLATE Latin1_General_CS_AS)"
+                    weight = cursor.execute(
+                        sql_stmt, (username, password)).fetchall()[0][1]
+                    height = cursor.execute(
+                        sql_stmt, (username, password)).fetchall()[0][0]
                 self.ui.lab_home_stat_disc.setText(
                     f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>{type1}id: {typid}<br />Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Start Date: {start}<br/>End Date: {end}<br/>Birth Date: {Bdate}<br/>Height: {height}<br/>Weight: {weight}</span></p></body></html>")
             else:
@@ -297,8 +313,13 @@ class UIFunction(MainWindow):
                 # self.ui.lab_user.setText(name.split()[0])
                 # member = cursor.execute(
                 #     "Select type1 from Membership where TraineeID = ?", (id)).fetchall()[0][4]
+                sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
+                weight = cursor.execute(
+                    sql_stmt, (username, password)).fetchall()[0][1]
+                height = cursor.execute(
+                    sql_stmt, (username, password)).fetchall()[0][0]
                 self.ui.lab_home_stat_disc.setText(
-                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}<br/>MemberShip type: N/A </span></p></body></html>")
+                    f"<html><head/><body><p><span style=\" color:#ffffff;\">ID: {id}<br/>Name: {username}<br/>Email: {email}<br/>Age:{age}<br/>Birth Date: {Bdate}<br/>Start Date: {start}<br/>End Date: {end}<br/>Height: {height}<br/>Weight: {weight}<br/>MemberShip type: N/A </span></p></body></html>")
                 self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
 
             else:
@@ -379,9 +400,16 @@ class UIFunction(MainWindow):
             phone = self.ui.line_android_adress.text()
             address = self.ui.line_android_ph.text()
             email = self.ui.line_android_email.text()
+            height = self.ui.line_android_height.text()
+            height = int(height)
+            weight = self.ui.line_android_weight.text()
+            weight = int(weight)
             sql_stmt = "exec edituserinfo ?,?,?,?,?,?"
             cursor.execute(
                 sql_stmt, (id, password, username, phone, email, address))
+            sql_stmt = "insert into Report (TraineeID, Weight, Height) values (?,?,?)"
+            cursor.execute(
+                sql_stmt, (id, weight, height))
         elif buttonName == 'bn_bug_start' and self.ui.stackedWidget.currentWidget() != self.ui.page_login and self.ui.stackedWidget.currentWidget() != self.ui.sign_up:
             inp = self.ui.progressBar_bug.text()
             print(type(inp))
@@ -404,9 +432,11 @@ class UIFunction(MainWindow):
                                                   f"</style></head><body style=\" font-family:\'Segoe UI\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">User Found!<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {fetch1[0][0]}<br /></p>\n"
+                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-ID: {
+                                                      fetch1[0][0]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"-Name:{fetch1[0][1]}<br /></p>\n"
+                                                  f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"-Name:{
+                                                      fetch1[0][1]}<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                                                   f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- Proper Form is Crucial:<br /></p>\n"
                                                   f"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
@@ -505,16 +535,27 @@ class UIFunction(MainWindow):
                 # raise Exception
                 self.errorexec("Invalid Input",
                                "static/errorAsset 55.png", "Try again")
-       
-       
-       
+
         elif buttonName == 'Add_new_Report':
-            print("Report")
-            csv_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\Trainee ID,Report ID,Trainer ID,Hei.csv'
-            template_path = fr'C:\ASU\ASU\SEM 6\Database Systems\Project\ReportTemplate.docx'
-            generate_data(template_path,csv_path)
-            
-        ##SQL Insert Procedure
+            sql_stmt = f"select dbo.UserType(?)"
+            traineeinfo = cursor.execute(sql_stmt, (id)).fetchall()[0]
+            sql_stmt = f"select Height,Weight from Report r join Trainee t on t.TraineeID=r.TraineeID where userID in (select UserID from Users  where Username=? and PasswordHash=? COLLATE Latin1_General_CS_AS) "
+            data = getUserinfo(self, cursor)
+            weight = cursor.execute(
+                sql_stmt, (data[0][1], data[0][2])).fetchall()[0][1]
+            height = cursor.execute(
+                sql_stmt, (data[0][1], data[0][2])).fetchall()[0][0]
+            sql_stmt = f"select TraineeID from Trainee where UserID=?"
+            TraineeID = cursor.execute(
+                sql_stmt, (data[0][0])).fetchall()[0][0]
+            sql_stmt = f"select ReportID from Report,Users,Trainee where Users.UserID=Trainee.UserID and Report.TraineeID=?"
+            ReportID = cursor.execute(
+                sql_stmt, (TraineeID)).fetchall()[0][0]
+            disc = "seifooo"
+            generate_data(ReportID, TraineeID, height,
+                          weight, disc)
+
+        # SQL Insert Procedure
         #             CREATE PROCEDURE InsertReport
         # (
         #     @TraineeID INT,
@@ -526,13 +567,13 @@ class UIFunction(MainWindow):
         # BEGIN
         #     INSERT INTO [Report] ([TraineeID], [Weight], [Height], [Description])
         #     VALUES (@TraineeID, @Weight, @Height, @Description);
-            
+
         #     SELECT SCOPE_IDENTITY() AS ReportID; -- Return the ID of the newly inserted report
         # END;
 
-        ##Execution of Procedure 
+        # Execution of Procedure
         # EXEC InsertReport @TraineeID = 1, @Weight = 70.5, @Height = 180, @Description = 'Progress report for April';
-        
+
         # ADD ANOTHER ELIF STATEMENT HERE FOR EXECTUITING A NEW MENU BUTTON STACK PAGE.
     ########################################################################################################################
 
